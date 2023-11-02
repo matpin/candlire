@@ -12,4 +12,18 @@ const createProduct = async (req, res) => {
     }
 }
 
-module.exports = {createProduct};
+const getProducts = async (req, res) => {
+    try {
+        let data = {};
+        if (req.query.body !== undefined) {
+            data = JSON.parse(req.query.body);
+        }
+        let products = await Product.find(data).sort({ createdAt: "desc" });
+        res.status(200).send(products);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({msg: `Internal error`});
+    }
+}
+
+module.exports = {createProduct, getProducts};
