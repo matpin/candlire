@@ -27,6 +27,20 @@ const getProducts = async (req, res) => {
     }
 }
 
+// Gets product by it's id
+const getProductById = async (req, res) => {
+    try {
+        let product = await Product.findById(req.params.id);
+        if (!product) {
+            res.status(400).send({msg: `Product not found`});
+        }
+        res.status(200).send(product);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({msg: `Internal error`});
+    }
+}
+
 // Searches for products by their brand or name 
 const searchProduct = async (req, res) => {
     try {
@@ -65,4 +79,4 @@ const updateProduct = async (req, res) => {
     }
 }
 
-module.exports = {createProduct, getProducts, deleteProduct, updateProduct, searchProduct};
+module.exports = {createProduct, getProducts, deleteProduct, updateProduct, searchProduct, getProductById};
