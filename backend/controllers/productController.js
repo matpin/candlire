@@ -38,4 +38,15 @@ const deleteProduct = async (req, res) => {
     }
 }
 
-module.exports = {createProduct, getProducts, deleteProduct};
+// Updates a product
+const updateProduct = async (req, res) => {
+    try {
+        await Product.updateOne({_id: req.params.id}, req.body);
+        res.status(200).send({msg: `Product updated successfully`});
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({msg: `Internal error`});
+    }
+}
+
+module.exports = {createProduct, getProducts, deleteProduct, updateProduct};
