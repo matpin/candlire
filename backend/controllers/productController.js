@@ -12,6 +12,7 @@ const createProduct = async (req, res) => {
     }
 }
 
+// Gets all products
 const getProducts = async (req, res) => {
     try {
         let data = {};
@@ -26,4 +27,15 @@ const getProducts = async (req, res) => {
     }
 }
 
-module.exports = {createProduct, getProducts};
+// Deletes a product
+const deleteProduct = async (req, res) => {
+    try {
+        await Product.deleteOne({_id: req.params.id});
+        res.status(200).send({msg: `Product deleted successfully`});
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({msg: `Internal error`});
+    }
+}
+
+module.exports = {createProduct, getProducts, deleteProduct};
