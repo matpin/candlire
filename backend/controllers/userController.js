@@ -24,4 +24,28 @@ const signUpUser = async (req, res) => {
     }
 }
 
-module.exports = {signUpUser};
+const signInUser = async (req, res) => {
+    try {
+        let {username, password} = req.body;
+        if (!username || !password) {
+            return res.status(401).send({msg: "All fields required for login"});
+        }
+        let userFound = await User.findOne({ username });
+        if (userFound) {
+            let validPass = await bcrypt.compare(password, userFound.password);
+            if (!validPass) {
+                return res.status(404).send({msg: "Incorrect password"});
+            } else {
+                let token = jwt.sign({id: userFound._id, username: userFound.username}, process.env.PRIVATE_TOKEN, {expiresIn: "2h"});
+                return res.status(200).send({msg: "User logged in successfully", token});
+            }
+        } else {
+            return res.status(401).send({msg: "No user found with this username, please sign up!"})
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({msg: `Internal error`});
+    }
+}
+
+module.exports = {signUpUser, signInUser};
