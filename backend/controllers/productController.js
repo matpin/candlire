@@ -27,6 +27,22 @@ const getProducts = async (req, res) => {
     }
 }
 
+// Searches for products by their brand or name 
+const searchProduct = async (req, res) => {
+    try {
+        let products = await Product.find({
+            $or: [
+                { brand: { $regex: req.query.search, $options: 'i' } },
+                { productName: { $regex: req.query.search, $options: 'i' } }
+            ]
+        }).sort({ createdAt: "desc" });
+        res.status(200).send(products);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({msg: `Internal error`});
+    }
+}
+
 // Deletes a product
 const deleteProduct = async (req, res) => {
     try {
@@ -49,4 +65,4 @@ const updateProduct = async (req, res) => {
     }
 }
 
-module.exports = {createProduct, getProducts, deleteProduct, updateProduct};
+module.exports = {createProduct, getProducts, deleteProduct, updateProduct, searchProduct};
