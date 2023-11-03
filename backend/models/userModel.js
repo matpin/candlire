@@ -14,8 +14,9 @@ const userSchema = new mongoose.mongoose.Schema({
             message: 'Invalid email format',
         },
     },
-    password: String
-});
+    password: String,
+    favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Product' }]
+}, { timestamps: true });
 
 const User = mongoose.model("User", userSchema);
 
