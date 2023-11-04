@@ -1,6 +1,6 @@
 const User = require("../models/userModel");
-const Product = require("../models/productModel");
 
+// Toggles to favorite
 const addRemoveFavorite = async (req, res) => {
     try {
         let productId = req.params.id;
@@ -21,4 +21,15 @@ const addRemoveFavorite = async (req, res) => {
     }
 }
 
-module.exports = addRemoveFavorite;
+// Gets user favorites
+const getFavorites = async (req, res) => {
+    try {
+        let favorites = await User.findById(req.params.id).populate("favorites");
+        res.status(500).send(favorites);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({msg: `Internal error`});
+    }
+}
+
+module.exports = {addRemoveFavorite, getFavorites};

@@ -1,8 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const addRemoveFavorite = require("../controllers/favoritesController");
+const {addRemoveFavorite, getFavorites} = require("../controllers/favoritesController");
 const verifyToken = require("../middleware/auth");
 
-router.post("/favorites/:id", verifyToken, addRemoveFavorite);
+router.post("/favorite/:id", verifyToken, addRemoveFavorite);
+router.get("/favorites/:id", verifyToken, getFavorites);
 
 module.exports = router;
