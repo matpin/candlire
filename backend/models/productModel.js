@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const productSchema = new mongoose.Schema(
   {
     brand: String,
-    productName: String,
+    name: String,
     category: {
       type: String,
       enum: ["all_season", "christmas", "halloween", "summer", "easter"],

@@ -3,8 +3,8 @@ const Product = require("../models/productModel");
 // Creates product
 const createProduct = async (req, res) => {
     try {
-        let {brand, productName, category, image, price, description} = req.body;
-        let product = await Product.create({brand, productName, category, image, price, description, owner: req.user.id});
+        let {brand, name, category, image, price, description} = req.body;
+        let product = await Product.create({brand, name, category, image, price, description, owner: req.user.id});
         res.status(200).send({msg: `New product added successfully`, product});
     } catch (error) {
         console.log(error);
@@ -47,7 +47,7 @@ const searchProduct = async (req, res) => {
         let products = await Product.find({
             $or: [
                 { brand: { $regex: req.query.search, $options: 'i' } },
-                { productName: { $regex: req.query.search, $options: 'i' } }
+                { name: { $regex: req.query.search, $options: 'i' } }
             ]
         }).sort({ createdAt: "desc" });
         res.status(200).send(products);
