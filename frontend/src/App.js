@@ -8,6 +8,7 @@ import ProductsList from './components/ProductsList';
 function App() {
   const [productsArray, setProductsArray] = useState([]);
 
+  // Gets all items
   async function getAllProducts() {
     try {
       await axios
@@ -45,11 +46,25 @@ function App() {
     }
   }
 
+  async function deleteProduct(id) {
+    try {
+      axios
+        .delete(`http://localhost:8000/${id}`)
+        .then(() => {
+          setProductsArray(productsArray.filter(deleteProduct => {
+            return deleteProduct._id !== id;
+          }))
+        })
+    } catch (error) {
+        console.log(error);
+    }
+  }
+
   return (
     <BrowserRouter>
       <Routes>
       <Route path="/create" element={<AddProduct addNewProduct={addNewProduct} />} />
-      <Route path="/" element={<ProductsList productsArray={productsArray} />} />
+      <Route path="/" element={<ProductsList productsArray={productsArray} deleteProduct={deleteProduct} />} />
       </Routes>
     </BrowserRouter>
   );
