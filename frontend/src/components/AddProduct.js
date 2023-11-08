@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { storage } from "../firebase.js";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { v4 } from "uuid";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
@@ -29,7 +30,7 @@ function AddProduct({ addNewProduct }) {
   // Uploads images to firebase
   function handleUpload(e) {
     e.preventDefault();
-    let imageRef = ref(storage, `images/${imageUpload._id}/${imageUpload.name}`);
+    let imageRef = ref(storage, `images/${imageUpload.name + v4()}`);
     uploadBytes(imageRef, imageUpload).then((snapshot) => {
       getDownloadURL(snapshot.ref).then((url) => {
         setProductImage(url);
