@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { storage } from "../firebase.js";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import axios from "axios";
+import { useParams } from "react-router-dom";
 
-function AddProduct({ addNewProduct }) {
+function EditProduct({ editProduct }) {
   const [productBrand, setProductBrand] = useState("");
   const [productName, setProductName] = useState("");
   const [productCategory, setProductCategory] = useState("");
@@ -14,6 +16,9 @@ function AddProduct({ addNewProduct }) {
   const [productPrice, setProductPrice] = useState("");
   const [productDescription, setProductDescription] = useState("");
   const [imageUpload, setImageUpload] = useState(null);
+  const [product, setProduct] = useState([]);
+  const { id } = useParams();
+  const fileInputRef = useRef(null);
 
   const validForm = () => {
     return (
@@ -26,6 +31,30 @@ function AddProduct({ addNewProduct }) {
     );
   };
 
+  // Gets products values
+  async function getProduct() {
+    try {
+      await axios
+        .get(`http://localhost:8000/product/${id}`)
+        .then((res) => {
+          setProduct(res.data);
+          setProductBrand(res.data.brand);
+          setProductName(res.data.name);
+          setProductCategory(res.data.category);
+          setProductImage(res.data.image);
+          setProductPrice(res.data.price);
+          setProductDescription(res.data.description);
+        })
+        .catch((err) => console.log(err));
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    getProduct();
+  }, []);
+
   // Uploads images to firebase
   function handleUpload(e) {
     e.preventDefault();
@@ -37,27 +66,23 @@ function AddProduct({ addNewProduct }) {
     });
   }
 
-  // Handles the add products action
-  async function handleClick(e) {
+  async function handleSave(e, product) {
     e.preventDefault();
+    product.brand = productBrand;
+    product.name = productName;
+    product.category = productCategory;
+    product.image = productImage;
+    product.price = productPrice;
+    product.description = productDescription;
     if (!validForm) {
-      alert("Fill all fields");
       return;
     }
-    console.log(
-      productBrand,
-      productName,
-      productCategory,
-      productImage,
-      productPrice,
-      productDescription
-    );
-    await addNewProduct( productBrand, productName, productCategory, productImage, productPrice, productDescription);
+    await editProduct(product);
   }
-  
+
   return (
     <div>
-      <h2>Add Product</h2>
+      <h2>Edit Product</h2>
       <form>
         <div>
           <label>Brand Name</label>
@@ -100,13 +125,24 @@ function AddProduct({ addNewProduct }) {
           </FormControl>
         </div>
         <div>
-          <label>Upload image</label>
+          <label>Current Image</label>
+          {productImage && (
+            <div>
+              <img
+                src={productImage}
+                alt="Current"
+                style={{ maxWidth: "100px" }}
+              />
+            </div>
+          )}
+        </div>
+        <div>
+          <label>Upload New Image</label>
           <input
             type="file"
-            onChange={(e) => {
-              setImageUpload(e.target.files[0]);
-            }}
-            // value={productImage}
+            accept="image/*"
+            onChange={(e) => setImageUpload(e.target.files[0])}
+            ref={fileInputRef}
           />
           <button onClick={handleUpload}>ok</button>
         </div>
@@ -130,10 +166,10 @@ function AddProduct({ addNewProduct }) {
             value={productDescription}
           />
         </div>
-        <button onClick={handleClick}>Add Product</button>
+        <button onClick={(e) => handleSave(e, product)}>Save</button>
       </form>
     </div>
   );
 }
 
-export default AddProduct;
+export default EditProduct;

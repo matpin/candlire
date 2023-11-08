@@ -4,6 +4,7 @@ import axios from "axios";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AddProduct from './components/AddProduct';
 import ProductsList from './components/ProductsList';
+import EditProduct from './components/EditProduct';
 
 function App() {
   const [productsArray, setProductsArray] = useState([]);
@@ -46,13 +47,31 @@ function App() {
     }
   }
 
+  // Deletes a product
   async function deleteProduct(id) {
     try {
-      axios
+      await axios
         .delete(`http://localhost:8000/${id}`)
         .then(() => {
           setProductsArray(productsArray.filter(deleteProduct => {
             return deleteProduct._id !== id;
+          }))
+        })
+    } catch (error) {
+        console.log(error);
+    }
+  }
+
+  async function editProduct(editedProduct) {
+    try {
+      await axios
+        .put(`http://localhost:8000/${editedProduct._id}`, editedProduct)
+        .then(() => {
+          setProductsArray(productsArray.map(updateProduct => {
+            if (updateProduct._id === editedProduct._id) {
+              return {...updateProduct, ...editedProduct}
+            }
+            return updateProduct;
           }))
         })
     } catch (error) {
@@ -65,6 +84,7 @@ function App() {
       <Routes>
       <Route path="/create" element={<AddProduct addNewProduct={addNewProduct} />} />
       <Route path="/" element={<ProductsList productsArray={productsArray} deleteProduct={deleteProduct} />} />
+      <Route path="/edit/:id" element={<EditProduct editProduct={editProduct} />} />
       </Routes>
     </BrowserRouter>
   );
