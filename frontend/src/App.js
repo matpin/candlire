@@ -1,11 +1,28 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import axios from "axios";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AddProduct from './components/AddProduct';
+import ProductsList from './components/ProductsList';
 
 function App() {
   const [productsArray, setProductsArray] = useState([]);
+
+  async function getAllProducts() {
+    try {
+      await axios
+        .get(`http://localhost:8000/products`)
+        .then((res) => {
+          setProductsArray(res.data);
+        })
+    } catch (error) {
+        console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    getAllProducts();
+  }, []);
 
   // Adds products
   async function addNewProduct(productBrand, productName, productCategory, productImage, productPrice, productDescription) {
@@ -21,7 +38,7 @@ function App() {
       await axios
         .post(`http://localhost:8000/create`, newProduct)
         .then((res) => {
-          setProductsArray([res.data.newProduct, ...productsArray])
+          // setProductsArray([res.data.newProduct, ...productsArray])
         })
     } catch (error) {
         console.log(error);
@@ -32,6 +49,7 @@ function App() {
     <BrowserRouter>
       <Routes>
       <Route path="/create" element={<AddProduct addNewProduct={addNewProduct} />} />
+      <Route path="/" element={<ProductsList productsArray={productsArray} />} />
       </Routes>
     </BrowserRouter>
   );
