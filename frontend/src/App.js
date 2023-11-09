@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AddProduct from './components/AddProduct';
 import ProductsList from './components/ProductsList';
 import EditProduct from './components/EditProduct';
+import SignUp from './components/SignUp';
 
 function App() {
   const [productsArray, setProductsArray] = useState([]);
@@ -85,6 +86,7 @@ function App() {
       <Route path="/create" element={<AddProduct addNewProduct={addNewProduct} />} />
       <Route path="/" element={<ProductsList productsArray={productsArray} deleteProduct={deleteProduct} />} />
       <Route path="/edit/:id" element={<EditProduct editProduct={editProduct} />} />
+      <Route path="/signup" element={<SignUp />} />
       </Routes>
     </BrowserRouter>
   );
