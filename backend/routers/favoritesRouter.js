@@ -4,6 +4,6 @@ const {addRemoveFavorite, getFavorites} = require("../controllers/favoritesContr
 const verifyToken = require("../middleware/auth");
 
 router.post("/favorite/:id", verifyToken, addRemoveFavorite);
-router.get("/favorites/:id", verifyToken, getFavorites);
+router.get("/favorites", verifyToken, getFavorites);
 
 module.exports = router;

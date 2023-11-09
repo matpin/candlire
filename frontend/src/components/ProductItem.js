@@ -6,12 +6,9 @@ function ProductItem({ product }) {
     <div>
       <Link to={`/product/${product._id}`}>
         <img className="productImage" src={product.image} alt="productImage" />
-      
-      <p className="productItemBrand">{product.brand}</p>
-      
+        <p className="productItemBrand">{product.brand}</p>
         <h4 className="productItemName">{product.name}</h4>
-      
-      <p className="productItemPrice">{product.price} €</p>
+        <p className="productItemPrice">{product.price} €</p>
       </Link>
     </div>
   );

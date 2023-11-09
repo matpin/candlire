@@ -4,9 +4,12 @@ import { jwtDecode } from "jwt-decode";
 import EditIcon from "@mui/icons-material/Edit";
 import ClearIcon from "@mui/icons-material/Clear";
 import { Link, useParams } from "react-router-dom";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 
 function ProductPage({ deleteProduct }) {
   const [product, setProduct] = useState({});
+  const [favoritesArray, setFavoritesArray] = useState([]);
   const { id } = useParams();
   let token = localStorage.getItem("token");
   let decoded;
@@ -21,7 +24,7 @@ function ProductPage({ deleteProduct }) {
       await axios
         .get(`http://localhost:8000/product/${id}`)
         .then((res) => {
-            setProduct(res.data)
+          setProduct(res.data);
         })
         .catch((err) => console.log(err));
     } catch (error) {
@@ -33,9 +36,36 @@ function ProductPage({ deleteProduct }) {
     getProduct();
   }, []);
 
+  // Handles the button when clicked for delete
   async function handleDelete(productId) {
     deleteProduct(productId);
-}
+  }
+
+  // Adds product on user favorites
+  async function addFavorites() {
+    try {
+      await axios
+        .post(
+          `http://localhost:8000/favorite/${id}`,
+          { productId: product._id },
+          { headers: { Authorization: `Bearer ${token}` } }
+        )
+        .then((res) => {
+            console.log(res.data);
+          setFavoritesArray(res.data.favorites);
+          localStorage.setItem("favorites", JSON.stringify(res.data.favorites));
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    const favoritesFromStorage = JSON.parse(
+      localStorage.getItem("favorites") || "[]"
+    );
+    setFavoritesArray(favoritesFromStorage);
+  }, []);
 
   return (
     <div>
@@ -47,17 +77,20 @@ function ProductPage({ deleteProduct }) {
         <div>
           <div>
             <h1>{product.name}</h1>
-            <div>
-                heart
-            {/* {favorites.includes(product._id) ? (
-                    <FavoriteIcon
-                      onClick={addFavorites}
-                      style={{ color: "#FF0000" }}
-                    />
-                  ) : (
-                    <FavoriteBorderIcon onClick={addFavorites} />
-                  )} */}
-            </div>
+            {token ? (
+              <div>
+                {favoritesArray.includes(product._id) ? (
+                  <FavoriteIcon
+                    onClick={addFavorites}
+                    style={{ color: "#FF0000" }}
+                  />
+                ) : (
+                  <FavoriteBorderIcon onClick={addFavorites} />
+                )}
+              </div>
+            ) : (
+              ""
+            )}
           </div>
           <div>
             {token && product.owner === decoded.id ? (
