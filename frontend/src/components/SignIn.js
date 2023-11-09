@@ -49,7 +49,7 @@ function SignIn() {
               value={password}
             />
           </div>
-          <button onClick={handleSignIn}>Create Account</button>
+          <button onClick={handleSignIn}>Sign In</button>
           <p>Don't have an account? <Link to="/signup">Sign Up</Link></p>
         </form>
       </div>

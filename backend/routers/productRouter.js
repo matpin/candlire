@@ -5,9 +5,9 @@ const verifyToken = require("../middleware/auth");
 
 router.post("/create", verifyToken, createProduct);
 router.get("/products", getProducts);
-router.get("/products/:id", getProductById);
+router.get("/product/:id", getProductById);
 router.get("/", searchProduct);
-router.delete("/:id", deleteProduct);
-router.put("/:id", updateProduct);
+router.delete("/:id", verifyToken, deleteProduct);
+router.put("/:id", verifyToken, updateProduct);
 
 module.exports = router;

@@ -11,6 +11,7 @@ import Navbar from './components/Navbar';
 
 function App() {
   const [productsArray, setProductsArray] = useState([]);
+  let token = localStorage.getItem("token");
 
   // Gets all items
   async function getAllProducts() {
@@ -41,7 +42,7 @@ function App() {
     }
     try {
       await axios
-        .post(`http://localhost:8000/create`, newProduct)
+        .post(`http://localhost:8000/create`, newProduct, {headers: {Authorization: `Bearer ${token}` }})
         .then((res) => {
           // setProductsArray([res.data.newProduct, ...productsArray])
         })
@@ -54,7 +55,7 @@ function App() {
   async function deleteProduct(id) {
     try {
       await axios
-        .delete(`http://localhost:8000/${id}`)
+        .delete(`http://localhost:8000/${id}`, {headers: {Authorization: `Bearer ${token}` }})
         .then(() => {
           setProductsArray(productsArray.filter(deleteProduct => {
             return deleteProduct._id !== id;
@@ -68,7 +69,7 @@ function App() {
   async function editProduct(editedProduct) {
     try {
       await axios
-        .put(`http://localhost:8000/${editedProduct._id}`, editedProduct)
+        .put(`http://localhost:8000/${editedProduct._id}`, editedProduct, {headers: {Authorization: `Bearer ${token}` }})
         .then(() => {
           setProductsArray(productsArray.map(updateProduct => {
             if (updateProduct._id === editedProduct._id) {
