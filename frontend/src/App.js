@@ -6,6 +6,7 @@ import AddProduct from './components/AddProduct';
 import ProductsList from './components/ProductsList';
 import EditProduct from './components/EditProduct';
 import SignUp from './components/SignUp';
+import SignIn from './components/SignIn';
 
 function App() {
   const [productsArray, setProductsArray] = useState([]);
@@ -87,6 +88,7 @@ function App() {
       <Route path="/" element={<ProductsList productsArray={productsArray} deleteProduct={deleteProduct} />} />
       <Route path="/edit/:id" element={<EditProduct editProduct={editProduct} />} />
       <Route path="/signup" element={<SignUp />} />
+      <Route path="/signin" element={<SignIn />} />
       </Routes>
     </BrowserRouter>
   );

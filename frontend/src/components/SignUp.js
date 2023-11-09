@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function SignUp() {
   const [username, setUsername] = useState("");
@@ -76,6 +76,7 @@ function SignUp() {
           ) : ("")} 
         </div>
         <button onClick={handleSignUp}>Create Account</button>
+        <p>Already have an account? <Link to="/signin">Sign In</Link></p>
       </form>
     </div>
   );
