@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import Alert from '@mui/material/Alert';
 
 function SignUp() {
   const [username, setUsername] = useState("");
@@ -72,7 +73,7 @@ function SignUp() {
             value={confirmPassword}
           />
           {password !== confirmPassword ? (
-            <p>Passwords does not match</p>
+            <Alert severity="error">Passwords does not match</Alert>
           ) : ("")} 
         </div>
         <button onClick={handleSignUp}>Create Account</button>
