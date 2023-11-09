@@ -7,6 +7,7 @@ import ProductsList from './components/ProductsList';
 import EditProduct from './components/EditProduct';
 import SignUp from './components/SignUp';
 import SignIn from './components/SignIn';
+import Navbar from './components/Navbar';
 
 function App() {
   const [productsArray, setProductsArray] = useState([]);
@@ -83,6 +84,7 @@ function App() {
 
   return (
     <BrowserRouter>
+      <Navbar />
       <Routes>
       <Route path="/create" element={<AddProduct addNewProduct={addNewProduct} />} />
       <Route path="/" element={<ProductsList productsArray={productsArray} deleteProduct={deleteProduct} />} />
