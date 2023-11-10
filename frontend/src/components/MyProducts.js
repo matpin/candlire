@@ -1,9 +1,10 @@
 import axios from "axios";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 import { Link } from "react-router-dom";
 
-function MyProducts({ setProductsArray, productsArray }) {
+function MyProducts() {
+    const [myProductsArray, setMyProductsArray] = useState([])
   let token = localStorage.getItem("token");
   let decoded;
 
@@ -26,7 +27,7 @@ function MyProducts({ setProductsArray, productsArray }) {
       .request(config)
       .then((res) => {
         console.log(res.data);
-        setProductsArray(res.data);
+        setMyProductsArray(res.data);
       })
       .catch((error) => {
         console.log(error);
@@ -36,10 +37,10 @@ function MyProducts({ setProductsArray, productsArray }) {
   useEffect(() => {
     getMyProducts(decoded.id);
   }, [])
-  
+
   return (
     <div>
-      {productsArray.map((p, i) => (
+      {myProductsArray.map((p, i) => (
         <div key={i}>
           <Link to={`/product/${p._id}`}>
             <img className="favoritesImage" src={p.image} alt="productImage" />
