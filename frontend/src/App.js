@@ -11,6 +11,8 @@ import Navbar from './components/Navbar';
 import ProductPage from './components/ProductPage';
 import Favorites from './components/Favorites';
 import MyProducts from './components/MyProducts';
+import UserProfile from './components/UserProfile';
+import Homepage from './components/Homepage';
 
 function App() {
   const [productsArray, setProductsArray] = useState([]);
@@ -90,12 +92,11 @@ function App() {
     <BrowserRouter>
       <Navbar setProductsArray={setProductsArray} />
       <Routes>
-      <Route path="/" element={<ProductsList productsArray={productsArray} />} />
+      <Route path="/" element={<Homepage productsArray={productsArray} />} />
       <Route path="/create" element={<AddProduct addNewProduct={addNewProduct} />} />
       <Route path="/product/:id" element={<ProductPage deleteProduct={deleteProduct} setProductsArray={setProductsArray} />} />
       <Route path="/edit/:id" element={<EditProduct editProduct={editProduct} />} />
-      <Route path="/myproducts" element={<MyProducts setProductsArray={setProductsArray} productsArray={productsArray} />} />
-      <Route path="/favorites" element={<Favorites />} />
+      <Route path="/myprofile" element={<UserProfile />} />
       <Route path="/signup" element={<SignUp />} />
       <Route path="/signin" element={<SignIn />} />
       </Routes>
