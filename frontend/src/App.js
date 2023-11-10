@@ -10,6 +10,7 @@ import SignIn from './components/SignIn';
 import Navbar from './components/Navbar';
 import ProductPage from './components/ProductPage';
 import Favorites from './components/Favorites';
+import MyProducts from './components/MyProducts';
 
 function App() {
   const [productsArray, setProductsArray] = useState([]);
@@ -93,6 +94,7 @@ function App() {
       <Route path="/create" element={<AddProduct addNewProduct={addNewProduct} />} />
       <Route path="/product/:id" element={<ProductPage deleteProduct={deleteProduct} setProductsArray={setProductsArray} />} />
       <Route path="/edit/:id" element={<EditProduct editProduct={editProduct} />} />
+      <Route path="/myproducts" element={<MyProducts setProductsArray={setProductsArray} productsArray={productsArray} />} />
       <Route path="/favorites" element={<Favorites />} />
       <Route path="/signup" element={<SignUp />} />
       <Route path="/signin" element={<SignIn />} />
