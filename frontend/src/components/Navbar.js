@@ -3,14 +3,16 @@ import logo from "../../src/candlirelogo.png";
 import { Link, useNavigate } from "react-router-dom";
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import PersonIcon from '@mui/icons-material/Person';
+import Searchbar from "./Searchbar";
 
-function Navbar() {
+function Navbar({ setProductsArray }) {
   const navigate = useNavigate();
   let token = localStorage.getItem("token");
 
   function handleLogout() {
     if (token) {
-      localStorage.removeItem("token");
+      let keysToRemove = ["token", "favorites"]
+      keysToRemove.forEach(k => localStorage.removeItem(k));
       navigate("/");
       window.location.reload();
     } else {
@@ -39,6 +41,9 @@ function Navbar() {
             <p>Products</p>
           </div>
           <div>
+            <Searchbar setProductsArray={setProductsArray} />
+          </div>
+          <div>
             <ShoppingCartIcon />
             <Link to="/signin">Sign In /</Link>
             <Link to="/signup">Sign Up</Link>
@@ -55,6 +60,9 @@ function Navbar() {
               alt="candlireImage"
             />
             <p>Products</p>
+          </div>
+          <div>
+            <Searchbar setProductsArray={setProductsArray} />
           </div>
           <div>
             <Link><PersonIcon /></Link>

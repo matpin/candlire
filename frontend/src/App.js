@@ -87,11 +87,11 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Navbar />
+      <Navbar setProductsArray={setProductsArray} />
       <Routes>
       <Route path="/" element={<ProductsList productsArray={productsArray} />} />
       <Route path="/create" element={<AddProduct addNewProduct={addNewProduct} />} />
-      <Route path="/product/:id" element={<ProductPage deleteProduct={deleteProduct} />} />
+      <Route path="/product/:id" element={<ProductPage deleteProduct={deleteProduct} setProductsArray={setProductsArray} />} />
       <Route path="/edit/:id" element={<EditProduct editProduct={editProduct} />} />
       <Route path="/favorites" element={<Favorites />} />
       <Route path="/signup" element={<SignUp />} />

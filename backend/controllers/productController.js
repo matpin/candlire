@@ -47,7 +47,8 @@ const searchProduct = async (req, res) => {
         let products = await Product.find({
             $or: [
                 { brand: { $regex: req.query.search, $options: 'i' } },
-                { name: { $regex: req.query.search, $options: 'i' } }
+                { name: { $regex: req.query.search, $options: 'i' } },
+                {category: { $regex: req.query.search, $options: 'i' } }
             ]
         }).sort({ createdAt: "desc" });
         res.status(200).send(products);
