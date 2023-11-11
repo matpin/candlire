@@ -8,13 +8,23 @@ const addRemoveFavorite = async (req, res) => {
         if (!user) {
             res.status(404).send({msg: `User not found`});
         }
+
         if (!user.favorites.includes(productId)) {
-            user.favorites.push(productId);
-        } else {
-            user.favorites = user.favorites.filter(f => f.toString() !== productId);  
+            await User.findByIdAndUpdate(
+                req.user.id,
+                { $addToSet: { favorites: productId } },
+                { new: true }
+            );
+        }  else {
+            await User.findByIdAndUpdate(
+                req.user.id,
+                { $pull: { favorites: productId } },
+                { new: true }
+            );
         }
-        let favorites = await User.findByIdAndUpdate({_id: user._id}, {favorites: user.favorites});
-        res.status(200).send({msg: `toggled`, favorites: user.favorites});
+        console.log(user);
+        let updatedUser = await User.findById(req.user.id);
+        res.status(200).send({favorites: updatedUser.favorites});
     } catch (error) {
         console.log(error);
         res.status(500).send({msg: `Internal error`});
@@ -25,6 +35,7 @@ const addRemoveFavorite = async (req, res) => {
 const getFavorites = async (req, res) => {
     try {
         let user = await User.findById(req.user.id).populate("favorites");
+        console.log(user, "aa");
         res.status(200).send(user.favorites);
     } catch (error) {
         console.log(error);

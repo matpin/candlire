@@ -3,7 +3,7 @@ import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import EditIcon from "@mui/icons-material/Edit";
 import ClearIcon from "@mui/icons-material/Clear";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 
@@ -13,6 +13,7 @@ function ProductPage({ deleteProduct }) {
   const { id } = useParams();
   let token = localStorage.getItem("token");
   let decoded;
+  const navigate = useNavigate();
 
   if (token) {
     decoded = jwtDecode(token);
@@ -39,10 +40,12 @@ function ProductPage({ deleteProduct }) {
   // Handles the button when clicked for delete
   async function handleDelete(productId) {
     deleteProduct(productId);
+    navigate("/");
   }
 
-  // Adds product on user favorites
-  async function addFavorites() {
+  // Adds or removes product on user favorites
+  async function addRemoveFavorites() {
+    console.log(id, "c");
     try {
       await axios
         .post(
@@ -51,9 +54,12 @@ function ProductPage({ deleteProduct }) {
           { headers: { Authorization: `Bearer ${token}` } }
         )
         .then((res) => {
-            console.log(res.data);
+          console.log(res.data.favorites, "a");
           setFavoritesArray(res.data.favorites);
-          localStorage.setItem("favorites", JSON.stringify(res.data.favorites));
+          localStorage.setItem(
+            `favorites_${decoded.id}`,
+            JSON.stringify(res.data.favorites)
+          );
         });
     } catch (error) {
       console.log(error);
@@ -61,11 +67,13 @@ function ProductPage({ deleteProduct }) {
   }
 
   useEffect(() => {
-    const favoritesFromStorage = JSON.parse(
-      localStorage.getItem("favorites") || "[]"
-    );
-    setFavoritesArray(favoritesFromStorage);
-  }, []);
+    let storedFavorites = localStorage.getItem(`favorites_${decoded.id}`);
+    if (storedFavorites) {
+      setFavoritesArray(JSON.parse(storedFavorites));
+    }
+  }, [decoded.id]);
+
+  console.log(favoritesArray, "b");
 
   return (
     <div>
@@ -81,11 +89,11 @@ function ProductPage({ deleteProduct }) {
               <div>
                 {favoritesArray.includes(product._id) ? (
                   <FavoriteIcon
-                    onClick={addFavorites}
+                    onClick={addRemoveFavorites}
                     style={{ color: "#FF0000" }}
                   />
                 ) : (
-                  <FavoriteBorderIcon onClick={addFavorites} />
+                  <FavoriteBorderIcon onClick={addRemoveFavorites} />
                 )}
               </div>
             ) : (
@@ -112,7 +120,7 @@ function ProductPage({ deleteProduct }) {
             )}
           </div>
         </div>
-        <p>{product.price}</p>
+        <p>{product.price} €</p>
         <p>{product.description}</p>
         {/* <button>Contact with seller</button> */}
       </div>

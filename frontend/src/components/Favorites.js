@@ -1,12 +1,17 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import { jwtDecode } from "jwt-decode";
 
 function Favorites() {
   const [favoritesList, setFavoritesList] = useState([]);
-  const { id } = useParams();
   let token = localStorage.getItem("token");
+  let decoded;
+
+  if (token) {
+    decoded = jwtDecode(token);
+  }
 
   // Gets user favorites
   async function getFavorites() {
@@ -15,6 +20,7 @@ function Favorites() {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
+        console.log(res.data);
         setFavoritesList(res.data);
       });
   }
@@ -23,18 +29,22 @@ function Favorites() {
     getFavorites();
   }, []);
 
-  // Removes favorite from user favorites array
-  async function addFavorites(productId) {
+  // Removes favorite from user favorites page
+  async function addRemoveFavorites(productId) {
     try {
       await axios
         .post(
-            `http://localhost:8000/favorite/${id}`,
+          `http://localhost:8000/favorite/${productId}`,
           { productId: productId },
           { headers: { Authorization: `Bearer ${token}` } }
         )
         .then((res) => {
+          console.log(res.data);
           setFavoritesList(favoritesList.filter((f) => f._id !== productId));
-          localStorage.setItem("favorites", JSON.stringify(res.data.favorites));
+          localStorage.setItem(
+            `favorites_${decoded.id}`,
+            JSON.stringify(res.data.favorites)
+          );
         });
     } catch (error) {
       console.log(error);
@@ -42,12 +52,11 @@ function Favorites() {
   }
 
   useEffect(() => {
-    const favoritesFromStorage = JSON.parse(
-      localStorage.getItem("favorites") || "[]"
-    );
-    setFavoritesList(favoritesFromStorage);
-  }, []);
-
+    let storedFavorites = localStorage.getItem(`favorites_${decoded.id}`);
+    if (storedFavorites) {
+      setFavoritesList(JSON.parse(storedFavorites));
+    }
+  }, [decoded.id]);
 
   return (
     <div>
@@ -66,7 +75,7 @@ function Favorites() {
             </div>
             <div>
               <FavoriteIcon
-                onClick={() => addFavorites(f._id)}
+                onClick={() => addRemoveFavorites(f._id)}
                 style={{ color: "#FF0000" }}
               />
             </div>
