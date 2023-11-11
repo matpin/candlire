@@ -20,7 +20,6 @@ function Favorites() {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
-        console.log(res.data);
         setFavoritesList(res.data);
       });
   }
@@ -39,7 +38,6 @@ function Favorites() {
           { headers: { Authorization: `Bearer ${token}` } }
         )
         .then((res) => {
-          console.log(res.data);
           setFavoritesList(favoritesList.filter((f) => f._id !== productId));
           localStorage.setItem(
             `favorites_${decoded.id}`,

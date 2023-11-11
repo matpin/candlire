@@ -22,7 +22,6 @@ const addRemoveFavorite = async (req, res) => {
                 { new: true }
             );
         }
-        console.log(user);
         let updatedUser = await User.findById(req.user.id);
         res.status(200).send({favorites: updatedUser.favorites});
     } catch (error) {
@@ -35,7 +34,6 @@ const addRemoveFavorite = async (req, res) => {
 const getFavorites = async (req, res) => {
     try {
         let user = await User.findById(req.user.id).populate("favorites");
-        console.log(user, "aa");
         res.status(200).send(user.favorites);
     } catch (error) {
         console.log(error);

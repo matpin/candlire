@@ -45,7 +45,6 @@ function ProductPage({ deleteProduct }) {
 
   // Adds or removes product on user favorites
   async function addRemoveFavorites() {
-    console.log(id, "c");
     try {
       await axios
         .post(
@@ -54,7 +53,6 @@ function ProductPage({ deleteProduct }) {
           { headers: { Authorization: `Bearer ${token}` } }
         )
         .then((res) => {
-          console.log(res.data.favorites, "a");
           setFavoritesArray(res.data.favorites);
           localStorage.setItem(
             `favorites_${decoded.id}`,
@@ -72,8 +70,6 @@ function ProductPage({ deleteProduct }) {
       setFavoritesArray(JSON.parse(storedFavorites));
     }
   }, [decoded.id]);
-
-  console.log(favoritesArray, "b");
 
   return (
     <div>
