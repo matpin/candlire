@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 import { Link } from "react-router-dom";
+import Checkout from "./Checkout";
 
 function Cart() {
     const [mergeCartItems, setMergeCartItems] = useState([]);
@@ -54,7 +55,7 @@ function Cart() {
         ))}
       </div>
       <div>
-        <button>Checkout</button>
+        <Checkout cartItems={mergeCartItems} />
       </div>
     </div>
   );

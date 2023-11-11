@@ -1,18 +1,17 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 import axios from "axios";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import AddProduct from './components/AddProduct';
-import ProductsList from './components/ProductsList';
 import EditProduct from './components/EditProduct';
 import SignUp from './components/SignUp';
 import SignIn from './components/SignIn';
 import Navbar from './components/Navbar';
 import ProductPage from './components/ProductPage';
-import Favorites from './components/Favorites';
-import MyProducts from './components/MyProducts';
 import UserProfile from './components/UserProfile';
 import Homepage from './components/Homepage';
+import Cart from './components/Cart';
+import SuccessPayment from './components/SuccessPayment';
 
 function App() {
   const [productsArray, setProductsArray] = useState([]);
@@ -97,8 +96,10 @@ function App() {
       <Route path="/product/:id" element={<ProductPage deleteProduct={deleteProduct} setProductsArray={setProductsArray} />} />
       <Route path="/edit/:id" element={<EditProduct editProduct={editProduct} />} />
       <Route path="/myprofile" element={<UserProfile />} />
+      <Route path="/cart" element={<Cart />} />
       <Route path="/signup" element={<SignUp />} />
       <Route path="/signin" element={<SignIn />} />
+      <Route path="/checkout_success" element={<SuccessPayment />} />
       </Routes>
     </BrowserRouter>
   );

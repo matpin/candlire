@@ -13,6 +13,7 @@ const favoriteRoutes = require("./routers/favoritesRouter");
 const orderRoutes = require("./routers/orderRouter");
 const chatRoutes = require("./routers/chatRouter");
 const messageRoutes = require("./routers/messageRouter");
+const stripeRoutes = require("./routers/stripeRouter");
 
 //middleware
 app.use(express.json());
@@ -31,6 +32,7 @@ app.use("/", favoriteRoutes);
 app.use("/", orderRoutes);
 app.use("/", chatRoutes);
 app.use("/", messageRoutes);
+app.use("/", stripeRoutes);
 
 server.listen(port, () => {
     console.log(`Server is listening on port ${port}`);
