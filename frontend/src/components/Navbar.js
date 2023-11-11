@@ -24,8 +24,7 @@ function Navbar({ setProductsArray }) {
 
   function handleLogout() {
     if (token) {
-      let keysToRemove = ["token", "favorites"];
-      keysToRemove.forEach((k) => localStorage.removeItem(k));
+      localStorage.removeItem("token");
       navigate("/");
       window.location.reload();
     } else {
@@ -33,12 +32,14 @@ function Navbar({ setProductsArray }) {
     }
   }
 
+  // Return on Homepage when the logo clicked
   function handleReturnHome(e) {
     e.preventDefault();
     navigate("/");
     window.location.reload();
   }
 
+  // Gets all product from navbar dropdown
   async function getAllProducts() {
     try {
       await axios.get(`http://localhost:8000/products`).then((res) => {
@@ -49,6 +50,7 @@ function Navbar({ setProductsArray }) {
     }
   }
 
+  // Gets products by category from navbar dropdown
   function getByCategory(category) {
     let config = {
       method: "get",
@@ -86,6 +88,10 @@ function Navbar({ setProductsArray }) {
             <div>
               <Button
                 // id="basic-button"
+                style={{
+                  backgroundColor: "#f2f2f2",
+                  color: "#000",
+                }}
                 aria-controls={open ? "basic-menu" : undefined}
                 aria-haspopup="true"
                 aria-expanded={open ? "true" : undefined}
@@ -157,7 +163,9 @@ function Navbar({ setProductsArray }) {
             <Searchbar setProductsArray={setProductsArray} />
           </div>
           <div>
-            <ShoppingCartIcon />
+            <Link to="/cart">
+              <ShoppingCartIcon />
+            </Link>
             <Link to="/signin">Sign In /</Link>
             <Link to="/signup">Sign Up</Link>
           </div>
@@ -174,6 +182,10 @@ function Navbar({ setProductsArray }) {
             />
             <div>
               <Button
+                style={{
+                  backgroundColor: "#f2f2f2",
+                  color: "#000",
+                }}
                 // id="basic-button"
                 aria-controls={open ? "basic-menu" : undefined}
                 aria-haspopup="true"
@@ -249,10 +261,10 @@ function Navbar({ setProductsArray }) {
             <Link to="/myprofile">
               <PersonIcon />
             </Link>
-            <Link>
+            <Link to="/cart">
               <ShoppingCartIcon />
             </Link>
-            <p onClick={handleLogout}>Sign Out</p>
+            <Link onClick={handleLogout}>Sign Out</Link>
           </div>
         </nav>
       )}

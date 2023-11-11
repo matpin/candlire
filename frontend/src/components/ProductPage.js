@@ -6,6 +6,10 @@ import ClearIcon from "@mui/icons-material/Clear";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import ButtonGroup from "@mui/material/ButtonGroup";
+import Button from "@mui/material/Button";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
 
 function ProductPage({ deleteProduct }) {
   const [product, setProduct] = useState({});
@@ -14,6 +18,9 @@ function ProductPage({ deleteProduct }) {
   let token = localStorage.getItem("token");
   let decoded;
   const navigate = useNavigate();
+  const [count, setCount] = useState(1);
+  const [cartArray, setCartArray] = useState([]);
+
 
   if (token) {
     decoded = jwtDecode(token);
@@ -71,6 +78,23 @@ function ProductPage({ deleteProduct }) {
     }
   }, [decoded.id]);
 
+  // Adds products to local storage for shopping cart
+  function addToCart(productId, productName, quantity, productPrice) {
+    let cart = {
+      productId: productId,
+      productName: productName,
+      quantity: quantity,
+      productPrice: productPrice
+    }
+
+    const oldCart = JSON.parse(localStorage.getItem(`cart_${decoded.id}`)) || [];
+    setCartArray([cart, ...cartArray]);
+    localStorage.setItem(`cart_${decoded.id}`, JSON.stringify([...oldCart, cart]));
+  }
+
+  useEffect(() => {
+  }, [cartArray])
+
   return (
     <div>
       <div>
@@ -117,6 +141,62 @@ function ProductPage({ deleteProduct }) {
           </div>
         </div>
         <p>{product.price} €</p>
+        <label>Quantity</label>
+        <ButtonGroup
+          style={{
+            backgroundColor: "#f2f2f2",
+            color: "#000",
+            borderColor: "#000",
+          }}
+        >
+          <Button
+            style={{
+              backgroundColor: "#f2f2f2",
+              color: "#000",
+              borderColor: "#000",
+            }}
+            aria-label="reduce"
+            onClick={() => {
+              setCount(Math.max(count - 1, 0));
+            }}
+          >
+            <RemoveIcon fontSize="small" />
+          </Button>
+          <Button
+            style={{
+              backgroundColor: "#f2f2f2",
+              color: "#000",
+              borderColor: "#000",
+            }}
+          >
+            {" "}
+            {count}{" "}
+          </Button>
+          <Button
+            style={{
+              backgroundColor: "#f2f2f2",
+              color: "#000",
+              borderColor: "#000",
+            }}
+            aria-label="increase"
+            onClick={() => {
+              setCount(count + 1);
+            }}
+          >
+            <AddIcon fontSize="small" />
+          </Button>
+        </ButtonGroup>
+        <Button
+          style={{
+            backgroundColor: "#fff",
+            color: "#000",
+            borderColor: "#000",
+          }}
+          variant="outlined"
+          onClick={() => addToCart(product._id, product.name, count, product.price)}
+        >
+          Add to cart
+        </Button>
         <p>{product.description}</p>
         {/* <button>Contact with seller</button> */}
       </div>
