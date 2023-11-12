@@ -16,18 +16,20 @@ function Cart() {
   function showCart() {
     let storedCart = JSON.parse(localStorage.getItem(`cart_${decoded.id}`));
 
-  setMergeCartItems(storedCart.reduce((acc, cur) => {
-    let existingProduct = acc.find((p) => p.productId === cur.productId);
-
-    if (existingProduct) {
-      existingProduct.quantity += cur.quantity;
-    } else {
-      acc.push({ ...cur });
+    if (storedCart !== null) {
+      setMergeCartItems(storedCart.reduce((acc, cur) => {
+        let existingProduct = acc.find((p) => p.productId === cur.productId);
+    
+        if (existingProduct) {
+          existingProduct.quantity += cur.quantity;
+        } else {
+          acc.push({ ...cur });
+        }
+    
+        return acc;
+      }, []))
     }
-
-    return acc;
-  }, []))}
-
+  }
   useEffect(() => {
     showCart();
   }, [])
@@ -40,7 +42,7 @@ function Cart() {
     setMergeCartItems(updateCart);
     localStorage.setItem(`cart_${decoded.id}`, JSON.stringify(updateCart));
   }
-
+  
   console.log(mergeCartItems);
   return (
     <div>
@@ -55,7 +57,15 @@ function Cart() {
         ))}
       </div>
       <div>
-        <Checkout cartItems={mergeCartItems} />
+        {mergeCartItems.length !== 0 ? (
+          <Checkout cartItems={mergeCartItems} />
+        ) : (
+          <div>
+            <p>Your cart is empty</p>
+            <Link to="/">Back to store...</Link>
+          </div>
+        )}
+        
       </div>
     </div>
   );
