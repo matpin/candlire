@@ -1,14 +1,8 @@
 import axios from "axios";
 import React from "react";
-// import { jwtDecode } from "jwt-decode";
 
 function Checkout({ cartItems }) {
   let token = localStorage.getItem("token");
-//   let decoded;
-
-//   if (token) {
-//     decoded = jwtDecode(token);
-//   }
 
   async function handleCheckout() {
     try {

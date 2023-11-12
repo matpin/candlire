@@ -1,12 +1,18 @@
 const Order = require("../models/orderModel");
 
 // Creates the order
-const createOrder = async (req, res) => {
+const createOrder = async (customer, data) => {
     try {
-        let {userId, products, total, deliveryStatus} = req.body;
-        let order = await Order.create({userId, products, total, deliveryStatus});
-        console.log(order);
-        res.status(200).send({msg: `New order added successfully`, order});
+        const items = JSON.parse(customer.metadata.cart);
+        const newOrder = await Order.create({
+            userId: customer.metadata.userId,
+            products: items,
+            total: data.amount_total,
+            shipping: data.shipping_details,
+            delivery_status: data.status,
+            payment_status: data.payment_status
+        })
+        console.log(newOrder);
     } catch (error) {
         console.log(error);
         res.status(500).send({msg: `Internal error`});
