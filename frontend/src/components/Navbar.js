@@ -8,6 +8,7 @@ import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import axios from "axios";
+import "./Navbar.css";
 
 function Navbar({ setProductsArray }) {
   const navigate = useNavigate();
@@ -74,201 +75,116 @@ function Navbar({ setProductsArray }) {
   }
 
   return (
-    <div>
+    <nav className="navbarContainer">
+      <div className="navLeftSide">
+        <div className="burgerIcon" hidden></div>
+        <img
+          onClick={handleReturnHome}
+          className="logo"
+          src={logo}
+          alt="candlireImage"
+        />
+        <div>
+          <Button
+            // id="basic-button"
+            style={{
+              backgroundColor: "rgb(241, 241, 241)",
+              color: "#333",
+              marginTop: "2em",
+            }}
+            aria-controls={open ? "basic-menu" : undefined}
+            aria-haspopup="true"
+            aria-expanded={open ? "true" : undefined}
+            onClick={handleClick}
+          >
+            Products
+          </Button>
+          <Menu
+            id="basic-menu"
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            MenuListProps={{
+              "aria-labelledby": "basic-button",
+            }}
+          >
+            <MenuItem
+              onClick={() => {
+                getAllProducts();
+                handleClose();
+              }}
+            >
+              All Products
+            </MenuItem>
+            <MenuItem
+              onClick={() => {
+                getByCategory("all_season");
+                handleClose();
+              }}
+            >
+              All Season
+            </MenuItem>
+            <MenuItem
+              onClick={() => {
+                getByCategory("christmas");
+                handleClose();
+              }}
+            >
+              Christmas
+            </MenuItem>
+            <MenuItem
+              onClick={() => {
+                getByCategory("halloween");
+                handleClose();
+              }}
+            >
+              Halloween
+            </MenuItem>
+            <MenuItem
+              onClick={() => {
+                getByCategory("summer");
+                handleClose();
+              }}
+            >
+              Summer
+            </MenuItem>
+            <MenuItem
+              onClick={() => {
+                getByCategory("easter");
+                handleClose();
+              }}
+            >
+              Easter
+            </MenuItem>
+          </Menu>
+        </div>
+      </div>
       {!token ? (
-        <nav>
-          <div>
-            <div hidden></div>
-            <img
-              onClick={handleReturnHome}
-              className="logo"
-              src={logo}
-              alt="candlireImage"
-            />
-            <div>
-              <Button
-                // id="basic-button"
-                style={{
-                  backgroundColor: "#f2f2f2",
-                  color: "#000",
-                }}
-                aria-controls={open ? "basic-menu" : undefined}
-                aria-haspopup="true"
-                aria-expanded={open ? "true" : undefined}
-                onClick={handleClick}
-              >
-                Products
-              </Button>
-              <Menu
-                id="basic-menu"
-                anchorEl={anchorEl}
-                open={open}
-                onClose={handleClose}
-                MenuListProps={{
-                  "aria-labelledby": "basic-button",
-                }}
-              >
-                <MenuItem
-                  onClick={() => {
-                    getAllProducts();
-                    handleClose();
-                  }}
-                >
-                  All Products
-                </MenuItem>
-                <MenuItem
-                  onClick={() => {
-                    getByCategory("all_season");
-                    handleClose();
-                  }}
-                >
-                  All Season
-                </MenuItem>
-                <MenuItem
-                  onClick={() => {
-                    getByCategory("christmas");
-                    handleClose();
-                  }}
-                >
-                  Christmas
-                </MenuItem>
-                <MenuItem
-                  onClick={() => {
-                    getByCategory("halloween");
-                    handleClose();
-                  }}
-                >
-                  Halloween
-                </MenuItem>
-                <MenuItem
-                  onClick={() => {
-                    getByCategory("summer");
-                    handleClose();
-                  }}
-                >
-                  Summer
-                </MenuItem>
-                <MenuItem
-                  onClick={() => {
-                    getByCategory("easter");
-                    handleClose();
-                  }}
-                >
-                  Easter
-                </MenuItem>
-              </Menu>
-            </div>
-          </div>
+        <div className="navRightSide">
           <div>
             <Searchbar setProductsArray={setProductsArray} />
           </div>
-          <div>
-            <Link to="/cart">
-              <ShoppingCartIcon />
-            </Link>
-            <Link to="/signin">Sign In /</Link>
-            <Link to="/signup">Sign Up</Link>
-          </div>
-        </nav>
+          <Link to="/cart">
+            <ShoppingCartIcon style={{color: "#333"}} />
+          </Link>
+          <Link to="/signin" className="signUpInOut">Sign In / Sign Up</Link>
+          {/* <Link to="/signup" className="signUpInOut">Sign Up</Link> */}
+        </div>
       ) : (
-        <nav>
-          <div>
-            <div hidden></div>
-            <img
-              onClick={handleReturnHome}
-              className="logo"
-              src={logo}
-              alt="candlireImage"
-            />
-            <div>
-              <Button
-                style={{
-                  backgroundColor: "#f2f2f2",
-                  color: "#000",
-                }}
-                // id="basic-button"
-                aria-controls={open ? "basic-menu" : undefined}
-                aria-haspopup="true"
-                aria-expanded={open ? "true" : undefined}
-                onClick={handleClick}
-              >
-                Products
-              </Button>
-              <Menu
-                id="basic-menu"
-                anchorEl={anchorEl}
-                open={open}
-                onClose={handleClose}
-                MenuListProps={{
-                  "aria-labelledby": "basic-button",
-                }}
-              >
-                <MenuItem
-                  onClick={() => {
-                    getAllProducts();
-                    handleClose();
-                  }}
-                >
-                  All Products
-                </MenuItem>
-                <MenuItem
-                  onClick={() => {
-                    getByCategory("all_season");
-                    handleClose();
-                  }}
-                >
-                  All Season
-                </MenuItem>
-                <MenuItem
-                  onClick={() => {
-                    getByCategory("christmas");
-                    handleClose();
-                  }}
-                >
-                  Christmas
-                </MenuItem>
-                <MenuItem
-                  onClick={() => {
-                    getByCategory("halloween");
-                    handleClose();
-                  }}
-                >
-                  Halloween
-                </MenuItem>
-                <MenuItem
-                  onClick={() => {
-                    getByCategory("summer");
-                    handleClose();
-                  }}
-                >
-                  Summer
-                </MenuItem>
-                <MenuItem
-                  onClick={() => {
-                    getByCategory("easter");
-                    handleClose();
-                  }}
-                >
-                  Easter
-                </MenuItem>
-              </Menu>
-            </div>
-          </div>
+        <div className="navRightSide">
           <div>
             <Searchbar setProductsArray={setProductsArray} />
           </div>
-          <div>
-            <Link to="/myprofile">
-              <PersonIcon />
-            </Link>
-            <Link to="/cart">
-              <ShoppingCartIcon />
-            </Link>
-            <Link onClick={handleLogout}>Sign Out</Link>
-          </div>
-        </nav>
+          <Link to="/myprofile">
+            <PersonIcon style={{color: "#333"}} />
+          </Link>
+          <Link to="/cart">
+            <ShoppingCartIcon style={{color: "#333"}} />
+          </Link>
+          <Link className="signUpInOut" onClick={handleLogout}>Sign Out</Link>
+        </div>
       )}
-    </div>
+    </nav>
   );
 }
 

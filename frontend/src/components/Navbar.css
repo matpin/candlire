@@ -1,0 +1,38 @@
+.navbarContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgb(241, 241, 241);
+    color: #fff;
+    position: sticky;
+    top: 0;
+    width: 100%;
+    box-shadow: 2px 0px 5px #000;
+    z-index: 1;
+    padding: 1em;
+}
+
+.navLeftSide {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1em;
+}
+
+.logo {
+    width: 100px;
+    padding: 5px;
+}
+
+.navRightSide {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1em;
+}
+
+.signUpInOut {
+    text-decoration: none;
+    color: #333;
+    font-size: 1em;
+}
