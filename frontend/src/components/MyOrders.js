@@ -137,7 +137,7 @@ function MyOrders() {
                       </TableRow>
                     </TableHead>
                     {o.products.map((p) => (
-                      <TableBody>
+                      <TableBody key={p._id}>
                         <TableRow
                           sx={{
                             "&:last-child td, &:last-child th": { border: 0 },

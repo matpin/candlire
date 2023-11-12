@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import MyProducts from './MyProducts';
-import Favorites from './Favorites';
-import { Link } from 'react-router-dom';
-import MyOrders from './MyOrders';
+import React, { useState } from "react";
+import MyProducts from "./MyProducts";
+import Favorites from "./Favorites";
+import { Link } from "react-router-dom";
+import MyOrders from "./MyOrders";
 
 function UserProfile() {
   const [option, setOption] = useState("myProducts");
@@ -23,16 +23,26 @@ function UserProfile() {
       </div>
       <div className="profilePageContent">
         <div>
-          <Link to="/create">
-          <button>Add Product</button>
-          </Link>
-        </div>
-        <div>
-        {option === "myProducts" ? (<MyProducts />) : option === "myFavorites" ? (<Favorites />) : option === "myOrders" ? (<MyOrders />) : ("")}
+          {option === "myProducts" ? (
+            <div>
+              <div>
+                <Link to="/create">
+                  <button>Add Product</button>
+                </Link>
+              </div>
+              <MyProducts />
+            </div>
+          ) : option === "myFavorites" ? (
+            <Favorites />
+          ) : option === "myOrders" ? (
+            <MyOrders />
+          ) : (
+            ""
+          )}
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 export default UserProfile;
