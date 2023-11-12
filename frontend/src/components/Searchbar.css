@@ -1,0 +1,26 @@
+.searchbarContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+}
+
+.innerSearchbarContainer {
+    display: flex;
+    align-items: center;
+    min-width: 30%;
+    border: 1px solid rgb(141, 141, 141);
+    border-radius: 50px;
+    height: 4vh;
+    background-color: #fff;
+    padding: 0.4em;
+}
+
+.searchInput {
+    border: none;
+    outline: none;
+    margin-right: auto;
+    margin-left: 15px;
+    height: 3vh;
+    font-size: 1em;
+    width: 100%;
+}

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import "./Searchbar.css"
 
 function Searchbar({ setProductsArray }) {
   const [search, setSearch] = useState("");
@@ -11,12 +12,10 @@ function Searchbar({ setProductsArray }) {
   async function handleSearchbar(e) {
     e.preventDefault();
     try {
-      await axios
-        .get(`http://localhost:8000?search=${search}`)
-        .then((res) => {
-          setProductsArray(res.data);
-          navigate("/");
-        });
+      await axios.get(`http://localhost:8000?search=${search}`).then((res) => {
+        setProductsArray(res.data);
+        navigate("/");
+      });
     } catch (error) {
       console.log(error);
     }
@@ -29,18 +28,22 @@ function Searchbar({ setProductsArray }) {
   }
 
   return (
-    <div>
-      <input
-        type="text"
-        spellCheck={false}
-        onChange={(e) => setSearch(e.target.value)}
-        onKeyDown={handleKeyDown}
-      />
-      <SearchIcon
-        onClick={handleSearchbar}
-        sx={{ fontSize: "2.2em" }}
-        style={{ color: "#79031d" }}
-      />
+    <div className="searchbarContainer">
+      <div className="innerSearchbarContainer">
+        <input
+          type="text"
+          spellCheck={false}
+          onChange={(e) => setSearch(e.target.value)}
+          onKeyDown={handleKeyDown}
+          className="searchInput"
+          placeholder="search product..."
+        />
+        <SearchIcon
+          onClick={handleSearchbar}
+          sx={{ fontSize: "2em" }}
+          style={{ color: "#333" }}
+        />
+      </div>
     </div>
   );
 }
