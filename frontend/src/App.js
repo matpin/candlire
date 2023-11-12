@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 import axios from "axios";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AddProduct from './components/AddProduct';
 import EditProduct from './components/EditProduct';
 import SignUp from './components/SignUp';
