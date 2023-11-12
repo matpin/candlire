@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import MyProducts from './MyProducts';
 import Favorites from './Favorites';
 import { Link } from 'react-router-dom';
+import MyOrders from './MyOrders';
 
 function UserProfile() {
   const [option, setOption] = useState("myProducts");
@@ -17,6 +18,7 @@ function UserProfile() {
         <ul>
           <li onClick={() => handler("myProducts")}>My Products</li>
           <li onClick={() => handler("myFavorites")}>My Favorites</li>
+          <li onClick={() => handler("myOrders")}>My Orders</li>
         </ul>
       </div>
       <div className="profilePageContent">
@@ -26,8 +28,7 @@ function UserProfile() {
           </Link>
         </div>
         <div>
-        {option === "myProducts" ? (<MyProducts />) : option === "myFavorites" ? (<Favorites />) : ("")}
-        {/* {option === "myFavorites" ?? (<Favorites />) } */}
+        {option === "myProducts" ? (<MyProducts />) : option === "myFavorites" ? (<Favorites />) : option === "myOrders" ? (<MyOrders />) : ("")}
         </div>
       </div>
     </div>

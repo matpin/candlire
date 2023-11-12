@@ -12,7 +12,6 @@ const createOrder = async (customer, data) => {
             delivery_status: data.status,
             payment_status: data.payment_status
         })
-        console.log(newOrder);
     } catch (error) {
         console.log(error);
         res.status(500).send({msg: `Internal error`});
@@ -22,7 +21,7 @@ const createOrder = async (customer, data) => {
 // Gets user orders
 const getOrders = async (req, res) => {
     try {
-        let orders = await Order.find({userId: req.user.id});
+        let orders = await Order.find({userId: req.user.id}).sort({ createdAt: "desc" });
         res.status(200).send(orders);
     } catch (error) {
         console.log(error);

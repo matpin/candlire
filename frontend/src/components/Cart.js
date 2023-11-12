@@ -30,6 +30,7 @@ function Cart() {
       }, []))
     }
   }
+  
   useEffect(() => {
     showCart();
   }, [])
@@ -42,8 +43,7 @@ function Cart() {
     setMergeCartItems(updateCart);
     localStorage.setItem(`cart_${decoded.id}`, JSON.stringify(updateCart));
   }
-  
-  console.log(mergeCartItems);
+
   return (
     <div>
       <div>
@@ -65,7 +65,6 @@ function Cart() {
             <Link to="/">Back to store...</Link>
           </div>
         )}
-        
       </div>
     </div>
   );
