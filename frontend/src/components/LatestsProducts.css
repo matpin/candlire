@@ -1,3 +1,50 @@
+.latestsTitle {
+    margin-top: 3em;
+    margin-left: 1em;
+}
+
+.latestsContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* border: 1px solid black; */
+    gap: 4em;
+    max-height: 50vh;
+    margin-top: 3em;
+    margin-bottom: 5em;
+}
+
+.latestsLinks {
+    text-decoration: none;
+    width: 100%;
+}
+
+.innerLatestsContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 20%;
+}
+
 .latestProductsImage {
-    width: 500px;
+    width: 100%;
+    max-height: 40vh;
+}
+
+.latestProductsBrand {
+    color: rgb(194, 194, 194);
+    /* border: 1px solid black; */
+}
+
+.latestProductsName {
+    color: #333;
+}
+
+.latestProductsName:hover {
+    text-decoration: underline;
+}
+
+.latestProductsPrice {
+    color: #333;
 }

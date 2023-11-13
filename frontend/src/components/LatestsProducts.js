@@ -24,17 +24,19 @@ function LatestsProducts() {
 
   return (
     <div>
-        <h1>Latests</h1>
+        <h1 className="latestsTitle">Latests</h1>
+        <div className="latestsContainer">
         {latestProducts.map((l => (
-            <div key={l._id}>
-                <Link to={`/product/${l._id}`}>
+            <div key={l._id} className="innerLatestsContainer">
+              <Link to={`/product/${l._id}`} className="latestsLinks">
                     <img className="latestProductsImage" src={l.image} alt="productImage" />
-                    <p>{l.brand}</p>
-                    <h4>{l.name}</h4>
-                    <p>{l.price} €</p>
+                    <p className="latestProductsBrand">{l.brand}</p>
+                    <h4 className="latestProductsName">{l.name}</h4>
+                    <p className="latestProductsPrice">{l.price} €</p>
                 </Link>
             </div>
         )))}
+        </div>
     </div>
   )
 }
