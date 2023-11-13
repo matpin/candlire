@@ -111,7 +111,7 @@ function MyOrders() {
                       {formatDate(o.createdAt)}
                     </TableCell>
                     <TableCell align="right">{o._id}</TableCell>
-                    <TableCell align="right">{o.total}</TableCell>
+                    <TableCell align="right">{(o.total / 100).toFixed(2)}</TableCell>
                   </TableRow>
                 </TableBody>
               </Table>
@@ -147,7 +147,7 @@ function MyOrders() {
                             {p.productName}
                           </TableCell>
                           <TableCell align="right">{p.productPrice}</TableCell>
-                          <TableCell align="right">{o.total}</TableCell>
+                          <TableCell align="right">{(o.total / 100).toFixed(2)}</TableCell>
                         </TableRow>
                       </TableBody>
                     ))}
