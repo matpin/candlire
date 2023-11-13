@@ -2,9 +2,14 @@ import React, { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 import { Link } from "react-router-dom";
 import Checkout from "./Checkout";
+import ButtonGroup from "@mui/material/ButtonGroup";
+import Button from "@mui/material/Button";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
 
 function Cart() {
   const [mergeCartItems, setMergeCartItems] = useState([]);
+  const [count, setCount] = useState(1);
   let token = localStorage.getItem("token");
   let decoded;
 
@@ -50,6 +55,34 @@ function Cart() {
     localStorage.setItem(`cart_${decoded.id}`, JSON.stringify(updateCart));
   }
 
+  function addQuantity(product) {
+    const updateCart = mergeCartItems.map((update) => {
+      if (update.productId === product.productId) {
+        return {...update, quantity: product.quantity + 1}
+      }
+      return update;
+    })
+    setMergeCartItems(updateCart);
+    localStorage.setItem(`cart_${decoded.id}`, JSON.stringify(updateCart));
+    window.location.reload();
+    console.log(mergeCartItems);
+  }
+
+  function removeQuantity(product) {
+    const updateCart = mergeCartItems.map((update) => {
+      if (update.productId === product.productId) {
+        const updatedQuantity = Math.max(update.quantity - 1, 1);
+        return {...update, quantity: updatedQuantity}
+      }
+      return update;
+    })
+    setMergeCartItems(updateCart);
+    localStorage.setItem(`cart_${decoded.id}`, JSON.stringify(updateCart));
+    window.location.reload();
+    console.log(mergeCartItems);
+    
+  }
+ 
   return (
     <div>
       <div>
@@ -58,6 +91,50 @@ function Cart() {
             <div key={p.productId}>
               <Link to={`/product/${p.productId}`}>{p.productName}</Link>
               <p>{p.quantity}</p>
+              <ButtonGroup
+          style={{
+            backgroundColor: "#f2f2f2",
+            color: "#000",
+            borderColor: "#000",
+          }}
+        >
+          <Button
+            style={{
+              backgroundColor: "#f2f2f2",
+              color: "#000",
+              borderColor: "#000",
+            }}
+            aria-label="reduce"
+            onClick={() => {
+              setCount(Math.max(count - 1, 0)); removeQuantity(p);
+            }}
+          >
+            <RemoveIcon fontSize="small" />
+          </Button>
+          <Button
+            style={{
+              backgroundColor: "#f2f2f2",
+              color: "#000",
+              borderColor: "#000",
+            }}
+          >
+            {" "}
+            {count + p.quantity - 1}{" "}
+          </Button>
+          <Button
+            style={{
+              backgroundColor: "#f2f2f2",
+              color: "#000",
+              borderColor: "#000",
+            }}
+            aria-label="increase"
+            onClick={() => {
+              setCount(count + 1); addQuantity(p);
+            }}
+          >
+            <AddIcon fontSize="small" />
+          </Button>
+        </ButtonGroup>
               <p>{p.productPrice} €</p>
               <button onClick={() => handleDeleteItem(p.productId)}>
                 delete
