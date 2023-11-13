@@ -21,6 +21,7 @@ function Navbar({ setProductsArray }) {
   };
   const handleClose = () => {
     setAnchorEl(null);
+    navigate("/");
   };
 
   function handleLogout() {
@@ -164,6 +165,9 @@ function Navbar({ setProductsArray }) {
           <div>
             <Searchbar setProductsArray={setProductsArray} />
           </div>
+          <Link to="/myprofile">
+            <PersonIcon style={{color: "#333"}} />
+          </Link>
           <Link to="/cart">
             <ShoppingCartIcon style={{color: "#333"}} />
           </Link>

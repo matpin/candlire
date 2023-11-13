@@ -72,11 +72,11 @@ function ProductPage({ deleteProduct }) {
   }
 
   useEffect(() => {
-    let storedFavorites = localStorage.getItem(`favorites_${decoded.id}`);
+    let storedFavorites = localStorage.getItem(`favorites_${decoded?.id}`);
     if (storedFavorites) {
       setFavoritesArray(JSON.parse(storedFavorites));
     }
-  }, [decoded.id]);
+  }, [decoded?.id]);
 
   // Adds products to local storage for shopping cart
   function addToCart(productId, productName, quantity, productPrice) {
@@ -87,13 +87,18 @@ function ProductPage({ deleteProduct }) {
       productPrice: productPrice
     }
 
-    const oldCart = JSON.parse(localStorage.getItem(`cart_${decoded.id}`)) || [];
+    const oldCart = JSON.parse(localStorage.getItem(`cart_${decoded?.id}`)) || [];
     setCartArray([cart, ...cartArray]);
-    localStorage.setItem(`cart_${decoded.id}`, JSON.stringify([...oldCart, cart]));
+    localStorage.setItem(`cart_${decoded?.id}`, JSON.stringify([...oldCart, cart]));
   }
 
   useEffect(() => {
   }, [cartArray])
+
+  function alertToSignIn() {
+    alert("You have to signed in first");
+    return;
+  }
 
   return (
     <div>
@@ -186,7 +191,8 @@ function ProductPage({ deleteProduct }) {
             <AddIcon fontSize="small" />
           </Button>
         </ButtonGroup>
-        <Button
+        {token ? (
+          <Button
           style={{
             backgroundColor: "#fff",
             color: "#000",
@@ -197,6 +203,19 @@ function ProductPage({ deleteProduct }) {
         >
           Add to cart
         </Button>
+        ) : (
+          <Button
+          style={{
+            backgroundColor: "#fff",
+            color: "#000",
+            borderColor: "#000",
+          }}
+          variant="outlined"
+          onClick={alertToSignIn}
+        >
+          Add to cart
+        </Button>
+        )}
         <p>{product.description}</p>
         {/* <button>Contact with seller</button> */}
       </div>

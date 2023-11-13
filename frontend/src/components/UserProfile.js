@@ -3,8 +3,10 @@ import MyProducts from "./MyProducts";
 import Favorites from "./Favorites";
 import { Link } from "react-router-dom";
 import MyOrders from "./MyOrders";
+import SignIn from "./SignIn";
 
 function UserProfile() {
+  let token = localStorage.getItem("token");
   const [option, setOption] = useState("myProducts");
 
   function handler(value) {
@@ -14,7 +16,9 @@ function UserProfile() {
 
   return (
     <div className="profilePageContainer">
-      <div className="profilePageSideBar">
+      {token ? (
+        <div>
+          <div className="profilePageSideBar">
         <ul>
           <li onClick={() => handler("myProducts")}>My Products</li>
           <li onClick={() => handler("myFavorites")}>My Favorites</li>
@@ -41,6 +45,10 @@ function UserProfile() {
           )}
         </div>
       </div>
+        </div>
+      ) : (
+        <SignIn />
+      )}
     </div>
   );
 }
