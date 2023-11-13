@@ -1,5 +1,5 @@
 import React from "react";
-import homepageImage from "../../src/homepageImage.jpg";
+import homepageImage from "../../src/homepageImage7.jpg";
 import "./Homepage.css";
 import { Link } from "react-router-dom";
 import LatestsProducts from "./LatestsProducts";

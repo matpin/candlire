@@ -89,7 +89,7 @@ function Navbar({ setProductsArray }) {
           <Button
             // id="basic-button"
             style={{
-              backgroundColor: "rgb(241, 241, 241)",
+              backgroundColor: "#f2f2f2",
               color: "#333",
               marginTop: "2em",
             }}
