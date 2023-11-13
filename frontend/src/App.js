@@ -13,6 +13,7 @@ import Homepage from './components/Homepage';
 import Cart from './components/Cart';
 import SuccessPayment from './components/SuccessPayment';
 import PageNotFound from './components/PageNotFound';
+import Catalog from './components/Catalog';
 
 function App() {
   const [productsArray, setProductsArray] = useState([]);
@@ -92,7 +93,8 @@ function App() {
     <BrowserRouter>
       <Navbar setProductsArray={setProductsArray} />
       <Routes>
-      <Route path="/" element={<Homepage productsArray={productsArray} />} />
+      <Route path="/" element={<Homepage />} />
+      <Route path="/products" element={<Catalog productsArray={productsArray} />} />
       <Route path="/create" element={<AddProduct addNewProduct={addNewProduct} />} />
       <Route path="/product/:id" element={<ProductPage deleteProduct={deleteProduct} setProductsArray={setProductsArray} />} />
       <Route path="/edit/:id" element={<EditProduct editProduct={editProduct} />} />

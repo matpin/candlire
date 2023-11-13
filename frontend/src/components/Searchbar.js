@@ -14,7 +14,7 @@ function Searchbar({ setProductsArray }) {
     try {
       await axios.get(`http://localhost:8000?search=${search}`).then((res) => {
         setProductsArray(res.data);
-        navigate("/");
+        navigate("/products");
       });
     } catch (error) {
       console.log(error);

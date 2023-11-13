@@ -21,7 +21,7 @@ function Navbar({ setProductsArray }) {
   };
   const handleClose = () => {
     setAnchorEl(null);
-    navigate("/");
+    navigate("/products");
   };
 
   function handleLogout() {
