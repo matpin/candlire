@@ -9,3 +9,9 @@ html {
     color: #333;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}

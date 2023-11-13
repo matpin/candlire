@@ -27,6 +27,20 @@ const getProducts = async (req, res) => {
     }
 }
 
+const getLimitThree = async (req, res) => {
+    try {
+        let data = {};
+        if (req.query.body !== undefined) {
+            data = JSON.parse(req.query.body);
+        }
+        let products = await Product.find(data).sort({ createdAt: "desc" }).limit(3).exec();
+        res.status(200).send(products);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({msg: `Internal error`});
+    }
+}
+
 // Gets product by it's id
 const getProductById = async (req, res) => {
     try {
@@ -80,4 +94,4 @@ const updateProduct = async (req, res) => {
     }
 }
 
-module.exports = {createProduct, getProducts, deleteProduct, updateProduct, searchProduct, getProductById};
+module.exports = {createProduct, getProducts, deleteProduct, updateProduct, searchProduct, getProductById, getLimitThree};

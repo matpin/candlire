@@ -1,0 +1,31 @@
+.homepageContainer{
+    position: relative;
+    top: 0;
+    left: 0;
+}
+
+.homepageImage {
+    width: 100%;
+    max-height: 60vh;
+    position: relative;
+    top: 0;
+    left: 0;
+    border: 1px red solid;
+}
+
+.introContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 10%;
+    background-color: #ffffff6e;
+    position: absolute;
+    top: 12em;
+}
+
+.introParagraph {
+    width: 28%;
+    text-align: center;
+    font-weight:bold;
+}
