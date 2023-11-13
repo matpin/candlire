@@ -12,6 +12,7 @@ import UserProfile from './components/UserProfile';
 import Homepage from './components/Homepage';
 import Cart from './components/Cart';
 import SuccessPayment from './components/SuccessPayment';
+import PageNotFound from './components/PageNotFound';
 
 function App() {
   const [productsArray, setProductsArray] = useState([]);
@@ -100,6 +101,7 @@ function App() {
       <Route path="/signup" element={<SignUp />} />
       <Route path="/signin" element={<SignIn />} />
       <Route path="/checkout_success" element={<SuccessPayment />} />
+      <Route path="*" element={<PageNotFound />} />
       </Routes>
     </BrowserRouter>
   );
