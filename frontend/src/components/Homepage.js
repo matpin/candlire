@@ -3,6 +3,7 @@ import homepageImage from "../../src/homepageImage7.jpg";
 import "./Homepage.css";
 import { Link } from "react-router-dom";
 import LatestsProducts from "./LatestsProducts";
+import BestSeller from "./BestSellers";
 
 function Homepage() {
   let token = localStorage.getItem("token");
@@ -21,6 +22,7 @@ function Homepage() {
       ) : ("")}
       </div>
       <LatestsProducts />
+      <BestSeller />
     </div>
   );
 }

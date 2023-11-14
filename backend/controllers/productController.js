@@ -27,6 +27,7 @@ const getProducts = async (req, res) => {
     }
 }
 
+// Gets latest four products
 const getLimitFour = async (req, res) => {
     try {
         let data = {};
@@ -34,6 +35,21 @@ const getLimitFour = async (req, res) => {
             data = JSON.parse(req.query.body);
         }
         let products = await Product.find(data).sort({ createdAt: "desc" }).limit(4).exec();
+        res.status(200).send(products);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({msg: `Internal error`});
+    }
+}
+
+// Gets latest four best seller products
+const getBestSeller = async (req, res) => {
+    try {
+        let data = {};
+        if (req.query.body !== undefined) {
+            data = JSON.parse(req.query.body);
+        }
+        let products = await Product.find(data).sort({ salesQuantity: "desc" }).limit(4).exec();
         res.status(200).send(products);
     } catch (error) {
         console.log(error);
@@ -94,4 +110,4 @@ const updateProduct = async (req, res) => {
     }
 }
 
-module.exports = {createProduct, getProducts, deleteProduct, updateProduct, searchProduct, getProductById, getLimitFour};
+module.exports = {createProduct, getProducts, deleteProduct, updateProduct, searchProduct, getProductById, getLimitFour, getBestSeller};

@@ -20,7 +20,8 @@ const productSchema = new mongoose.Schema(
     },
     price: Number,
     description: String,
-    owner: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
+    owner: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    salesQuantity: { type: Number, default: 0 }
   },
   { timestamps: true }
 );

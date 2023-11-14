@@ -1,4 +1,5 @@
 const Order = require("../models/orderModel");
+const Product = require("../models/productModel");
 
 // Creates the order
 const createOrder = async (customer, data) => {
@@ -12,6 +13,14 @@ const createOrder = async (customer, data) => {
             delivery_status: data.status,
             payment_status: data.payment_status
         })
+
+        for (const item of items) {
+            let productId = item.productId;
+            let quantity = item.quantity;
+
+            await Product.updateOne({_id: productId}, {salesQuantity: quantity});
+        }
+
     } catch (error) {
         console.log(error);
         res.status(500).send({msg: `Internal error`});
