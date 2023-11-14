@@ -21,8 +21,8 @@ function Homepage() {
       </div>
       ) : ("")}
       </div>
-      <LatestsProducts />
       <BestSeller />
+      <LatestsProducts />
     </div>
   );
 }

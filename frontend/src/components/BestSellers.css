@@ -1,9 +1,9 @@
-.latestsTitle {
+.bestSellerTitle {
     margin-top: 2em;
     margin-left: 1em;
 }
 
-.latestsContainer {
+.bestSellerContainer {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -12,46 +12,50 @@
     max-height: 50vh;
     margin-top: 3em;
     margin-bottom: 5em;
+    overflow: hidden;
 }
 
-.latestsLinks {
+.bestSellerLinks {
     text-decoration: none;
     width: 100%;
+    overflow: hidden;
 }
 
-.innerLatestsContainer {
+.innerBestSellerContainer {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     width: 20%;
+    overflow: hidden;
 }
 
-.latestProductsImage {
+.bestSellerImage {
     width: 100%;
+    max-width: 100%;
     height: 40vh;
     max-height: 40vh;
     opacity: 100%;
 }
 
-.latestProductsImage:hover {
+.bestSellerLinks:hover .bestSellerImage {
     opacity: 50%;
     transition: all 1s;
 }
 
-.latestProductsBrand {
+.bestSellerBrand {
     color: rgb(194, 194, 194);
     /* border: 1px solid black; */
 }
 
-.latestProductsName {
+.bestSellerName {
     color: #333;
 }
 
-.latestProductsName:hover {
+.bestSellerName:hover {
     text-decoration: underline;
 }
 
-.latestProductsPrice {
+.bestSellerPrice {
     color: #333;
 }

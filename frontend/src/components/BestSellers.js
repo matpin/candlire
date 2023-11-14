@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import "./BestSeller.css";
+import "./BestSellers.css";
 
 function BestSeller() {
   const [bestSellers, setBestSellers] = useState([]);
