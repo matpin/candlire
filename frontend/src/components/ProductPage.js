@@ -10,6 +10,7 @@ import ButtonGroup from "@mui/material/ButtonGroup";
 import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
+import "./ProductPage.css";
 
 function ProductPage({ deleteProduct }) {
   const [product, setProduct] = useState({});
@@ -103,7 +104,7 @@ function ProductPage({ deleteProduct }) {
   return (
     <div>
       <div>
-        <img className="image2" src={product.image} alt="productImage" />
+        <img className="productPageImage" src={product.image} alt="productImage" />
       </div>
       <div>
         <div>{product.brand}</div>

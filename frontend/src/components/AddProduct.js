@@ -6,6 +6,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import { useNavigate } from "react-router-dom";
 
 function AddProduct({ addNewProduct }) {
   const [productBrand, setProductBrand] = useState("");
@@ -15,17 +16,7 @@ function AddProduct({ addNewProduct }) {
   const [productPrice, setProductPrice] = useState("");
   const [productDescription, setProductDescription] = useState("");
   const [imageUpload, setImageUpload] = useState(null);
-
-  const validForm = () => {
-    return (
-      productBrand.trim() !== "" &&
-      productName.trim() !== "" &&
-      productCategory !== "" &&
-      productImage.trim() !== "" &&
-      productPrice.trim() !== "" &&
-      productDescription.trim() !== ""
-    );
-  };
+  const navigate = useNavigate();
 
   // Uploads images to firebase
   function handleUpload(e) {
@@ -41,19 +32,17 @@ function AddProduct({ addNewProduct }) {
   // Handles the add products action
   async function handleClick(e) {
     e.preventDefault();
-    if (!validForm) {
+    if (productBrand.trim() === "" ||
+    productName.trim() === ""  ||
+    productCategory.trim() === "" ||
+    productImage.trim() === "" ||
+    productPrice.trim() === "" ||
+    productDescription.trim() === "") {
       alert("Fill all fields");
       return;
     }
-    console.log(
-      productBrand,
-      productName,
-      productCategory,
-      productImage,
-      productPrice,
-      productDescription
-    );
     await addNewProduct( productBrand, productName, productCategory, productImage, productPrice, productDescription);
+    navigate("/myprofile");
   }
   
   return (

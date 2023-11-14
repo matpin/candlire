@@ -15,6 +15,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 
+// Requirements for MUI accordion
 const Accordion = styled((props) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
 ))(({ theme }) => ({
@@ -60,6 +61,7 @@ function MyOrders() {
     setExpanded(newExpanded ? panel : false);
   };
 
+  // Changes the date that get from database to yyyy/mm/dd
   function formatDate(createdAtString) {
     const dateObject = new Date(createdAtString);
     const year = dateObject.getFullYear();
@@ -68,6 +70,7 @@ function MyOrders() {
     return `${year}-${month}-${day}`;
   }
 
+  // Gets orders from database
   async function getMyOrders() {
     try {
       await axios

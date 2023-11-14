@@ -7,7 +7,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 function EditProduct({ editProduct }) {
   const [productBrand, setProductBrand] = useState("");
@@ -20,17 +20,7 @@ function EditProduct({ editProduct }) {
   const [product, setProduct] = useState([]);
   const { id } = useParams();
   const fileInputRef = useRef(null);
-
-  const validForm = () => {
-    return (
-      productBrand.trim() !== "" &&
-      productName.trim() !== "" &&
-      productCategory !== "" &&
-      productImage.trim() !== "" &&
-      productPrice.trim() !== "" &&
-      productDescription.trim() !== ""
-    );
-  };
+  const navigate = useNavigate();
 
   // Gets products values
   async function getProduct() {
@@ -67,6 +57,7 @@ function EditProduct({ editProduct }) {
     });
   }
 
+  // Handles the edit
   async function handleSave(e, product) {
     e.preventDefault();
     product.brand = productBrand;
@@ -75,10 +66,19 @@ function EditProduct({ editProduct }) {
     product.image = productImage;
     product.price = productPrice;
     product.description = productDescription;
-    if (!validForm) {
+    if (
+      product.brand.trim() === "" ||
+      product.name.trim() === "" ||
+      product.category.trim() === "" ||
+      product.image.trim() === "" ||
+      product.price === "" ||
+      product.description.trim() === ""
+    ) {
+      alert("Fill all fields");
       return;
     }
     await editProduct(product);
+    navigate(`/product/${id}`);
   }
 
   return (

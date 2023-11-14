@@ -9,6 +9,7 @@ function UserProfile() {
   let token = localStorage.getItem("token");
   const [option, setOption] = useState("myProducts");
 
+  // Handles what component user should see
   function handler(value) {
     setOption(value);
     console.log();

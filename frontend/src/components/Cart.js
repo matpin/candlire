@@ -55,6 +55,7 @@ function Cart() {
     localStorage.setItem(`cart_${decoded.id}`, JSON.stringify(updateCart));
   }
 
+  // Adds one item on local storage array
   function addQuantity(product) {
     const updateCart = mergeCartItems.map((update) => {
       if (update.productId === product.productId) {
@@ -68,6 +69,7 @@ function Cart() {
     console.log(mergeCartItems);
   }
 
+  // Removes one item from local storage array
   function removeQuantity(product) {
     const updateCart = mergeCartItems.map((update) => {
       if (update.productId === product.productId) {

@@ -4,6 +4,7 @@ import React from "react";
 function Checkout({ cartItems }) {
   let token = localStorage.getItem("token");
 
+  // Handles the checkout button and redirect to stripe for payment action
   async function handleCheckout() {
     try {
       await axios

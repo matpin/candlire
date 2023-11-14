@@ -12,6 +12,7 @@ function MyProducts() {
     decoded = jwtDecode(token);
   }
 
+  // Gets only products that user added
   function getMyProducts(owner) {
     let config = {
       method: "get",

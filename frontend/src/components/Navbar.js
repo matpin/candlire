@@ -24,6 +24,7 @@ function Navbar({ setProductsArray }) {
     navigate("/products");
   };
 
+  // Handles log out and removes token from local storage
   function handleLogout() {
     if (token) {
       localStorage.removeItem("token");
