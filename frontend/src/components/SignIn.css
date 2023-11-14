@@ -60,4 +60,9 @@
 
 .signUpLink {
     text-decoration: none;
+    color: #333;
+}
+
+.signUpLink:hover {
+    text-decoration: underline;
 }

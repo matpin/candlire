@@ -23,7 +23,7 @@ function LatestsProducts() {
 
   return (
     <div>
-      <h1 className="latestsTitle">Latests</h1>
+      <h1 className="latestsTitle">Latest</h1>
       <div className="latestsContainer">
         {latestProducts.map((l) => (
           <div key={l._id} className="innerLatestsContainer">
