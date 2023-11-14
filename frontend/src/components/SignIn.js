@@ -77,8 +77,8 @@ function SignIn() {
             Sign In
           </Button>
         </form>
-        <p>
-          Don't have an account? <Link to="/signup">Sign Up</Link>
+        <p className="notAccount">
+          Don't have an account? <Link className="signUpLink" to="/signup">Sign Up</Link>
         </p>
       </div>
     </div>

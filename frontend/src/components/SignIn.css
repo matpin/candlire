@@ -1,11 +1,10 @@
 .signInContainer {
     display: flex;
-    border: 1px solid black;
+    /* border: 1px solid black; */
     gap: 1em;
 }
 
 .signInLeftSide {
-    border: 1px solid black;
     width: 40%;
 }
 
@@ -15,7 +14,6 @@
 
 .signInRightSide {
     width: 60%;
-    border: 1px solid black;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -25,7 +23,7 @@
 .signInTitle {
     text-align: left;
     width: 50%;
-    margin-bottom: 2em;
+    margin-bottom: 1.5em;
 }
 
 .formContainer {
@@ -52,4 +50,14 @@
 
 .signInInput:focus {
     box-shadow: rgba(57, 57, 104, 0.25) 0px 50px 100px -20px, rgba(32, 32, 32, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+}
+
+.notAccount {
+    font-size: 0.9em;
+    color: #aaaaaa;
+    margin-top: 1em;
+}
+
+.signUpLink {
+    text-decoration: none;
 }
