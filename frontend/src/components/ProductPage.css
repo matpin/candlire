@@ -1,3 +1,72 @@
+.productsPageContainer {
+    display: flex;
+    margin: 5em;
+    gap: 2em;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.productsPageLeftSide {
+    width: 60%;
+}
+
 .productPageImage {
-    width: 500px;
+    width: 100%;
+}
+
+.productsPageRightSide {
+    width: 40%;
+}
+
+.productPageBrand {
+    font-size: 1em;
+    font-weight: lighter;
+    color: rgb(194, 194, 194);
+}
+
+.productPageTopContainer {
+    /* border: 1px solid black; */
+    display: flex;
+    align-items: center;
+    gap: 1em;
+}
+
+.productPageNameContainer {
+    display: flex;
+}
+
+.productPageName {
+    font-size: 4em;
+}
+
+.productPageFavContainer {
+    margin-right: auto;
+}
+
+.productPageEditDelete {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 0.5em;
+}
+
+.productPagePrice {
+    font-size: 1.5em;
+    color: rgb(83, 83, 83);
+    margin-top: 1em;
+}
+
+.quantityButtons {
+    display: flex;
+    flex-direction: column;
+    margin-top: 3em;
+    gap: 0.5em;
+}
+
+.addToCartButtonContainer {
+    margin-top: 2em;
+}
+
+.productPageDescContainer {
+    display: flex;
+    flex-direction: column;
+    margin-top: 3em;
 }

@@ -22,7 +22,6 @@ function ProductPage({ deleteProduct }) {
   const [count, setCount] = useState(1);
   const [cartArray, setCartArray] = useState([]);
 
-
   if (token) {
     decoded = jwtDecode(token);
   }
@@ -85,16 +84,19 @@ function ProductPage({ deleteProduct }) {
       productId: productId,
       productName: productName,
       quantity: quantity,
-      productPrice: productPrice
-    }
+      productPrice: productPrice,
+    };
 
-    const oldCart = JSON.parse(localStorage.getItem(`cart_${decoded?.id}`)) || [];
+    const oldCart =
+      JSON.parse(localStorage.getItem(`cart_${decoded?.id}`)) || [];
     setCartArray([cart, ...cartArray]);
-    localStorage.setItem(`cart_${decoded?.id}`, JSON.stringify([...oldCart, cart]));
+    localStorage.setItem(
+      `cart_${decoded?.id}`,
+      JSON.stringify([...oldCart, cart])
+    );
   }
 
-  useEffect(() => {
-  }, [cartArray])
+  useEffect(() => {}, [cartArray]);
 
   function alertToSignIn() {
     alert("You have to signed in first");
@@ -102,17 +104,23 @@ function ProductPage({ deleteProduct }) {
   }
 
   return (
-    <div>
-      <div>
-        <img className="productPageImage" src={product.image} alt="productImage" />
+    <div className="productsPageContainer">
+      <div className="productsPageLeftSide">
+        <img
+          className="productPageImage"
+          src={product.image}
+          alt="productImage"
+        />
       </div>
-      <div>
-        <div>{product.brand}</div>
-        <div>
-          <div>
-            <h1>{product.name}</h1>
+      <div className="productsPageRightSide">
+        <div className="productPageBrand">{product.brand}</div>
+        <div className="productPageTopContainer">
+          <div className="productPageNameContainer">
+            <p className="productPageName">{product.name}</p>
+          </div>
+          <div className="productPageFavContainer">
             {token ? (
-              <div>
+              <div className="productPageFav">
                 {favoritesArray.includes(product._id) ? (
                   <FavoriteIcon
                     onClick={addRemoveFavorites}
@@ -126,7 +134,7 @@ function ProductPage({ deleteProduct }) {
               ""
             )}
           </div>
-          <div>
+          <div className="productPageEditDelete">
             {token && product.owner === decoded.id ? (
               <>
                 <Link to={`/edit/${product._id}`} className="editButton">
@@ -146,78 +154,91 @@ function ProductPage({ deleteProduct }) {
             )}
           </div>
         </div>
-        <p>{product.price} €</p>
-        <label>Quantity</label>
-        <ButtonGroup
-          style={{
-            backgroundColor: "#f2f2f2",
-            color: "#000",
-            borderColor: "#000",
-          }}
-        >
-          <Button
+        <p className="productPagePrice">{product.price} €</p>
+        <div className="quantityButtons">
+          <h4>Quantity</h4>
+          <ButtonGroup
             style={{
-              backgroundColor: "#f2f2f2",
-              color: "#000",
-              borderColor: "#000",
-            }}
-            aria-label="reduce"
-            onClick={() => {
-              setCount(Math.max(count - 1, 0));
+              width: "100%",
+              height: "5vh",
             }}
           >
-            <RemoveIcon fontSize="small" />
-          </Button>
-          <Button
-            style={{
-              backgroundColor: "#f2f2f2",
-              color: "#000",
-              borderColor: "#000",
-            }}
-          >
-            {" "}
-            {count}{" "}
-          </Button>
-          <Button
-            style={{
-              backgroundColor: "#f2f2f2",
-              color: "#000",
-              borderColor: "#000",
-            }}
-            aria-label="increase"
-            onClick={() => {
-              setCount(count + 1);
-            }}
-          >
-            <AddIcon fontSize="small" />
-          </Button>
-        </ButtonGroup>
-        {token ? (
-          <Button
-          style={{
-            backgroundColor: "#fff",
-            color: "#000",
-            borderColor: "#000",
-          }}
-          variant="outlined"
-          onClick={() => addToCart(product._id, product.name, count, product.price)}
-        >
-          Add to cart
-        </Button>
-        ) : (
-          <Button
-          style={{
-            backgroundColor: "#fff",
-            color: "#000",
-            borderColor: "#000",
-          }}
-          variant="outlined"
-          onClick={alertToSignIn}
-        >
-          Add to cart
-        </Button>
-        )}
-        <p>{product.description}</p>
+            <Button
+              style={{
+                backgroundColor: "#fff",
+                color: "#000",
+                borderColor: "#000",
+              }}
+              aria-label="reduce"
+              onClick={() => {
+                setCount(Math.max(count - 1, 0));
+              }}
+            >
+              <RemoveIcon fontSize="small" />
+            </Button>
+            <Button
+              style={{
+                backgroundColor: "#fff",
+                color: "#000",
+                borderColor: "#000",
+                borderRadius: "5%",
+              }}
+            >
+              {" "}
+              {count}{" "}
+            </Button>
+            <Button
+              style={{
+                backgroundColor: "#fff",
+                color: "#000",
+                borderColor: "#000",
+                borderRadius: "5%",
+              }}
+              aria-label="increase"
+              onClick={() => {
+                setCount(count + 1);
+              }}
+            >
+              <AddIcon fontSize="small" />
+            </Button>
+          </ButtonGroup>
+        </div>
+        <div className="addToCartButtonContainer">
+          {token ? (
+            <Button
+              style={{
+                backgroundColor: "#f2f2f2",
+                color: "#000",
+                borderColor: "#000",
+                width: "100%",
+                height: "5vh",
+                fontSize: "1em",
+              }}
+              variant="outlined"
+              onClick={() =>
+                addToCart(product._id, product.name, count, product.price)
+              }
+            >
+              Add to cart
+            </Button>
+          ) : (
+            <Button
+              style={{
+                backgroundColor: "#fff",
+                color: "#000",
+                borderColor: "#000",
+              }}
+              variant="outlined"
+              onClick={alertToSignIn}
+            >
+              Add to cart
+            </Button>
+          )}
+        </div>
+        <div className="productPageDescContainer">
+          <h4>Description</h4>
+          <p className="productPageDesc">{product.description}</p>
+        </div>
         {/* <button>Contact with seller</button> */}
       </div>
     </div>
