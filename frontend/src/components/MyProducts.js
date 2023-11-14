@@ -27,7 +27,6 @@ function MyProducts() {
     axios
       .request(config)
       .then((res) => {
-        console.log(res.data);
         setMyProductsArray(res.data);
       })
       .catch((error) => {
@@ -37,7 +36,7 @@ function MyProducts() {
 
   useEffect(() => {
     getMyProducts(decoded.id);
-  }, [])
+  }, [decoded.id])
 
   return (
     <div>
