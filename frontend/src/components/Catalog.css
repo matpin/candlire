@@ -11,3 +11,10 @@
     margin-top: 2em;
     text-align: center;
 }
+
+.noResults {
+    margin-top: 3em;
+    text-align: center;
+    color: rgb(194, 194, 194);
+    font-style: italic;
+}

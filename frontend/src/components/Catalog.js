@@ -39,7 +39,11 @@ function Catalog({ productsArray }) {
         </FormControl>
       </div>
       <h1 className="catalogTitle">Products</h1>
-      <ProductsList productsArray={sortedProductsArray} />
+      {sortedProductsArray.length !== 0 ? (
+        <ProductsList productsArray={sortedProductsArray} />
+      ) : (
+        <p className="noResults">No results</p>
+      )}
     </div>
   );
 }
