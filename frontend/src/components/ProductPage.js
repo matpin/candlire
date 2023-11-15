@@ -11,6 +11,12 @@ import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import "./ProductPage.css";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 function ProductPage({ deleteProduct }) {
   const [product, setProduct] = useState({});
@@ -25,6 +31,20 @@ function ProductPage({ deleteProduct }) {
   if (token) {
     decoded = jwtDecode(token);
   }
+
+  const [open, setOpen] = useState(false);
+
+  const handleClick = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
 
   // Gets product by it's id
   async function getProduct() {
@@ -99,7 +119,6 @@ function ProductPage({ deleteProduct }) {
   useEffect(() => {}, [cartArray]);
 
   function alertToSignIn() {
-    alert("You have to signed in first");
     return;
   }
 
@@ -205,34 +224,68 @@ function ProductPage({ deleteProduct }) {
         </div>
         <div className="addToCartButtonContainer">
           {token ? (
-            <Button
-              style={{
-                backgroundColor: "#f2f2f2",
-                color: "#000",
-                borderColor: "#000",
-                width: "100%",
-                height: "5vh",
-                fontSize: "1em",
-              }}
-              variant="outlined"
-              onClick={() =>
-                addToCart(product._id, product.name, count, product.price)
-              }
-            >
-              Add to cart
-            </Button>
+            <>
+              <Button
+                style={{
+                  backgroundColor: "#f2f2f2",
+                  color: "#000",
+                  borderColor: "#000",
+                  width: "100%",
+                  height: "5vh",
+                  fontSize: "1em",
+                }}
+                variant="outlined"
+                onClick={() => {
+                  addToCart(product._id, product.name, count, product.price);
+                  handleClick();
+                }}
+              >
+                Add to cart
+              </Button>
+              <Snackbar
+                open={open}
+                autoHideDuration={3000}
+                onClose={handleClose}
+              >
+                <Alert
+                  onClose={handleClose}
+                  severity="success"
+                  sx={{ width: "100%" }}
+                >
+                  Product added to cart!
+                </Alert>
+              </Snackbar>
+            </>
           ) : (
-            <Button
-              style={{
-                backgroundColor: "#fff",
-                color: "#000",
-                borderColor: "#000",
-              }}
-              variant="outlined"
-              onClick={alertToSignIn}
-            >
-              Add to cart
-            </Button>
+            <>
+              <Button
+                style={{
+                  backgroundColor: "#f2f2f2",
+                  color: "#000",
+                  borderColor: "#000",
+                  width: "100%",
+                  height: "5vh",
+                  fontSize: "1em",
+                }}
+                variant="outlined"
+                onClick={() => {alertToSignIn(); handleClick();}}
+              >
+                Add to cart
+              </Button>
+              <Snackbar
+                open={open}
+                autoHideDuration={3000}
+                onClose={handleClose}
+              >
+                <Alert
+                  onClose={handleClose}
+                  severity="info"
+                  sx={{ width: "100%" }}
+                >
+                  You have to sign in first!
+                </Alert>
+              </Snackbar>
+            </>
           )}
         </div>
         <div className="productPageDescContainer">
