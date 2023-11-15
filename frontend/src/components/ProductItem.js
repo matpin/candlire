@@ -4,8 +4,8 @@ import "./ProductItem.css";
 
 function ProductItem({ product }) {
   return (
-    <div>
-      <Link to={`/product/${product._id}`}>
+    <div className="productItemContainer">
+      <Link className="productItemLink" to={`/product/${product._id}`}>
         <img className="productImage" src={product.image} alt="productImage" />
         <p className="productItemBrand">{product.brand}</p>
         <h4 className="productItemName">{product.name}</h4>

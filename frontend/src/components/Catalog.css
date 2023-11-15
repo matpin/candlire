@@ -1,0 +1,13 @@
+.catalogContainer {
+    /* border: 1px solid black; */
+    margin: 2em;
+}
+
+.orderContainer {
+    text-align: right;
+}
+
+.catalogTitle {
+    margin-top: 2em;
+    text-align: center;
+}

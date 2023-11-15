@@ -1,0 +1,9 @@
+.productListContainer {
+    /* border: 1px solid black; */
+    display: grid;
+    grid-template-columns: repeat(4, 15%);
+    gap: 3em;
+    align-items: center;
+    justify-content: center;
+    margin-top: 4em;
+}
