@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import logo from "../../src/candlirelogo.png";
 import { Link, useNavigate } from "react-router-dom";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
@@ -9,10 +9,23 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import axios from "axios";
 import "./Navbar.css";
+import { jwtDecode } from "jwt-decode";
+import Badge from "@mui/material/Badge";
+import { styled } from "@mui/material/styles";
+
+const StyledBadge = styled(Badge)(({ theme }) => ({
+  "& .MuiBadge-badge": {
+    right: -3,
+    top: 13,
+    border: `2px solid ${theme.palette.background.paper}`,
+    padding: "0 4px",
+  },
+}));
 
 function Navbar({ setProductsArray }) {
   const navigate = useNavigate();
   let token = localStorage.getItem("token");
+  const [cartItems, setCartItems] = useState(0);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (e) => {
@@ -23,6 +36,17 @@ function Navbar({ setProductsArray }) {
     setAnchorEl(null);
     navigate("/products");
   };
+
+  useEffect(() => {
+    let decoded;
+    if (token) {
+      decoded = jwtDecode(token);
+      let cart = localStorage.getItem(`cart_${decoded.id}`);
+      if (cart) {
+        setCartItems(JSON.parse(cart).length);
+      }
+    }
+  }, [token]);
 
   // Handles log out and removes token from local storage
   function handleLogout() {
@@ -167,12 +191,14 @@ function Navbar({ setProductsArray }) {
             <Searchbar setProductsArray={setProductsArray} />
           </div>
           <Link to="/myprofile">
-            <PersonIcon style={{color: "#333"}} />
+            <PersonIcon style={{ color: "#333" }} />
           </Link>
           <Link to="/cart">
-            <ShoppingCartIcon style={{color: "#333"}} />
+            <ShoppingCartIcon style={{ color: "#333" }} />
           </Link>
-          <Link to="/signin" className="signUpInOut">Sign In / Sign Up</Link>
+          <Link to="/signin" className="signUpInOut">
+            Sign In / Sign Up
+          </Link>
           {/* <Link to="/signup" className="signUpInOut">Sign Up</Link> */}
         </div>
       ) : (
@@ -181,12 +207,20 @@ function Navbar({ setProductsArray }) {
             <Searchbar setProductsArray={setProductsArray} />
           </div>
           <Link to="/myprofile">
-            <PersonIcon style={{color: "#333"}} />
+            <PersonIcon style={{ color: "#333" }} />
           </Link>
           <Link to="/cart">
-            <ShoppingCartIcon style={{color: "#333"}} />
+            {cartItems > 0 ? (
+              <StyledBadge badgeContent={cartItems} color="secondary">
+                <ShoppingCartIcon style={{ color: "#333" }} />
+              </StyledBadge>
+            ) : (
+              <ShoppingCartIcon style={{ color: "#333" }} />
+            )}
           </Link>
-          <Link className="signUpInOut" onClick={handleLogout}>Sign Out</Link>
+          <Link className="signUpInOut" onClick={handleLogout}>
+            Sign Out
+          </Link>
         </div>
       )}
     </nav>
