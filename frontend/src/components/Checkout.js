@@ -1,3 +1,4 @@
+import { Button } from "@mui/material";
 import axios from "axios";
 import React from "react";
 
@@ -24,7 +25,7 @@ function Checkout({ cartItems }) {
 
   return (
     <div>
-      <button onClick={() => handleCheckout()}>Checkout</button>
+      <Button onClick={() => handleCheckout()}>Checkout</Button>
     </div>
   );
 }
