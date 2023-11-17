@@ -8,12 +8,15 @@ import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import "./Cart.css";
 import ClearIcon from "@mui/icons-material/Clear";
+import { increaseCartCount, decreaseCartCount, resetCartCount } from "../redux/actions/cartActions";
+import { useDispatch } from "react-redux";
 
 function Cart() {
   const [mergeCartItems, setMergeCartItems] = useState([]);
   const [count, setCount] = useState(1);
   let token = localStorage.getItem("token");
   let decoded;
+  const dispatch = useDispatch();
 
   if (token) {
     decoded = jwtDecode(token);
@@ -53,20 +56,25 @@ function Cart() {
     const updateCart = mergeCartItems.filter((item) => item.productId !== id);
     setMergeCartItems(updateCart);
     localStorage.setItem(`cart_${decoded.id}`, JSON.stringify(updateCart));
+    
+    if (mergeCartItems.length > 1) {
+      dispatch(decreaseCartCount(1));
+    } else if (mergeCartItems.length === 1) {
+        dispatch(resetCartCount());
+    }
   }
 
   // Adds one item on local storage array
   function addQuantity(product) {
     const updateCart = mergeCartItems.map((update) => {
       if (update.productId === product.productId) {
+        dispatch(increaseCartCount(1));
         return { ...update, quantity: product.quantity + 1 };
       }
       return update;
     });
     setMergeCartItems(updateCart);
     localStorage.setItem(`cart_${decoded.id}`, JSON.stringify(updateCart));
-    window.location.reload();
-    console.log(mergeCartItems);
   }
 
   // Removes one item from local storage array
@@ -74,19 +82,19 @@ function Cart() {
     const updateCart = mergeCartItems.map((update) => {
       if (update.productId === product.productId) {
         const updatedQuantity = Math.max(update.quantity - 1, 1);
+        dispatch(decreaseCartCount(1));
         return { ...update, quantity: updatedQuantity };
       }
       return update;
     });
     setMergeCartItems(updateCart);
     localStorage.setItem(`cart_${decoded.id}`, JSON.stringify(updateCart));
-    window.location.reload();
-    console.log(mergeCartItems);
-  }
+   }
 
   function handleRemoveAll() {
     setMergeCartItems([]);
     localStorage.removeItem(`cart_${decoded.id}`);
+    dispatch(resetCartCount());
   }
 
   return (
@@ -139,7 +147,7 @@ function Cart() {
                     }}
                   >
                     {" "}
-                    {count + p.quantity - 1}{" "}
+                    {p.quantity}{" "}
                   </Button>
                   <Button
                     style={{

@@ -13,6 +13,8 @@ import RemoveIcon from "@mui/icons-material/Remove";
 import "./ProductPage.css";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
+import { increaseCartCount } from "../redux/actions/cartActions";
+import { useDispatch } from "react-redux";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -27,6 +29,7 @@ function ProductPage({ deleteProduct }) {
   const navigate = useNavigate();
   const [count, setCount] = useState(1);
   const [cartArray, setCartArray] = useState([]);
+  const dispatch = useDispatch();
 
   if (token) {
     decoded = jwtDecode(token);
@@ -110,10 +113,8 @@ function ProductPage({ deleteProduct }) {
     const oldCart =
       JSON.parse(localStorage.getItem(`cart_${decoded?.id}`)) || [];
     setCartArray([cart, ...cartArray]);
-    localStorage.setItem(
-      `cart_${decoded?.id}`,
-      JSON.stringify([...oldCart, cart])
-    );
+    localStorage.setItem(`cart_${decoded?.id}`,JSON.stringify([...oldCart, cart]));
+    dispatch(increaseCartCount(1));
   }
 
   useEffect(() => {}, [cartArray]);

@@ -12,6 +12,10 @@ import "./Navbar.css";
 import { jwtDecode } from "jwt-decode";
 import Badge from "@mui/material/Badge";
 import { styled } from "@mui/material/styles";
+import { updateCartCount } from "../redux/actions/cartActions";
+import { useDispatch, useSelector } from "react-redux";
+import Box from "@mui/material/Box";
+import Tooltip from "@mui/material/Tooltip";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -25,9 +29,21 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 function Navbar({ setProductsArray }) {
   const navigate = useNavigate();
   let token = localStorage.getItem("token");
-  const [cartItems, setCartItems] = useState(0);
+  const dispatch = useDispatch();
+  const cartCount = useSelector((state) => state.cart.count);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+
+  const [anchorElUser, setAnchorElUser] = React.useState(null);
+
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
+  };
+
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
+
   const handleClick = (e) => {
     setAnchorEl(e.currentTarget);
     console.log(anchorEl, "aaa");
@@ -43,10 +59,12 @@ function Navbar({ setProductsArray }) {
       decoded = jwtDecode(token);
       let cart = localStorage.getItem(`cart_${decoded.id}`);
       if (cart) {
-        setCartItems(JSON.parse(cart).length);
+        let productCount = JSON.parse(cart).length;
+        console.log(productCount);
+        dispatch(updateCartCount(productCount));
       }
     }
-  }, [token]);
+  }, [token, dispatch]);
 
   // Handles log out and removes token from local storage
   function handleLogout() {
@@ -63,7 +81,6 @@ function Navbar({ setProductsArray }) {
   function handleReturnHome(e) {
     e.preventDefault();
     navigate("/");
-    window.location.reload();
   }
 
   // Gets all product from navbar dropdown
@@ -116,8 +133,11 @@ function Navbar({ setProductsArray }) {
             style={{
               backgroundColor: "#f2f2f2",
               color: "#333",
-              marginTop: "2em",
+              marginTop: "1em",
+              textTransform: "capitalize",
+              fontSize: "1em",
             }}
+            sx = {{"&:hover": {textDecoration: "underline"},}}
             aria-controls={open ? "basic-menu" : undefined}
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}
@@ -187,40 +207,92 @@ function Navbar({ setProductsArray }) {
       </div>
       {!token ? (
         <div className="navRightSide">
-          <div>
+          <div className="navSearchBar">
             <Searchbar setProductsArray={setProductsArray} />
           </div>
-          <Link to="/myprofile">
-            <PersonIcon style={{ color: "#333" }} />
-          </Link>
           <Link to="/cart">
-            <ShoppingCartIcon style={{ color: "#333" }} />
+            <ShoppingCartIcon style={{ color: "#333", fontSize: "25" }} />
           </Link>
-          <Link to="/signin" className="signUpInOut">
-            Sign In / Sign Up
-          </Link>
-          {/* <Link to="/signup" className="signUpInOut">Sign Up</Link> */}
+          <div>
+          <Box style={{ padding: "0", margin: "0" }}>
+            <Tooltip title="Open settings">
+              <Button onClick={handleOpenUserMenu}>
+                <PersonIcon style={{ color: "#333", fontSize: "30" }} />
+              </Button>
+            </Tooltip>
+            <Menu
+              sx={{ mt: "45px" }}
+              id="menu-appbar"
+              anchorEl={anchorElUser}
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              open={Boolean(anchorElUser)}
+              onClose={handleCloseUserMenu}
+            >
+              <MenuItem onClick={handleCloseUserMenu}>
+                <Link to="/signin" className="signUpInOut">
+                  Sign In / Sign Up
+                </Link>
+              </MenuItem>
+            </Menu>
+          </Box>
+          </div>
         </div>
       ) : (
         <div className="navRightSide">
-          <div>
+          <div className="navSearchBar">
             <Searchbar setProductsArray={setProductsArray} />
           </div>
-          <Link to="/myprofile">
-            <PersonIcon style={{ color: "#333" }} />
-          </Link>
           <Link to="/cart">
-            {cartItems > 0 ? (
-              <StyledBadge badgeContent={cartItems} color="secondary">
-                <ShoppingCartIcon style={{ color: "#333" }} />
+            {cartCount > 0 ? (
+              <StyledBadge badgeContent={cartCount} color="secondary">
+                <ShoppingCartIcon style={{ color: "#333", fontSize: "25" }} />
               </StyledBadge>
             ) : (
-              <ShoppingCartIcon style={{ color: "#333" }} />
+              <ShoppingCartIcon style={{ color: "#333", fontSize: "25" }} />
             )}
           </Link>
-          <Link className="signUpInOut" onClick={handleLogout}>
-            Sign Out
-          </Link>
+          <Box style={{ padding: "0", margin: "0" }}>
+            <Tooltip title="Open settings">
+              <Button onClick={handleOpenUserMenu}>
+                <PersonIcon style={{ color: "#333", fontSize: "30" }} />
+              </Button>
+            </Tooltip>
+            <Menu
+              sx={{ mt: "45px" }}
+              id="menu-appbar"
+              anchorEl={anchorElUser}
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              open={Boolean(anchorElUser)}
+              onClose={handleCloseUserMenu}
+            >
+              <MenuItem onClick={handleCloseUserMenu}>
+                <Link className="navMyProfileLink" to="/myprofile">
+                  My Profile
+                </Link>
+              </MenuItem>
+              <MenuItem onClick={handleCloseUserMenu}>
+                <Link className="signUpInOut" onClick={handleLogout}>
+                  Sign Out
+                </Link>
+              </MenuItem>
+            </Menu>
+          </Box>
         </div>
       )}
     </nav>
