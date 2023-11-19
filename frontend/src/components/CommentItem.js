@@ -3,8 +3,8 @@ import AddComment from "./AddComment";
 
 function CommentItem({ comment, addComment }) {
   const [isReplying, setIsReplying] = useState(false);
-  // const [repliedComment, setRepliedComment] = useState(comment.replies);
 
+  // Checks if the comment is replied or not
   function isReplied(reply) {
     if (!reply || reply.length === 0) {
       return null;
