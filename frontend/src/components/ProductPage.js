@@ -131,19 +131,24 @@ function ProductPage({ deleteProduct }) {
 
   // Adds the comments to database
   async function addComment(commentBody, commentId = null) {
-    let newComment = {
-      text: commentBody,
-      productId: id,
-      parentId: commentId,
-    };
-    await axios
-      .post(`http://localhost:8000/comment`, newComment, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then((res) => {
-        // setCommentsArray([...commentsArray, res.data.newComment]);
-        getComments()
-      });
+    try {
+      let newComment = {
+        text: commentBody,
+        productId: id,
+        parentId: commentId,
+      };
+      await axios
+        .post(`http://localhost:8000/comment`, newComment, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then((res) => {
+          // setCommentsArray([...commentsArray, res.data.newComment]);
+          getComments()
+        });
+    } catch (error) {
+        console.log(error);
+    }
+    
   }
 
   // Gets the comments from database

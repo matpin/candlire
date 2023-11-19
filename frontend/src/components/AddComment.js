@@ -9,6 +9,9 @@ function AddComment({ addComment, commentId, setIsReplying }) {
 
   // Adds comments
   async function handleComment() {
+    if (comment.trim() === "") {
+      return;
+    }
     await addComment(comment, commentId);
     setComment("");
     if (commentId) {
