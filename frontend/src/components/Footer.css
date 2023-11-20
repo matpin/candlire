@@ -7,7 +7,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 0.8em;
+    gap: 0.5em;
 }
 
 .titleLogoContainer {
@@ -34,13 +34,23 @@
     width: 50px;
 }
 
+.footerDetails {
+    display: flex;
+    gap: 1em;
+}
+
+.footerLinks {
+    font-size: 0.9em;
+    color: #646464ab;
+}
+
 .socialMedia {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 1em;
     width: 100%;
-    border-bottom: 1px solid rgba(124, 124, 124, 0.753);
+    border-bottom: 1px solid rgba(163, 163, 163, 0.548);
     padding-bottom: 0.2em;
 }
 
