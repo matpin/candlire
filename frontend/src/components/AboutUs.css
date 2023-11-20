@@ -1,0 +1,86 @@
+.aboutUsContainer {
+    /* border: 1px solid black; */
+    margin: 3em;
+    display: flex;
+    flex-direction: column;
+    gap: 10em;
+}
+
+.aboutUsTop {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3em;
+    width: 100%;
+}
+
+.aboutUsImageContainer {
+    border-top-left-radius: 100%;
+    border-top-right-radius: 100%;
+    min-height: 70vh;
+    width: 35%;
+}
+
+.aboutUsImage {
+    width: 100%;
+    border-top-left-radius: 50%;
+    border-top-right-radius: 50%;
+    box-shadow: 0px 3px 5px 1px #ccc;
+}
+
+.aboutUsContentTop {
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+    gap: 7em;
+}
+
+.aboutUsHead {
+    text-align: center;
+}
+
+.aboutUsMoto {
+    font-style: italic;
+    color: #b4b4b4;
+    margin-top: 1em;
+}
+
+.aboutUsParagraph {
+    border: 2px outset rgba(177, 177, 177, 0.795);
+    box-shadow: 0px 3px 5px 1px #ccc;
+    padding: 4em;
+    letter-spacing: 1px;
+    font-weight: 300;
+}
+
+.separation {
+    border-top: 1px solid rgb(216, 216, 216);
+}
+
+.aboutUsBottom {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3em;
+    width: 100%;
+}
+
+.aboutUsContentBottom {
+    border: 2px inset rgba(177, 177, 177, 0.795);
+    box-shadow: 0px 3px 5px 1px #ccc;
+    width: 45%;
+    padding: 4em;
+    letter-spacing: 1px;
+    font-weight: 300;
+}
+
+.aboutUsBottomImage {
+    width: 100%;
+    border-bottom-left-radius: 50%;
+    border-bottom-right-radius: 50%;
+    box-shadow: 0px 3px 5px 1px #ccc;
+}
+
+.aboutUsLink {
+    color: #333;
+}

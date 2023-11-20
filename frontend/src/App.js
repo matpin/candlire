@@ -15,6 +15,7 @@ import SuccessPayment from "./components/SuccessPayment";
 import PageNotFound from "./components/PageNotFound";
 import Catalog from "./components/Catalog";
 import Footer from "./components/Footer";
+import AboutUs from "./components/AboutUs";
 
 function App() {
   const [productsArray, setProductsArray] = useState([]);
@@ -134,6 +135,7 @@ function App() {
           />
           <Route path="/myprofile" element={<UserProfile />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/aboutus" element={<AboutUs />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/checkout_success" element={<SuccessPayment />} />
