@@ -14,6 +14,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import "./MyOrders.css";
 
 // Requirements for MUI accordion
 const Accordion = styled((props) => (
@@ -55,11 +56,6 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
 function MyOrders() {
   let token = localStorage.getItem("token");
   const [orderList, setOrderList] = useState([]);
-  const [expanded, setExpanded] = React.useState("panel1");
-
-  const handleChange = (panel) => (event, newExpanded) => {
-    setExpanded(newExpanded ? panel : false);
-  };
 
   // Changes the date that get from database to yyyy/mm/dd
   function formatDate(createdAtString) {
@@ -78,7 +74,6 @@ function MyOrders() {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((res) => {
-          console.log(res.data);
           setOrderList(res.data);
         });
     } catch (error) {}
@@ -89,12 +84,12 @@ function MyOrders() {
   }, []);
 
   return (
-    <div>
+    <div className="myOrderContainer">
       {orderList.map((o) => (
         <Accordion
           key={o._id}
-          expanded={expanded === "panel1"}
-          onChange={handleChange("panel1")}
+          expandIcon={<ExpandMoreIcon />}
+          style={{marginBottom: "2em", border: 0}}
         >
           <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
             <TableContainer component={Paper} sx={{ width: "100%" }}>
@@ -136,6 +131,7 @@ function MyOrders() {
                       <TableRow>
                         <TableCell>Product Name</TableCell>
                         <TableCell align="right">Price</TableCell>
+                        <TableCell align="right">Quantity</TableCell>
                         <TableCell align="right">Total</TableCell>
                       </TableRow>
                     </TableHead>
@@ -150,6 +146,7 @@ function MyOrders() {
                             {p.productName}
                           </TableCell>
                           <TableCell align="right">{p.productPrice}</TableCell>
+                          <TableCell align="right">{p.quantity}</TableCell>
                           <TableCell align="right">{(o.total / 100).toFixed(2)}</TableCell>
                         </TableRow>
                       </TableBody>
