@@ -1,5 +1,6 @@
 import React from "react";
-import aboutUsImage from "../../src/signInUpImage.jpg";
+import aboutUsImage2 from "../../src/aboutUsImage2.jpg";
+import aboutUsImage from "../../src/aboutUsImage.jpg";
 import "./AboutUs.css";
 import { Link } from "react-router-dom";
 
@@ -10,7 +11,7 @@ function AboutUs() {
         <div className="aboutUsImageContainer">
           <img
             className="aboutUsImage"
-            src={aboutUsImage}
+            src={aboutUsImage2}
             alt="homepageImage"
           />
         </div>
@@ -48,7 +49,7 @@ function AboutUs() {
           flame of creativity never wanes, and the glow of connection burns
           bright."
         </p>
-        <div className="aboutUsImageContainer">
+        <div className="aboutUsImageContainerBottom">
           <img
             className="aboutUsBottomImage"
             src={aboutUsImage}
