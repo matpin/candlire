@@ -15,11 +15,17 @@ function Homepage() {
       {!token ? (
       <div className="introContainer">
           <p className="introParagraph">
-          Candlire is a community for selling or buying handmade candles. <Link to="signin">Sign
+          Candlire is a community for selling or buying handmade candles. <Link to="/signin">Sign
           In / Sign Up</Link> to sell or buy.
         </p>
       </div>
-      ) : ("")}
+      ) : (
+        <div className="introContainer">
+          <p className="introParagraph">
+          Candlire, where the art of handmade candles sparks connections and kindles creativity. <br/> <Link to="/aboutus">Learn more</Link> about us.
+        </p>
+      </div>
+      )}
       </div>
       <BestSeller />
       <LatestsProducts />
