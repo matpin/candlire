@@ -174,7 +174,7 @@ function Navbar({ setProductsArray }) {
             </div>
           </div>
         </div>
-        <Link className="navMenuItemsLinks">About us</Link>
+        <Link to="/aboutus" className="navMenuItemsLinks">About us</Link>
       </div>
       {!token ? (
         <div className="navRightSide">
