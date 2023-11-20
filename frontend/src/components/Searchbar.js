@@ -4,7 +4,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./Searchbar.css"
 
-function Searchbar({ setProductsArray }) {
+function Searchbar({ setProductsArray, setIsClicked }) {
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
 
@@ -14,6 +14,7 @@ function Searchbar({ setProductsArray }) {
     try {
       await axios.get(`http://localhost:8000?search=${search}`).then((res) => {
         setProductsArray(res.data);
+        setIsClicked(false);
         navigate("/products");
       });
     } catch (error) {

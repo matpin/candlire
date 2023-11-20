@@ -2,7 +2,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #f2f2f2;
+    background-color: #fdfcfc;
     color: #fff;
     position: sticky;
     top: 0;
@@ -18,6 +18,7 @@
     align-items: center;
     justify-content: center;
     gap: 1em;
+    /* border: 1px solid black; */
 }
 
 .logo {
@@ -25,15 +26,81 @@
     padding: 5px;
 }
 
-.navRightSide {
+.middleSide {
     display: flex;
     align-items: center;
     justify-content: center;
-    /* gap: 1em; */
+    gap: 1em;
+    padding-top: 1.5em;
+}
+
+.navMenuItemsLinks {
+    text-decoration: none;
+    color: #333;
+}
+
+.navMenuItemsLinks:hover {
+    text-decoration: underline;
+}
+
+.productsContainerDropdown {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    list-style: none;
+    padding: 0 1em;
+    position: relative;
+    text-decoration: none;
+    text-align: center;
+}
+
+.navProductsLink {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #333;
+}
+
+.navProductsLink:hover {
+    text-decoration: underline;
+}
+
+.dropdown {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    padding-left: 0;
+    left: 0;
+    display: none;
+    background: #fff;
+}
+
+.productsContainerDropdown:hover .dropdown {
+    visibility: visible;
+    opacity: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    min-width: 15%;
+    text-align: left;
+    margin-top: 1.5em;
+    padding: 1em;
+    box-shadow: 0px 3px 5px -1px #ccc;
+    border-radius: 10px;
+}
+
+.navRightSide {
+    padding-top: 1.5em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* gap: 0.5em; */
+    /* border: 1px solid black; */
 }
 
 .navSearchBar {
-    margin-right: 2em;
+    margin-right: 0.5em;
+    margin-top: 0.1em;
 }
 
 .navMyProfileLink {

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import logo from "../../src/candlirelogo.png";
 import { Link, useNavigate } from "react-router-dom";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import LocalMallIcon from "@mui/icons-material/LocalMall";
 import PersonIcon from "@mui/icons-material/Person";
 import Searchbar from "./Searchbar";
 import Button from "@mui/material/Button";
@@ -16,6 +16,8 @@ import { updateCartCount } from "../redux/actions/cartActions";
 import { useDispatch, useSelector } from "react-redux";
 import Box from "@mui/material/Box";
 import Tooltip from "@mui/material/Tooltip";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import SearchIcon from "@mui/icons-material/Search";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -31,10 +33,8 @@ function Navbar({ setProductsArray }) {
   let token = localStorage.getItem("token");
   const dispatch = useDispatch();
   const cartCount = useSelector((state) => state.cart.count);
-  const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
-
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [anchorElUser, setAnchorElUser] = useState(null);
+  const [isClicked, setIsClicked] = useState(false);
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -42,15 +42,6 @@ function Navbar({ setProductsArray }) {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
-  };
-
-  const handleClick = (e) => {
-    setAnchorEl(e.currentTarget);
-    console.log(anchorEl, "aaa");
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-    navigate("/products");
   };
 
   useEffect(() => {
@@ -88,6 +79,7 @@ function Navbar({ setProductsArray }) {
     try {
       await axios.get(`http://localhost:8000/products`).then((res) => {
         setProductsArray(res.data);
+        navigate("/products");
       });
     } catch (error) {
       console.log(error);
@@ -111,6 +103,7 @@ function Navbar({ setProductsArray }) {
       .then((res) => {
         console.log(res.data);
         setProductsArray(res.data);
+        navigate("/products");
       })
       .catch((error) => {
         console.log(error);
@@ -127,97 +120,91 @@ function Navbar({ setProductsArray }) {
           src={logo}
           alt="candlireImage"
         />
-        <div>
-          <Button
-            // id="basic-button"
-            style={{
-              backgroundColor: "#f2f2f2",
-              color: "#333",
-              marginTop: "1em",
-              textTransform: "capitalize",
-              fontSize: "1em",
-            }}
-            sx = {{"&:hover": {textDecoration: "underline"},}}
-            aria-controls={open ? "basic-menu" : undefined}
-            aria-haspopup="true"
-            aria-expanded={open ? "true" : undefined}
-            onClick={handleClick}
-          >
-            Products
-          </Button>
-          <Menu
-            id="basic-menu"
-            anchorEl={anchorEl}
-            open={open}
-            onClose={handleClose}
-            MenuListProps={{
-              "aria-labelledby": "basic-button",
-            }}
-          >
-            <MenuItem
+      </div>
+      <div className="middleSide">
+        <Link className="navMenuItemsLinks" to="/">
+          Home
+        </Link>
+        <div className="productsContainerDropdown">
+          <Link className="navProductsLink">
+            Products <ArrowDropDownIcon />{" "}
+          </Link>
+          <div className="dropdown">
+            <div
               onClick={() => {
                 getAllProducts();
-                handleClose();
               }}
             >
-              All Products
-            </MenuItem>
-            <MenuItem
+              <Link className="navProductsLink">All Products</Link>
+            </div>
+            <div
               onClick={() => {
                 getByCategory("all_season");
-                handleClose();
               }}
             >
-              All Season
-            </MenuItem>
-            <MenuItem
+              <Link className="navProductsLink">All Season</Link>
+            </div>
+            <div
               onClick={() => {
                 getByCategory("christmas");
-                handleClose();
               }}
             >
-              Christmas
-            </MenuItem>
-            <MenuItem
+              <Link className="navProductsLink">Christmas</Link>
+            </div>
+            <div
               onClick={() => {
                 getByCategory("halloween");
-                handleClose();
               }}
             >
-              Halloween
-            </MenuItem>
-            <MenuItem
+              <Link className="navProductsLink">Halloween</Link>
+            </div>
+            <div
               onClick={() => {
                 getByCategory("summer");
-                handleClose();
               }}
             >
-              Summer
-            </MenuItem>
-            <MenuItem
+              <Link className="navProductsLink">Summer</Link>
+            </div>
+            <div
               onClick={() => {
                 getByCategory("easter");
-                handleClose();
               }}
             >
-              Easter
-            </MenuItem>
-          </Menu>
+              <Link className="navProductsLink">Easter</Link>
+            </div>
+          </div>
         </div>
+        <Link className="navMenuItemsLinks">About us</Link>
       </div>
       {!token ? (
         <div className="navRightSide">
-          <div className="navSearchBar">
-            <Searchbar setProductsArray={setProductsArray} />
+          <div className="navSearchBar" onClick={() => setIsClicked(true)}>
+            {isClicked ? (
+              <Searchbar
+                setProductsArray={setProductsArray}
+                setIsClicked={setIsClicked}
+              />
+            ) : (
+              <SearchIcon
+                sx={{ fontSize: "2em" }}
+                style={{ color: "#333", marginRight: "0.3em" }}
+              />
+            )}
           </div>
-          <Link to="/cart">
-            <ShoppingCartIcon style={{ color: "#333", fontSize: "25" }} />
+          <Link style={{ marginTop: "0.1em" }} to="/cart">
+            <LocalMallIcon style={{ color: "#333", fontSize: "27" }} />
           </Link>
-          <div>
           <Box style={{ padding: "0", margin: "0" }}>
-            <Tooltip title="Open settings">
+            <Tooltip title="Open profile">
               <Button onClick={handleOpenUserMenu}>
-                <PersonIcon style={{ color: "#333", fontSize: "30" }} />
+                <PersonIcon
+                  style={{
+                    color: "#333",
+                    fontSize: "30",
+                    padding: "0",
+                    margin: "0",
+                  }}
+                />
               </Button>
             </Tooltip>
             <Menu
@@ -243,24 +230,30 @@ function Navbar({ setProductsArray }) {
               </MenuItem>
             </Menu>
           </Box>
-          </div>
         </div>
       ) : (
         <div className="navRightSide">
-          <div className="navSearchBar">
-            <Searchbar setProductsArray={setProductsArray} />
+          <div className="navSearchBar" onClick={() => setIsClicked(true)}>
+            {isClicked ? (
+              <Searchbar
+                setProductsArray={setProductsArray}
+                setIsClicked={setIsClicked}
+              />
+            ) : (
+              <SearchIcon sx={{ fontSize: "2em" }} style={{ color: "#333" }} />
+            )}
           </div>
           <Link to="/cart">
             {cartCount > 0 ? (
               <StyledBadge badgeContent={cartCount} color="secondary">
-                <ShoppingCartIcon style={{ color: "#333", fontSize: "25" }} />
+                <LocalMallIcon style={{ color: "#333", fontSize: "25" }} />
               </StyledBadge>
             ) : (
-              <ShoppingCartIcon style={{ color: "#333", fontSize: "25" }} />
+              <LocalMallIcon style={{ color: "#333", fontSize: "25" }} />
             )}
           </Link>
           <Box style={{ padding: "0", margin: "0" }}>
-            <Tooltip title="Open settings">
+            <Tooltip title="Open profile">
               <Button onClick={handleOpenUserMenu}>
                 <PersonIcon style={{ color: "#333", fontSize: "30" }} />
               </Button>
