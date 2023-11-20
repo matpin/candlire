@@ -85,7 +85,9 @@ function MyOrders() {
 
   return (
     <div className="myOrderContainer">
-      {orderList.map((o) => (
+      {orderList.length !== 0 ? (
+        <div>
+          {orderList.map((o) => (
         <Accordion
           key={o._id}
           expandIcon={<ExpandMoreIcon />}
@@ -158,6 +160,10 @@ function MyOrders() {
           </AccordionDetails>
         </Accordion>
       ))}
+        </div>
+      ) : (
+        <p className="noOrdersYet">No orders yet.</p>
+      )}
     </div>
   );
 }
