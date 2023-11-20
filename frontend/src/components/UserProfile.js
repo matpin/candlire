@@ -4,48 +4,54 @@ import Favorites from "./Favorites";
 import { Link } from "react-router-dom";
 import MyOrders from "./MyOrders";
 import SignIn from "./SignIn";
+import { jwtDecode } from "jwt-decode";
+import "./UserProfile.css";
+import Button from '@mui/material/Button';
 
 function UserProfile() {
   let token = localStorage.getItem("token");
   const [option, setOption] = useState("myProducts");
+  let decoded;
+
+  if (token) {
+    decoded = jwtDecode(token);
+  }
 
   // Handles what component user should see
   function handler(value) {
     setOption(value);
-    console.log();
   }
 
   return (
     <div className="profilePageContainer">
       {token ? (
-        <div>
+        <div className="innerProfilePageContainer">
           <div className="profilePageSideBar">
-        <ul>
-          <li onClick={() => handler("myProducts")}>My Products</li>
-          <li onClick={() => handler("myFavorites")}>My Favorites</li>
-          <li onClick={() => handler("myOrders")}>My Orders</li>
-        </ul>
-      </div>
-      <div className="profilePageContent">
-        <div>
-          {option === "myProducts" ? (
-            <div>
+            <div className="profileGreeting">Hello, {decoded.username} </div>
+            <Link className="myProfileLinks" onClick={() => handler("myProducts")}>My Products</Link>
+            <Link className="myProfileLinks" onClick={() => handler("myFavorites")}>My Favorites</Link>
+            <Link className="myProfileLinks" onClick={() => handler("myOrders")}>My Orders</Link>
+          </div>
+          <div className="profilePageContent">
+            {option === "myProducts" ? (
               <div>
-                <Link to="/create">
-                  <button>Add Product</button>
-                </Link>
+                <div className="addButton">
+                  <Link to="/create">
+                    <Button variant="outlined" style={{color: "grey", borderBlockColor: "grey"}}>Add Product</Button>
+                  </Link>
+                </div>
+                <div className="profileProductContent">
+                  <MyProducts />
+                </div>
               </div>
-              <MyProducts />
-            </div>
-          ) : option === "myFavorites" ? (
-            <Favorites />
-          ) : option === "myOrders" ? (
-            <MyOrders />
-          ) : (
-            ""
-          )}
-        </div>
-      </div>
+            ) : option === "myFavorites" ? (
+              <Favorites />
+            ) : option === "myOrders" ? (
+              <MyOrders />
+            ) : (
+              ""
+            )}
+          </div>
         </div>
       ) : (
         <SignIn />

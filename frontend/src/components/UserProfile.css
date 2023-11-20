@@ -1,0 +1,55 @@
+.innerProfilePageContainer {
+    /* border: 1px solid black; */
+    display: flex;
+    gap: 1em;
+    width: 100%;
+}
+
+.profilePageSideBar {
+    display: flex;
+    flex-direction: column;
+    width: 15%;
+    min-height: 100vh;
+    padding: 1em;
+    background-color: #f2f2f2;
+}
+
+.profileGreeting {
+    margin-bottom: 1.5em;
+    font-weight: bold;
+    padding-bottom: 0.5em;
+    border-bottom: 1px solid rgba(151, 151, 151, 0.664);
+    font-size: 1.1em;
+}
+
+.myProfileLinks {
+    text-decoration: none;
+    color: #333;
+    font-size: 1.05em;
+    margin-bottom: 0.5em;
+}
+
+.myProfileLinks:hover {
+    background-color: rgba(134, 134, 134, 0.342);
+}
+
+.myProfileLinks:focus {
+    background-color: rgba(134, 134, 134, 0.342);
+}
+
+.profilePageContent {
+    display: flex;
+    flex-direction: column;
+    width: 85%;
+    padding: 1em;
+}
+
+.addButton {
+    margin-bottom: 2em;
+    text-align: right;
+}
+
+.profileProductContent {
+    display: flex;
+    flex-direction: column;
+}
