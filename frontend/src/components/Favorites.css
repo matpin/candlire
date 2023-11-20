@@ -1,0 +1,53 @@
+.myFavoritesContainer {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 3em;
+    padding: 2em;
+    margin-top: 4em;
+}
+
+.innerMyFavoritesContainer {
+    width: 19%;
+    margin-bottom: 2em;
+}
+
+.favoritesImage {
+    width: 100%;
+    height: 30vh;
+}
+
+.favoritesDetailsFavIcon {
+    display: flex;
+    justify-content: space-between;
+}
+
+.favoritesLinks {
+    text-decoration: none;
+    color: #333;
+}
+
+.favoritesBrand {
+    color: rgb(194, 194, 194);
+    font-size: 0.9em;
+}
+
+.favoritesName {
+    font-size: 1.1em;
+}
+
+.favoritesName:hover {
+    text-decoration: underline;
+}
+
+.favoritesPrice {
+    font-size: 0.9em;
+}
+
+.noFavoritesYet {
+    color: #a0a0a0b9;
+    font-style: italic;
+    text-align: center;
+    margin-top: 6em;
+}
