@@ -1,0 +1,47 @@
+.myProductsContainer {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 3em;
+    padding: 2em;
+}
+
+.innerMyProductsContainer {
+    width: 19%;
+    margin-bottom: 2em;
+}
+
+.myProductsLinks {
+    text-decoration: none;
+    color: #333;
+}
+
+.productsImage {
+    width: 100%;
+    height: 30vh;
+}
+
+.myProductsBrand {
+    color: rgb(194, 194, 194);
+    font-size: 0.9em;
+}
+
+.myProductsName {
+    font-size: 1.1em;
+}
+
+.myProductsName:hover {
+    text-decoration: underline;
+}
+
+.myProductsPrice {
+    font-size: 0.9em;
+}
+
+.noProductsYet {
+    color: #a0a0a0b9;
+    font-style: italic;
+    text-align: center;
+    margin-top: 6em;
+}

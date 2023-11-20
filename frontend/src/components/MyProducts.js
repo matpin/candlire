@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 import { Link } from "react-router-dom";
+import "./MyProducts.css";
 
 function MyProducts() {
     const [myProductsArray, setMyProductsArray] = useState([])
@@ -39,19 +40,27 @@ function MyProducts() {
   }, [decoded.id])
 
   return (
-    <div>
-      {myProductsArray.map((p, i) => (
-        <div key={i}>
-          <Link to={`/product/${p._id}`}>
-            <img className="favoritesImage" src={p.image} alt="productImage" />
-            <div>
-              <p>{p.brand}</p>
-              <p>{p.name}</p>
-            </div>
-            <p>{p.price}</p>
-          </Link>
+    <div >
+      {myProductsArray.length !== 0 ? (
+        <div className="myProductsContainer">
+          {myProductsArray.map((p, i) => (
+          <div key={i} className="innerMyProductsContainer">
+            <Link className="myProductsLinks" to={`/product/${p._id}`}>
+              <img className="productsImage" src={p.image} alt="productImage" />
+              <div className="productsDetails">
+                <p className="myProductsBrand">{p.brand}</p>
+                <p className="myProductsName">{p.name}</p>
+              </div>
+              <p className="myProductsPrice">{p.price} €</p>
+            </Link>
+          </div>
+        ))}
         </div>
-      ))}
+        
+      ) : (
+        <p className="noProductsYet">No products added yet.</p>
+      )}
+      
     </div>
   );
 }
