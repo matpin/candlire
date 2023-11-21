@@ -280,7 +280,8 @@ function ProductPage({ deleteProduct }) {
                     borderColor: "#000",
                     width: "100%",
                     height: "5vh",
-                    fontSize: "1em",
+                    fontSize: "1.1em",
+                    fontFamily: "Lora"
                   }}
                   variant="outlined"
                   onClick={() => {
@@ -313,7 +314,8 @@ function ProductPage({ deleteProduct }) {
                     borderColor: "#000",
                     width: "100%",
                     height: "5vh",
-                    fontSize: "1em",
+                    fontSize: "1.1em",
+                    fontFamily: "Lora"
                   }}
                   variant="outlined"
                   onClick={() => {
@@ -346,13 +348,21 @@ function ProductPage({ deleteProduct }) {
           {/* <button>Contact with seller</button> */}
         </div>
       </div>
-      <div>
+      <div className="commentsSectionContainer">
+        <h2 className="commentsLabel">Customer Reviews</h2>
         <AddComment addComment={addComment} />
-        {commentsArray.map((comment, i) => (
+        {commentsArray.length !== 0 ? (
+          <div className="commentsContainer">
+            {commentsArray.map((comment, i) => (
           <div key={i}>
             <CommentItem comment={comment} commentsArray={commentsArray} addComment={addComment} />
           </div>
         ))}
+          </div>
+        ) : (
+          <p className="noReviewsYet">No reviews yet.</p>
+        )}
+        
       </div>
     </div>
   );

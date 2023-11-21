@@ -2,7 +2,7 @@
     display: flex;
     margin: 5em;
     gap: 2em;
-    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-family: 'Lora';
 }
 
 .productsPageLeftSide {
@@ -69,4 +69,34 @@
     display: flex;
     flex-direction: column;
     margin-top: 3em;
+}
+
+.commentsSectionContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10em;
+    /* border: 1px solid black; */
+    margin-bottom: 5em;
+}
+
+.commentsLabel {
+    margin-top: 1em;
+    margin-bottom: 2em;
+    display: flex;
+    width: 60%;
+    justify-content: left;
+}
+
+.commentsContainer {
+    width: 60%;
+    margin-top: 2em;
+}
+
+.noReviewsYet {
+    margin-top: 3em;
+    color: #a0a0a0b9;
+    font-style: italic;
+    text-align: center;
 }
