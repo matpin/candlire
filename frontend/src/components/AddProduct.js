@@ -194,7 +194,20 @@ function AddProduct({ addNewProduct }) {
               Click on the save button after uploading your image.
             </p>
             {imageUpload !== null ? (
-              <Button
+              <>
+              {isClicked ? (
+                <Button
+              style={{
+                fontFamily: "Lora",
+                color: "#333",
+                backgroundColor: "#f2f2f2",
+                marginRight: "1em",
+              }}
+            >
+              <CheckIcon style={{ color: "green" }} disabled/>
+            </Button>
+              ) : (
+                <Button
               style={{
                 fontFamily: "Lora",
                 color: "#333",
@@ -207,8 +220,10 @@ function AddProduct({ addNewProduct }) {
                 setIsClicked(true);
               }}
             >
-              {isClicked ? <CheckIcon /> : "Save"}
+              Save
             </Button>
+              ) }
+              </>
             ) : (
               <Button
               style={{
