@@ -73,7 +73,7 @@ function ProductPage({ deleteProduct }) {
   // Handles the button when clicked for delete
   async function handleDelete(productId) {
     deleteProduct(productId);
-    navigate("/");
+    navigate("/myprofile");
   }
 
   // Adds or removes product on user favorites
