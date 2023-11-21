@@ -37,7 +37,7 @@ function UserProfile() {
               <div>
                 <div className="addButton">
                   <Link to="/create">
-                    <Button variant="outlined" style={{color: "grey", borderBlockColor: "grey"}}>Add Product</Button>
+                    <Button variant="outlined" style={{color: "grey", borderBlockColor: "grey", fontFamily: "Lora"}}>Add Product</Button>
                   </Link>
                 </div>
                 <div className="profileProductContent">

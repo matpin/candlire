@@ -7,6 +7,17 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { useNavigate } from "react-router-dom";
+import "./AddProduct.css";
+import Button from "@mui/material/Button";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import { styled } from "@mui/material/styles";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
+import CheckIcon from "@mui/icons-material/Check";
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 function AddProduct({ addNewProduct }) {
   const [productBrand, setProductBrand] = useState("");
@@ -17,6 +28,36 @@ function AddProduct({ addNewProduct }) {
   const [productDescription, setProductDescription] = useState("");
   const [imageUpload, setImageUpload] = useState(null);
   const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
+  const [isClicked, setIsClicked] = useState(false);
+
+  const handleSave = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
+
+  const handleAdd = () => {
+    setOpen(true);
+  };
+
+  const VisuallyHiddenInput = styled("input")({
+    clip: "rect(0 0 0 0)",
+    clipPath: "inset(50%)",
+    height: 1,
+    overflow: "hidden",
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    whiteSpace: "nowrap",
+    width: 1,
+  });
 
   // Uploads images to firebase
   function handleUpload(e) {
@@ -32,24 +73,33 @@ function AddProduct({ addNewProduct }) {
   // Handles the add products action
   async function handleClick(e) {
     e.preventDefault();
-    if (productBrand.trim() === "" ||
-    productName.trim() === ""  ||
-    productCategory.trim() === "" ||
-    productImage.trim() === "" ||
-    productPrice.trim() === "" ||
-    productDescription.trim() === "") {
+    if (
+      productBrand.trim() === "" ||
+      productName.trim() === "" ||
+      productCategory.trim() === "" ||
+      productImage.trim() === "" ||
+      productPrice.trim() === "" ||
+      productDescription.trim() === ""
+    ) {
       alert("Fill all fields");
       return;
     }
-    await addNewProduct( productBrand, productName, productCategory, productImage, productPrice, productDescription);
+    await addNewProduct(
+      productBrand,
+      productName,
+      productCategory,
+      productImage,
+      productPrice,
+      productDescription
+    );
     navigate("/myprofile");
   }
-  
+
   return (
-    <div>
-      <h2>Add Product</h2>
-      <form>
-        <div>
+    <div className="addProductContainer">
+      <h2 className="addProductHead">Add Product</h2>
+      <form className="addProductForm">
+        <div className="addProductBrandContainer">
           <label>Brand Name</label>
           <input
             type="text"
@@ -58,9 +108,10 @@ function AddProduct({ addNewProduct }) {
             }}
             value={productBrand}
             spellCheck={false}
+            className="addProductInputs"
           />
         </div>
-        <div>
+        <div className="addProductNameContainer">
           <label>Product Name</label>
           <input
             type="text"
@@ -69,38 +120,118 @@ function AddProduct({ addNewProduct }) {
             }}
             value={productName}
             spellCheck={false}
+            className="addProductInputs"
           />
         </div>
-        <div>
-          <FormControl sx={{ width: "100%" }}>
-            <InputLabel id="demo-simple-select-label">Category</InputLabel>
+        <div className="addProductCategoryContainer">
+          <FormControl sx={{ width: "100%", marginTop: "1vh" }}>
+            <InputLabel
+              style={{ fontFamily: "Lora", fontSize: "1.03em", color: "#333" }}
+              id="demo-simple-select-label"
+            >
+              Category
+            </InputLabel>
             <Select
+              sx={{
+                color: "#333",
+                ".MuiOutlinedInput-notchedOutline": {
+                  borderColor: "gray",
+                },
+                "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                  borderColor: "gray",
+                },
+                "&:hover .MuiOutlinedInput-notchedOutline": {
+                  borderColor: "gray",
+                },
+                ".MuiSvgIcon-root ": {
+                  fill: "#333 !important",
+                },
+              }}
               labelId="demo-simple-select-label"
               id="demo-simple-select"
               value={productCategory}
               label="Category"
               onChange={(e) => setProductCategory(e.target.value)}
             >
-              <MenuItem value="all_season">All season</MenuItem>
-              <MenuItem value="christmas">Christmas</MenuItem>
-              <MenuItem value="halloween">Halloween</MenuItem>
-              <MenuItem value="summer">Summer</MenuItem>
-              <MenuItem value="easter">Easter</MenuItem>
+              <MenuItem style={{ fontFamily: "Lora" }} value="all_season">
+                All season
+              </MenuItem>
+              <MenuItem style={{ fontFamily: "Lora" }} value="christmas">
+                Christmas
+              </MenuItem>
+              <MenuItem style={{ fontFamily: "Lora" }} value="halloween">
+                Halloween
+              </MenuItem>
+              <MenuItem style={{ fontFamily: "Lora" }} value="summer">
+                Summer
+              </MenuItem>
+              <MenuItem style={{ fontFamily: "Lora" }} value="easter">
+                Easter
+              </MenuItem>
             </Select>
           </FormControl>
         </div>
-        <div>
+        <div className="addProductImageContainer">
           <label>Upload image</label>
-          <input
-            type="file"
-            onChange={(e) => {
-              setImageUpload(e.target.files[0]);
-            }}
-            // value={productImage}
-          />
-          <button onClick={handleUpload}>ok</button>
+          <div className="uploadImageButtonContainer">
+            <Button
+              style={{
+                fontFamily: "Lora",
+                marginLeft: "1em",
+                backgroundColor: "#333",
+              }}
+              component="label"
+              variant="contained"
+              startIcon={<CloudUploadIcon />}
+              onChange={(e) => {
+                setImageUpload(e.target.files[0]);
+              }}
+            >
+              Upload image
+              <VisuallyHiddenInput type="file" />
+            </Button>
+            <p className="imageDetails">
+              Click on the save button after uploading your image.
+            </p>
+            {imageUpload !== null ? (
+              <Button
+              style={{
+                fontFamily: "Lora",
+                color: "#333",
+                backgroundColor: "#f2f2f2",
+                marginRight: "1em",
+              }}
+              onClick={(e) => {
+                handleUpload(e);
+                handleSave();
+                setIsClicked(true);
+              }}
+            >
+              {isClicked ? <CheckIcon /> : "Save"}
+            </Button>
+            ) : (
+              <Button
+              style={{
+                fontFamily: "Lora",
+                marginRight: "1em",
+              }}
+              disabled
+            >
+              Save
+            </Button>
+            )}
+            <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
+              <Alert
+                onClose={handleClose}
+                severity="info"
+                sx={{ width: "100%" }}
+              >
+                Image saved.
+              </Alert>
+            </Snackbar>
+          </div>
         </div>
-        <div>
+        <div className="addProductPriceContainer">
           <label>Price</label>
           <input
             type="number"
@@ -108,9 +239,10 @@ function AddProduct({ addNewProduct }) {
               setProductPrice(e.target.value);
             }}
             value={productPrice}
+            className="addProductInputs"
           />
         </div>
-        <div>
+        <div className="addProductDescriptionContainer">
           <label>Description</label>
           <textarea
             type="text"
@@ -118,9 +250,49 @@ function AddProduct({ addNewProduct }) {
               setProductDescription(e.target.value);
             }}
             value={productDescription}
+            className="addProductTextarea"
           />
         </div>
-        <button onClick={handleClick}>Add Product</button>
+        {isClicked ? (
+          <>
+          <Button
+          style={{
+            fontFamily: "Lora",
+            color: "#333",
+            backgroundColor: "#f2f2f2",
+            height: "5vh",
+            marginTop: "1em",
+          }}
+          onClick={handleClick}
+        >
+          Add Product
+        </Button>
+          </>
+        ) : (
+          <>
+          <Button
+          style={{
+            fontFamily: "Lora",
+            color: "#333",
+            backgroundColor: "#f2f2f2",
+            height: "5vh",
+            marginTop: "1em",
+          }}
+          onClick={() =>{handleAdd();}}
+        >
+          Add Product
+        </Button>
+        <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
+        <Alert
+          onClose={handleClose}
+          severity="warning"
+          sx={{ width: "100%" }}
+        >
+          You have to save your image first.
+        </Alert>
+      </Snackbar>
+          </>
+        )}
       </form>
     </div>
   );

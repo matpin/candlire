@@ -1,0 +1,65 @@
+.addProductContainer {
+    /* border: 1px solid black; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5em;
+    margin-bottom: 7em;
+}
+
+.addProductForm {
+    /* border: 1px solid black; */
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    margin-top: 2em;
+}
+
+.addProductBrandContainer, 
+.addProductNameContainer, 
+.addProductCategoryContainer, 
+.addProductImageContainer, 
+.addProductPriceContainer,
+.addProductDescriptionContainer {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    font-size: 1.1em;
+}
+
+.addProductInputs {
+    margin-top: 0.5em;
+    height: 5.5vh;
+    font-size: medium;
+    padding-left: 15px;
+    font-family: "Lora";
+    /* border-radius: 5px; */
+}
+
+.addProductTextarea {
+    margin-top: 0.5em;
+    height: 5.5vh;
+    font-size: large;
+    padding-left: 15px;
+    padding-top: 1em;
+    font-family: "Lora";
+}
+
+.uploadImageButtonContainer {
+    border: 1px solid gray;
+    height: 5.5vh;
+    display: flex;
+    align-items: center;
+    border-radius: 3px;
+    margin-top: 0.5em;
+}
+
+.imageDetails {
+    font-size: small;
+    color: #bebebe;
+    font-style: italic;
+    margin-right: auto;
+    margin-left: 1em;
+}
