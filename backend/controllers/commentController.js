@@ -45,7 +45,8 @@ const getCommentById = async (req, res) => {
     
         // Recursively populate replies for each parent comment
         async function populateReplies(comment) {
-          let populatedComment = await Comment.populate(comment, { path: 'replies', options: { sort: { createdAt: 'desc' } } });
+          let populatedComment = await Comment.populate(comment, [{ path: 'user', select: 'username' }, { path: 'replies', options: { sort: { createdAt: 'desc' } } }]);
+          console.log('Populated Comment:', populatedComment);
     
           if (populatedComment.replies && populatedComment.replies.length > 0) {
             for (let reply of populatedComment.replies) {
