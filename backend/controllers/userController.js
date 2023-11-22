@@ -7,12 +7,13 @@ const signUpUser = async (req, res) => {
     try {
         let {username, email, password} = req.body;
         if (!username || !email || !password) {
-            return res.status(400).send({msg: "All fields required for sign up"});
+            return res.status(400).send({msg: "All fields required for sign up", username, email, password});
         }
+        console.log(email);
         let usernameFound = await User.findOne({ username });
         let emailFound = await User.findOne({ email });
         if (usernameFound || emailFound) {
-            return res.status(400).send({msg: "User already exists"});
+            return res.status(400).send({msg: "User already exists", usernameFound, emailFound});
         }
         let hashedPass = await bcrypt.hash(password, +process.env.SALT);
         let user = await User.create({username, email, password: hashedPass});

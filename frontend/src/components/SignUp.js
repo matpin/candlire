@@ -5,6 +5,11 @@ import Alert from "@mui/material/Alert";
 import "./SignUp.css";
 import logo from "../../src/signInUpImage.jpg";
 import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 
 function SignUp() {
   const [username, setUsername] = useState("");
@@ -12,6 +17,19 @@ function SignUp() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const navigate = useNavigate();
+  const [openSignUpDialog, setOpenSignUpDialog] = useState(false);
+  const [errorUsername, setErrorUsername] = useState("");
+  const [errorEmail, setErrorEmail] = useState("");
+  const [emptyUsername, setEmptyUsername] = useState("");
+  const [emptyEmail, setEmptyEmail] = useState("");
+  const [emptyPassword, setEmptyPassword] = useState("");
+  const [emailValidation, setEmailValidation] = useState(true);
+  let validateEmail = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/.test(email);
+
+  // Handles dialog when user sign up successfully
+  function handleSignUpDialog() {
+    navigate("/");
+  }
 
   // Handles sign up action
   async function handleSignUp(e) {
@@ -28,13 +46,27 @@ function SignUp() {
         })
         .then((res) => {
           if (res.status === 200) {
-            alert(res.data.msg);
             localStorage.setItem("token", res.data.token);
-            navigate("/");
+            setOpenSignUpDialog(true);
           }
         });
     } catch (error) {
       console.log(error);
+      if (error.response.data.username === "") {
+        setEmptyUsername(error.response.data.msg);
+      }
+      if (error.response.data.email === "") {
+        setEmptyEmail(error.response.data.msg);
+      }
+      if (error.response.data.password === "") {
+        setEmptyPassword(error.response.data.msg);
+      }
+      if (error.response.data.emailFound === null) {
+        setErrorUsername(error.response.data.msg);
+      } else if (error.response.data.usernameFound === null) {
+        setErrorEmail(error.response.data.msg);
+      }
+      setEmailValidation(validateEmail);
     }
   }
 
@@ -50,30 +82,52 @@ function SignUp() {
             <label>Username</label>
             <input
               type="text"
-              onChange={(e) => setUsername(e.target.value)}
+              onChange={(e) => {setUsername(e.target.value); setErrorUsername(""); setEmptyUsername("");}}
               value={username}
               spellCheck={false}
               className="signUpInput"
+              minLength="4"
             />
+            {errorUsername !== "" ? (
+              <Alert severity="error">{errorUsername}</Alert>
+            ) : ("")}
+            {emptyUsername !== "" ? (
+              <Alert severity="error">{emptyUsername}</Alert>
+            ) : ("")}
+            {username.length < 4 && username !== "" ? (
+              <Alert severity="error">Username has to be greater than 4 characters</Alert>
+            ) : ("")}
           </div>
           <div className="signUpUsernamePassword">
             <label>Email</label>
             <input
               type="email"
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => {setEmail(e.target.value); setErrorEmail(""); setEmptyEmail(""); setEmailValidation(true);}}
               value={email}
               spellCheck={false}
               className="signUpInput"
             />
+            {errorEmail !== "" ? (
+              <Alert severity="error">{errorEmail}</Alert>
+            ) : ("")}
+            {emptyEmail !== "" ? (
+              <Alert severity="error">{emptyEmail}</Alert>
+            ) : ("")}
+            {!emailValidation ? (
+              <Alert severity="error">Invalid email address</Alert>
+            ) : ("")}
           </div>
           <div className="signUpUsernamePassword">
             <label>Password</label>
             <input
               type="password"
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => {setPassword(e.target.value); setEmptyPassword("");}}
               value={password}
               className="signUpInput"
             />
+             {emptyPassword !== "" ? (
+              <Alert severity="error">{emptyPassword}</Alert>
+            ) : ("")}
           </div>
           <div className="signUpUsernamePassword">
             <label>Confirm Password</label>
@@ -110,6 +164,25 @@ function SignUp() {
           </Link>
         </p>
       </div>
+
+      <Dialog
+        open={openSignUpDialog}
+        onClose={handleSignUpDialog}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle style={{fontFamily: "Lora"}} id="alert-dialog-title">
+          Welcome
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText style={{fontFamily: "Lora"}} id="alert-dialog-description">
+            Sign up successfully
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button style={{fontFamily: "Lora", color: "#333"}} onClick={() => handleSignUpDialog(true)}>Ok</Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }
