@@ -1,0 +1,14 @@
+.pageNotFoundContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1em;
+    margin-top: 5em;
+    font-size: 2.4em;
+    color: rgba(204, 5, 5, 0.856);
+}
+
+.pageNotFound {
+    font-size: 1.2em;
+}
