@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { jwtDecode } from "jwt-decode";
+import "./SuccessPayment.css";
 
 function SuccessPayment() {
   let token = localStorage.getItem("token");
@@ -13,9 +14,9 @@ function SuccessPayment() {
   localStorage.removeItem(`cart_${decoded.id}`);
   
   return (
-    <div>
-        <h1>Payment completed</h1>
-        <Link to="/">Return to Homepage</Link>
+    <div className="checkoutSuccessContainer">
+        <h1 className="checkoutSuccessHead">Payment completed.</h1>
+        <Link className="checkoutSuccessLink" to="/">Return to Homepage</Link>
     </div>
   )
 }
