@@ -1,6 +1,6 @@
 import React from 'react';
 import ProductItem from './ProductItem'
-import "./ProductList.css";
+import "./ProductsList.css";
 
 function ProductsList({ productsArray, deleteProduct }) {
   return (
