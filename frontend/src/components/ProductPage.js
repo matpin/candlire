@@ -17,6 +17,11 @@ import { increaseCartCount } from "../redux/actions/cartActions";
 import { useDispatch } from "react-redux";
 import AddComment from "./AddComment";
 import CommentItem from "./CommentItem";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -33,13 +38,14 @@ function ProductPage({ deleteProduct }) {
   const [cartArray, setCartArray] = useState([]);
   const dispatch = useDispatch();
   const [commentsArray, setCommentsArray] = useState([]);
+  const [openDialogDeleteItem, setOpenDialogDeleteItem] = useState(false);
+  const [open, setOpen] = useState(false);
 
   if (token) {
     decoded = jwtDecode(token);
   }
 
-  const [open, setOpen] = useState(false);
-
+  // Handles the snackbars
   const handleClick = () => {
     setOpen(true);
   };
@@ -51,6 +57,18 @@ function ProductPage({ deleteProduct }) {
 
     setOpen(false);
   };
+
+  // Handles the delete action when the button clicked with dialog warning
+  function handleClickOpenDeleteItem() {
+    setOpenDialogDeleteItem(true);
+  }
+
+  function handleCloseDeleteItem(deleteItem) {
+    if (deleteItem === true) {
+      handleDelete(product._id)
+    }
+    setOpenDialogDeleteItem(false);
+  }
 
   // Gets product by it's id
   async function getProduct() {
@@ -72,7 +90,7 @@ function ProductPage({ deleteProduct }) {
 
   // Handles the button when clicked for delete
   async function handleDelete(productId) {
-    deleteProduct(productId);
+    await deleteProduct(productId);
     navigate("/myprofile");
   }
 
@@ -212,7 +230,7 @@ function ProductPage({ deleteProduct }) {
                   </Link>
                   <ClearIcon
                     style={{ color: "#333" }}
-                    onClick={() => handleDelete(product._id)}
+                    onClick={() => handleClickOpenDeleteItem()}
                     sx={{ fontSize: "1.4em" }}
                   />
                 </>
@@ -364,6 +382,28 @@ function ProductPage({ deleteProduct }) {
         )}
         
       </div>
+
+      <Dialog
+        open={openDialogDeleteItem}
+        onClose={handleCloseDeleteItem}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle style={{fontFamily: "Lora"}} id="alert-dialog-title">
+          Task will be removed
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText style={{fontFamily: "Lora"}} id="alert-dialog-description">
+            Permantly delete.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button style={{fontFamily: "Lora", color: "#333"}} onClick={() => handleCloseDeleteItem(false)}>Cancel</Button>
+          <Button style={{fontFamily: "Lora", color: "#333"}} onClick={() => handleCloseDeleteItem(true)} autoFocus>
+            Remove
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }
