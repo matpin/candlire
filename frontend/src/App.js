@@ -19,7 +19,6 @@ import AboutUs from "./components/AboutUs";
 
 function App() {
   const [productsArray, setProductsArray] = useState([]);
-  let token = localStorage.getItem("token");
 
   // Gets all items
   async function getAllProducts() {
@@ -56,7 +55,7 @@ function App() {
     try {
       await axios
         .post(`http://localhost:8000/create`, newProduct, {
-          headers: { Authorization: `Bearer ${token}` },
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         })
         .then((res) => {
           // setProductsArray([res.data.newProduct, ...productsArray])
@@ -71,7 +70,7 @@ function App() {
     try {
       await axios
         .delete(`http://localhost:8000/${id}`, {
-          headers: { Authorization: `Bearer ${token}` },
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         })
         .then(() => {
           setProductsArray(
@@ -89,7 +88,7 @@ function App() {
     try {
       await axios
         .put(`http://localhost:8000/${editedProduct._id}`, editedProduct, {
-          headers: { Authorization: `Bearer ${token}` },
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         })
         .then(() => {
           setProductsArray(
