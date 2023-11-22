@@ -1,0 +1,87 @@
+.editProductContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5em;
+    margin-bottom: 7em;
+}
+
+.editFormContainer {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    margin-top: 2em;
+}
+
+.editBrandContainer,
+.editNameContainer,
+.editCategoryContainer,
+.editPriceContainer,
+.editDescriptionContainer {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    font-size: 1.1em;
+}
+
+.editImageContainer {
+    border: 1px solid gray;
+    display: flex;
+    gap: 2em;
+    border-radius: 5px;
+    padding: 1em;
+    /* align-items: flex-end; */
+}
+
+.editCurrentImageContainer {
+    border: 1px solid rgba(185, 185, 185, 0.795);
+    border-radius: 5px;
+    padding: 0.5em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 18%;
+}
+
+.uploadNewImageContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 3px;
+    margin-top: 0.5em;
+    padding: 0.5em;
+    width: 80%;
+}
+
+.editUploadImageButtonContainer {
+    display: flex;
+    align-items: center;
+    margin-top: 1.2em;
+}
+
+.editImageDetails {
+    font-size: small;
+    color: #bebebe;
+    font-style: italic;
+    margin-right: auto;
+    margin-left: 1em;
+}
+
+.editInputs {
+    margin-top: 0.5em;
+    height: 5.5vh;
+    font-size: medium;
+    padding-left: 15px;
+    font-family: "Lora";
+}
+
+.editTextArea {
+    margin-top: 0.5em;
+    height: 5.5vh;
+    font-size: large;
+    padding-left: 15px;
+    padding-top: 1em;
+    font-family: "Lora";
+}

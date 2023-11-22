@@ -8,6 +8,17 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import "./EditProduct.css";
+import Button from "@mui/material/Button";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import { styled } from "@mui/material/styles";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
+import CheckIcon from "@mui/icons-material/Check";
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 function EditProduct({ editProduct }) {
   const [productBrand, setProductBrand] = useState("");
@@ -21,6 +32,32 @@ function EditProduct({ editProduct }) {
   const { id } = useParams();
   const fileInputRef = useRef(null);
   const navigate = useNavigate();
+  const [isClicked, setIsClicked] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  const handleImageSave = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
+
+  const VisuallyHiddenInput = styled("input")({
+    clip: "rect(0 0 0 0)",
+    clipPath: "inset(50%)",
+    height: 1,
+    overflow: "hidden",
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    whiteSpace: "nowrap",
+    width: 1,
+  });
 
   // Gets products values
   async function getProduct() {
@@ -82,10 +119,10 @@ function EditProduct({ editProduct }) {
   }
 
   return (
-    <div>
-      <h2>Edit Product</h2>
-      <form>
-        <div>
+    <div className="editProductContainer">
+      <h2 className="editProductHead">Edit Product</h2>
+      <form className="editFormContainer">
+        <div className="editBrandContainer">
           <label>Brand Name</label>
           <input
             type="text"
@@ -94,9 +131,10 @@ function EditProduct({ editProduct }) {
             }}
             value={productBrand}
             spellCheck={false}
+            className="editInputs"
           />
         </div>
-        <div>
+        <div className="editNameContainer">
           <label>Product Name</label>
           <input
             type="text"
@@ -105,49 +143,152 @@ function EditProduct({ editProduct }) {
             }}
             value={productName}
             spellCheck={false}
+            className="editInputs"
           />
         </div>
-        <div>
-          <FormControl sx={{ width: "100%" }}>
-            <InputLabel id="demo-simple-select-label">Category</InputLabel>
+        <div className="editCategoryContainer">
+          <FormControl sx={{ width: "100%", marginTop: "1vh" }}>
+            <InputLabel
+              style={{ fontFamily: "Lora", fontSize: "1.03em", color: "#333" }}
+              id="demo-simple-select-label"
+            >
+              Category
+            </InputLabel>
             <Select
+              sx={{
+                color: "#333",
+                ".MuiOutlinedInput-notchedOutline": {
+                  borderColor: "gray",
+                },
+                "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                  borderColor: "gray",
+                },
+                "&:hover .MuiOutlinedInput-notchedOutline": {
+                  borderColor: "gray",
+                },
+                ".MuiSvgIcon-root ": {
+                  fill: "#333 !important",
+                },
+                fontFamily: "Lora",
+              }}
               labelId="demo-simple-select-label"
               id="demo-simple-select"
               value={productCategory}
               label="Category"
               onChange={(e) => setProductCategory(e.target.value)}
             >
-              <MenuItem value="all_season">All season</MenuItem>
-              <MenuItem value="christmas">Christmas</MenuItem>
-              <MenuItem value="halloween">Halloween</MenuItem>
-              <MenuItem value="summer">Summer</MenuItem>
-              <MenuItem value="easter">Easter</MenuItem>
+              <MenuItem style={{ fontFamily: "Lora" }} value="all_season">
+                All season
+              </MenuItem>
+              <MenuItem style={{ fontFamily: "Lora" }} value="christmas">
+                Christmas
+              </MenuItem>
+              <MenuItem style={{ fontFamily: "Lora" }} value="halloween">
+                Halloween
+              </MenuItem>
+              <MenuItem style={{ fontFamily: "Lora" }} value="summer">
+                Summer
+              </MenuItem>
+              <MenuItem style={{ fontFamily: "Lora" }} value="easter">
+                Easter
+              </MenuItem>
             </Select>
           </FormControl>
         </div>
-        <div>
-          <label>Current Image</label>
-          {productImage && (
-            <div>
-              <img
-                src={productImage}
-                alt="Current"
-                style={{ maxWidth: "100px" }}
-              />
+        <div className="editImageContainer">
+          <div className="editCurrentImageContainer">
+            <label>Current Image</label>
+            {productImage && (
+              <div>
+                <img
+                  src={productImage}
+                  alt="Current"
+                  style={{ maxWidth: "80px", marginTop: "0.4em" }}
+                />
+              </div>
+            )}
+          </div>
+          <div className="uploadNewImageContainer">
+            <label>Upload New Image</label>
+            <div className="editUploadImageButtonContainer">
+              <Button
+                style={{
+                  fontFamily: "Lora",
+                  marginLeft: "1em",
+                  backgroundColor: "#333",
+                }}
+                component="label"
+                variant="contained"
+                startIcon={<CloudUploadIcon />}
+                onChange={(e) => {
+                  setImageUpload(e.target.files[0]);
+                }}
+              >
+                Upload image
+                <VisuallyHiddenInput type="file" />
+              </Button>
+              <p className="editImageDetails">
+                Click on the save button after uploading your image.
+              </p>
+              {imageUpload !== null ? (
+                <>
+                  {isClicked ? (
+                    <Button
+                      style={{
+                        fontFamily: "Lora",
+                        color: "#333",
+                        backgroundColor: "#f2f2f2",
+                        marginRight: "1em",
+                      }}
+                    >
+                      <CheckIcon style={{ color: "green" }} disabled />
+                    </Button>
+                  ) : (
+                    <Button
+                      style={{
+                        fontFamily: "Lora",
+                        color: "#333",
+                        backgroundColor: "#f2f2f2",
+                        marginRight: "1em",
+                      }}
+                      onClick={(e) => {
+                        handleUpload(e);
+                        handleImageSave();
+                        setIsClicked(true);
+                      }}
+                    >
+                      Save
+                    </Button>
+                  )}
+                </>
+              ) : (
+                <Button
+                  style={{
+                    fontFamily: "Lora",
+                    marginRight: "1em",
+                  }}
+                  disabled
+                >
+                  Save
+                </Button>
+              )}
+              <Snackbar
+                open={open}
+                autoHideDuration={3000}
+                onClose={handleClose}
+              >
+                <Alert
+                  onClose={handleClose}
+                  severity="info"
+                  sx={{ width: "100%" }}
+                >
+                  Image saved.
+                </Alert>
+              </Snackbar>
             </div>
-          )}
+          </div>
         </div>
-        <div>
-          <label>Upload New Image</label>
-          <input
-            type="file"
-            accept="image/*"
-            onChange={(e) => setImageUpload(e.target.files[0])}
-            ref={fileInputRef}
-          />
-          <button onClick={handleUpload}>ok</button>
-        </div>
-        <div>
+        <div className="editPriceContainer">
           <label>Price</label>
           <input
             type="number"
@@ -155,9 +296,10 @@ function EditProduct({ editProduct }) {
               setProductPrice(e.target.value);
             }}
             value={productPrice}
+            className="editInputs"
           />
         </div>
-        <div>
+        <div className="editDescriptionContainer">
           <label>Description</label>
           <textarea
             type="text"
@@ -165,9 +307,21 @@ function EditProduct({ editProduct }) {
               setProductDescription(e.target.value);
             }}
             value={productDescription}
+            className="editTextArea"
           />
         </div>
-        <button onClick={(e) => handleSave(e, product)}>Save</button>
+        <Button
+          style={{
+            fontFamily: "Lora",
+            color: "#333",
+            backgroundColor: "#f2f2f2",
+            height: "5vh",
+            marginTop: "1em",
+          }}
+          onClick={(e) => handleSave(e, product)}
+        >
+          Save
+        </Button>
       </form>
     </div>
   );
