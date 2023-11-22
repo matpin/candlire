@@ -146,6 +146,7 @@ function AddProduct({ addNewProduct }) {
                 ".MuiSvgIcon-root ": {
                   fill: "#333 !important",
                 },
+                fontFamily: "Lora"
               }}
               labelId="demo-simple-select-label"
               id="demo-simple-select"
