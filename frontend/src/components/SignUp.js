@@ -65,6 +65,10 @@ function SignUp() {
         setErrorUsername(error.response.data.msg);
       } else if (error.response.data.usernameFound === null) {
         setErrorEmail(error.response.data.msg);
+      } 
+      else if (error.response.data.emailFound !== null && error.response.data.usernameFound !== null && error.response.data.emailFound !== undefined && error.response.data.usernameFound !== undefined) {
+        setErrorUsername("User already exists");
+        setErrorEmail("User already exists");
       }
       setEmailValidation(validateEmail);
     }
@@ -89,13 +93,13 @@ function SignUp() {
               minLength="4"
             />
             {errorUsername !== "" ? (
-              <Alert severity="error">{errorUsername}</Alert>
+              <Alert style={{ fontFamily: "Lora" }} severity="error">{errorUsername}</Alert>
             ) : ("")}
             {emptyUsername !== "" ? (
-              <Alert severity="error">{emptyUsername}</Alert>
+              <Alert style={{ fontFamily: "Lora" }} severity="error">{emptyUsername}</Alert>
             ) : ("")}
             {username.length < 4 && username !== "" ? (
-              <Alert severity="error">Username has to be greater than 4 characters</Alert>
+              <Alert style={{ fontFamily: "Lora" }} severity="error">Username has to be greater than 4 characters</Alert>
             ) : ("")}
           </div>
           <div className="signUpUsernamePassword">
@@ -108,13 +112,13 @@ function SignUp() {
               className="signUpInput"
             />
             {errorEmail !== "" ? (
-              <Alert severity="error">{errorEmail}</Alert>
+              <Alert style={{ fontFamily: "Lora" }} severity="error">{errorEmail}</Alert>
             ) : ("")}
             {emptyEmail !== "" ? (
-              <Alert severity="error">{emptyEmail}</Alert>
+              <Alert style={{ fontFamily: "Lora" }} severity="error">{emptyEmail}</Alert>
             ) : ("")}
-            {!emailValidation ? (
-              <Alert severity="error">Invalid email address</Alert>
+            {!emailValidation && email !== "" ? (
+              <Alert style={{ fontFamily: "Lora" }} severity="error">Invalid email address</Alert>
             ) : ("")}
           </div>
           <div className="signUpUsernamePassword">
@@ -126,7 +130,7 @@ function SignUp() {
               className="signUpInput"
             />
              {emptyPassword !== "" ? (
-              <Alert severity="error">{emptyPassword}</Alert>
+              <Alert style={{ fontFamily: "Lora" }} severity="error">{emptyPassword}</Alert>
             ) : ("")}
           </div>
           <div className="signUpUsernamePassword">
@@ -138,7 +142,7 @@ function SignUp() {
               className="signUpInput"
             />
             {password !== confirmPassword ? (
-              <Alert severity="error">Passwords does not match</Alert>
+              <Alert style={{ fontFamily: "Lora" }} severity="error">Passwords does not match</Alert>
             ) : (
               ""
             )}
@@ -175,11 +179,11 @@ function SignUp() {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle style={{fontFamily: "Lora"}} id="alert-dialog-title">
-          Welcome
+          Welcome!
         </DialogTitle>
         <DialogContent>
           <DialogContentText style={{fontFamily: "Lora"}} id="alert-dialog-description">
-            Sign up successfully
+          Sign up successful!
           </DialogContentText>
         </DialogContent>
         <DialogActions>
