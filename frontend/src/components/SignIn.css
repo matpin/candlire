@@ -61,6 +61,7 @@
 .signUpLink {
     text-decoration: none;
     color: #333;
+    font-family: "Lora";
 }
 
 .signUpLink:hover {

@@ -4,11 +4,27 @@ import { Link, useNavigate } from "react-router-dom";
 import "./SignIn.css";
 import Button from "@mui/material/Button";
 import logo from "../../src/signInUpImage2.jpg";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import Alert from "@mui/material/Alert";
 
 function SignIn() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const [openSignInDialog, setOpenSignInDialog] = useState(false);
+  const [emptyUsername, setEmptyUsername] = useState("");
+  const [emptyPassword, setEmptyPassword] = useState("");
+  const [userNotFound, setUserNotFound] = useState("");
+  const [incorrectPassword, setIncorrectPassword] = useState("");
+
+  // Handles dialog when user sign up successfully
+  function handleSignInDialog() {
+    navigate("/");
+  }
 
   // Handles sign in action
   async function handleSignIn(e) {
@@ -21,17 +37,23 @@ function SignIn() {
         })
         .then((res) => {
           if (res.status === 200) {
-            alert(res.data.msg);
             localStorage.setItem("token", res.data.token);
-            navigate("/");
+            setOpenSignInDialog(true);
           }
         });
     } catch (error) {
       console.log(error);
-      if (error.response) {
-        alert(error.response.data.msg);
-      } else {
-        alert("Internal error");
+      if (error.response.data.username === "") {
+        setEmptyUsername(error.response.data.msg);
+      }
+      if (error.response.data.password === "") {
+        setEmptyPassword(error.response.data.msg);
+      }
+      if (!error.response.data.userFound && error.response.data.userFound !== undefined) {
+        setUserNotFound(error.response.data.msg);
+      } 
+      if (!error.response.data.validPass && error.response.data.validPass !== undefined) {
+          setIncorrectPassword(error.response.data.msg);
       }
     }
   }
@@ -48,20 +70,32 @@ function SignIn() {
             <label>Username</label>
             <input
               type="text"
-              onChange={(e) => setUsername(e.target.value)}
+              onChange={(e) => {setUsername(e.target.value); setEmptyUsername(""); setUserNotFound("");}}
               value={username}
               spellCheck={false}
               className="signInInput"
             />
+             {emptyUsername !== "" ? (
+              <Alert style={{ fontFamily: "Lora" }} severity="error">{emptyUsername}</Alert>
+            ) : ("")}
+            {userNotFound !== "" ? (
+              <Alert style={{ fontFamily: "Lora", fontSize: "0.8em" }} severity="error">{userNotFound}</Alert>
+            ) : ("")}
           </div>
           <div className="signInUsernamePassword">
             <label>Password</label>
             <input
               type="password"
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => {setPassword(e.target.value); setEmptyPassword(""); setIncorrectPassword("");}}
               value={password}
               className="signInInput"
             />
+             {emptyPassword !== "" ? (
+              <Alert style={{ fontFamily: "Lora" }} severity="error">{emptyPassword}</Alert>
+            ) : ("")}
+            {incorrectPassword !== "" ? (
+              <Alert style={{ fontFamily: "Lora" }} severity="error">{incorrectPassword}</Alert>
+            ) : ("")}
           </div>
           <Button
             onClick={handleSignIn}
@@ -70,7 +104,10 @@ function SignIn() {
               backgroundColor: "#000",
               color: "#fff",
               borderRadius: "50px",
-              height: "5vh"
+              height: "5vh",
+              fontFamily: "Lora",
+              textTransform: "capitalize",
+              fontSize: "1em",
             }}
             variant="filled"
           >
@@ -78,9 +115,39 @@ function SignIn() {
           </Button>
         </form>
         <p className="notAccount">
-          Don't have an account? <Link className="signUpLink" to="/signup">Sign Up</Link>
+          Don't have an account?{" "}
+          <Link className="signUpLink" to="/signup">
+            Sign Up
+          </Link>
         </p>
       </div>
+
+      <Dialog
+        open={openSignInDialog}
+        onClose={handleSignInDialog}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle style={{ fontFamily: "Lora" }} id="alert-dialog-title">
+          Welcome back!
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText
+            style={{ fontFamily: "Lora" }}
+            id="alert-dialog-description"
+          >
+            Sign in successful!
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            style={{ fontFamily: "Lora", color: "#333" }}
+            onClick={() => handleSignInDialog(true)}
+          >
+            Ok
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }
