@@ -151,7 +151,9 @@ function SignUp() {
               color: "#fff",
               borderRadius: "50px",
               height: "5vh",
-              fontFamily: "Lora"
+              fontFamily: "Lora",
+              textTransform: "capitalize",
+              fontSize: "1em"
             }}
             variant="filled"
           >
