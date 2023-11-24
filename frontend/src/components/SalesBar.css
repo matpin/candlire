@@ -10,14 +10,14 @@
 .salesContent {
     color: #fff;
     padding: 0.5em;
-    animation: scroll 13s linear infinite;
+    animation: scroll 12s linear infinite;
 }
 
 @keyframes scroll {
     from {
-        transform: translateX(175%);
+        transform: translateX(100%);
     }
     to {
-        transform: translateX(-175%);
+        transform: translateX(-100%);
     }
 }
