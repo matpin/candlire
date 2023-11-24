@@ -22,11 +22,11 @@ function LatestsProducts() {
   }, []);
 
   return (
-    <div>
+    <div className="latestsContainer">
       <h1 className="latestsTitle">Latest</h1>
-      <div className="latestsContainer">
+      <div className="innerLatestsContainer">
         {latestProducts.map((l) => (
-          <div key={l._id} className="innerLatestsContainer">
+          <div key={l._id} className="innerLatests">
             <Link to={`/product/${l._id}`} className="latestsLinks">
               <img
                 className="latestProductsImage"
