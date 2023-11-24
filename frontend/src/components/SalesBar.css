@@ -1,0 +1,23 @@
+.salesBarContainer {
+    border: 1px solid black;
+    height: 3vh;
+    background-color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.salesContent {
+    color: #fff;
+    padding: 0.5em;
+    animation: scroll 13s linear infinite;
+}
+
+@keyframes scroll {
+    from {
+        transform: translateX(175%);
+    }
+    to {
+        transform: translateX(-175%);
+    }
+}

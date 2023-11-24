@@ -16,6 +16,7 @@ import PageNotFound from "./components/PageNotFound";
 import Catalog from "./components/Catalog";
 import Footer from "./components/Footer";
 import AboutUs from "./components/AboutUs";
+import SalesBar from "./components/SalesBar";
 
 function App() {
   const [productsArray, setProductsArray] = useState([]);
@@ -108,6 +109,7 @@ function App() {
   return (
     <BrowserRouter>
       <div className="app">
+        <SalesBar />
         <Navbar setProductsArray={setProductsArray} />
         <Routes className="contentContainer">
           <Route path="/" element={<Homepage />} />
