@@ -5,6 +5,10 @@
     margin: 5em;
 }
 
+.onlyCartItems {
+    border-bottom: 1px solid rgb(189, 189, 189);
+}
+
 .cartTitle {
     text-align: center;
     margin-bottom: 2em;
@@ -40,9 +44,15 @@
     text-decoration: underline;
 }
 
+.total {
+    text-align: right;
+    margin-top: 1em;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
 .cartBottomContainer {
-    margin-top: 2em;
-    border-top: 1px solid rgb(189, 189, 189);
+    /* margin-top: 1em; */
     display: flex;
     justify-content: space-between;
     padding-top: 2em;

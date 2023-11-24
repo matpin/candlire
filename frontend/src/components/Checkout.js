@@ -25,7 +25,7 @@ function Checkout({ cartItems }) {
 
   return (
     <div>
-      <Button onClick={() => handleCheckout()}>Checkout</Button>
+      <Button style={{backgroundColor: "#000", fontFamily: "Lora", color: "#fff", textTransform: "capitalize", fontSize: "1.1em", padding: "0.4em", width: "8em"}} onClick={() => handleCheckout()}>Checkout</Button>
     </div>
   );
 }
