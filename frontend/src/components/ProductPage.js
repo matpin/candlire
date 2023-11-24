@@ -13,7 +13,7 @@ import RemoveIcon from "@mui/icons-material/Remove";
 import "./ProductPage.css";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
-import { increaseCartCount } from "../redux/actions/cartActions";
+import { increaseCartCount, decreaseCartCount } from "../redux/actions/cartActions";
 import { useDispatch } from "react-redux";
 import AddComment from "./AddComment";
 import CommentItem from "./CommentItem";
@@ -40,10 +40,36 @@ function ProductPage({ deleteProduct }) {
   const [commentsArray, setCommentsArray] = useState([]);
   const [openDialogDeleteItem, setOpenDialogDeleteItem] = useState(false);
   const [open, setOpen] = useState(false);
+  // const [openFavorites, setOpenFavorites] = useState(false);
+  // const [openRemoveFavorites, setOpenRemoveFavorites] = useState(false);
 
   if (token) {
     decoded = jwtDecode(token);
   }
+
+  // const handleClickFavorites = () => {
+  //   setOpenFavorites(true);
+  // };
+
+  // const handleCloseFavorites = (event, reason) => {
+  //   if (reason === "clickaway") {
+  //     return;
+  //   }
+
+  //   setOpenFavorites(false);
+  // };
+
+  // const handleClickRemoveFavorites = () => {
+  //   setOpenRemoveFavorites(true);
+  // };
+
+  // const handleCloseRemoveFavorites = (event, reason) => {
+  //   if (reason === "clickaway") {
+  //     return;
+  //   }
+
+  //   setOpenRemoveFavorites(false);
+  // };
 
   // Handles the snackbars
   const handleClick = () => {
@@ -65,7 +91,7 @@ function ProductPage({ deleteProduct }) {
 
   function handleCloseDeleteItem(deleteItem) {
     if (deleteItem === true) {
-      handleDelete(product._id)
+      handleDelete(product._id);
     }
     setOpenDialogDeleteItem(false);
   }
@@ -109,6 +135,7 @@ function ProductPage({ deleteProduct }) {
             `favorites_${decoded.id}`,
             JSON.stringify(res.data.favorites)
           );
+          console.log(favoritesArray);
         });
     } catch (error) {
       console.log(error);
@@ -147,6 +174,14 @@ function ProductPage({ deleteProduct }) {
     return;
   }
 
+  function addToQuantity() {
+    dispatch(increaseCartCount(1));
+  };
+
+  function removeFromQuantity() {
+    dispatch(decreaseCartCount(1));
+  };
+
   // Adds the comments to database
   async function addComment(commentBody, commentId = null) {
     try {
@@ -161,12 +196,11 @@ function ProductPage({ deleteProduct }) {
         })
         .then((res) => {
           // setCommentsArray([...commentsArray, res.data.newComment]);
-          getComments()
+          getComments();
         });
     } catch (error) {
-        console.log(error);
+      console.log(error);
     }
-    
   }
 
   // Gets the comments from database
@@ -207,12 +241,42 @@ function ProductPage({ deleteProduct }) {
               {token ? (
                 <div className="productPageFav">
                   {favoritesArray.includes(product._id) ? (
-                    <FavoriteIcon
-                      onClick={addRemoveFavorites}
-                      style={{ color: "#FF0000" }}
-                    />
+                    <>
+                      <FavoriteIcon
+                        onClick={() => {addRemoveFavorites();}}
+                        style={{ color: "#FF0000" }}
+                      />
+                      {/* <Snackbar
+                        open={openFavorites}
+                        autoHideDuration={3000}
+                        onClose={handleCloseFavorites}
+                      >
+                        <Alert
+                          onClose={handleCloseFavorites}
+                          severity="success"
+                          sx={{ width: "100%" }}
+                        >
+                          You've added this product to your favorites.
+                        </Alert>
+                      </Snackbar> */}
+                    </>
                   ) : (
-                    <FavoriteBorderIcon onClick={addRemoveFavorites} />
+                    <>
+                      <FavoriteBorderIcon onClick={() => {addRemoveFavorites();}} />
+                      {/* <Snackbar
+                        open={openRemoveFavorites}
+                        autoHideDuration={3000}
+                        onClose={handleCloseRemoveFavorites}
+                      >
+                        <Alert
+                          onClose={handleCloseRemoveFavorites}
+                          severity="error"
+                          sx={{ width: "100%" }}
+                        >
+                          You've removed this product from your favorites.
+                        </Alert>
+                      </Snackbar> */}
+                    </>
                   )}
                 </div>
               ) : (
@@ -256,7 +320,7 @@ function ProductPage({ deleteProduct }) {
                 }}
                 aria-label="reduce"
                 onClick={() => {
-                  setCount(Math.max(count - 1, 0));
+                  setCount(Math.max(count - 1, 0)); removeFromQuantity();
                 }}
               >
                 <RemoveIcon fontSize="small" />
@@ -281,7 +345,7 @@ function ProductPage({ deleteProduct }) {
                 }}
                 aria-label="increase"
                 onClick={() => {
-                  setCount(count + 1);
+                  setCount(count + 1); addToQuantity();
                 }}
               >
                 <AddIcon fontSize="small" />
@@ -299,7 +363,7 @@ function ProductPage({ deleteProduct }) {
                     width: "100%",
                     height: "5vh",
                     fontSize: "1.1em",
-                    fontFamily: "Lora"
+                    fontFamily: "Lora",
                   }}
                   variant="outlined"
                   onClick={() => {
@@ -333,7 +397,7 @@ function ProductPage({ deleteProduct }) {
                     width: "100%",
                     height: "5vh",
                     fontSize: "1.1em",
-                    fontFamily: "Lora"
+                    fontFamily: "Lora",
                   }}
                   variant="outlined"
                   onClick={() => {
@@ -372,15 +436,18 @@ function ProductPage({ deleteProduct }) {
         {commentsArray.length !== 0 ? (
           <div className="commentsContainer">
             {commentsArray.map((comment, i) => (
-          <div key={i}>
-            <CommentItem comment={comment} commentsArray={commentsArray} addComment={addComment} />
-          </div>
-        ))}
+              <div key={i}>
+                <CommentItem
+                  comment={comment}
+                  commentsArray={commentsArray}
+                  addComment={addComment}
+                />
+              </div>
+            ))}
           </div>
         ) : (
           <p className="noReviewsYet">No reviews yet.</p>
         )}
-        
       </div>
 
       <Dialog
@@ -389,17 +456,29 @@ function ProductPage({ deleteProduct }) {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle style={{fontFamily: "Lora"}} id="alert-dialog-title">
+        <DialogTitle style={{ fontFamily: "Lora" }} id="alert-dialog-title">
           Task will be removed
         </DialogTitle>
         <DialogContent>
-          <DialogContentText style={{fontFamily: "Lora"}} id="alert-dialog-description">
+          <DialogContentText
+            style={{ fontFamily: "Lora" }}
+            id="alert-dialog-description"
+          >
             Permantly delete.
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button style={{fontFamily: "Lora", color: "#333"}} onClick={() => handleCloseDeleteItem(false)}>Cancel</Button>
-          <Button style={{fontFamily: "Lora", color: "#333"}} onClick={() => handleCloseDeleteItem(true)} autoFocus>
+          <Button
+            style={{ fontFamily: "Lora", color: "#333" }}
+            onClick={() => handleCloseDeleteItem(false)}
+          >
+            Cancel
+          </Button>
+          <Button
+            style={{ fontFamily: "Lora", color: "#333" }}
+            onClick={() => handleCloseDeleteItem(true)}
+            autoFocus
+          >
             Remove
           </Button>
         </DialogActions>
