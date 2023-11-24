@@ -29,6 +29,10 @@ const stripePayment = async (req, res) => {
       },
       customer: customer.id,
       line_items,
+      // discounts: [{
+      //   coupon: 'BLACKFRIDAY',
+      // }],
+      allow_promotion_codes: true,
       mode: "payment",
       success_url: `${process.env.CLIENT_URL}/checkout_success`,
       cancel_url: `${process.env.CLIENT_URL}/cart`,
