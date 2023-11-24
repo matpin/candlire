@@ -8,7 +8,11 @@ import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import "./Cart.css";
 import ClearIcon from "@mui/icons-material/Clear";
-import { increaseCartCount, decreaseCartCount, resetCartCount } from "../redux/actions/cartActions";
+import {
+  increaseCartCount,
+  decreaseCartCount,
+  resetCartCount,
+} from "../redux/actions/cartActions";
 import { useDispatch } from "react-redux";
 
 function Cart() {
@@ -17,6 +21,7 @@ function Cart() {
   let token = localStorage.getItem("token");
   let decoded;
   const dispatch = useDispatch();
+  let totalPrice;
 
   if (token) {
     decoded = jwtDecode(token);
@@ -51,16 +56,24 @@ function Cart() {
     showCart();
   }, []);
 
+  if (decoded) {
+    let storedCart = JSON.parse(localStorage.getItem(`cart_${decoded.id}`));
+
+    totalPrice = storedCart.reduce((acc, cur) => {
+      return acc + cur.productPrice * cur.quantity;
+    }, 0);
+  }
+
   // Deletes items from cart
   function handleDeleteItem(id) {
     const updateCart = mergeCartItems.filter((item) => item.productId !== id);
     setMergeCartItems(updateCart);
     localStorage.setItem(`cart_${decoded.id}`, JSON.stringify(updateCart));
-    
+
     if (mergeCartItems.length > 1) {
       dispatch(decreaseCartCount(1));
     } else if (mergeCartItems.length === 1) {
-        dispatch(resetCartCount());
+      dispatch(resetCartCount());
     }
   }
 
@@ -89,7 +102,7 @@ function Cart() {
     });
     setMergeCartItems(updateCart);
     localStorage.setItem(`cart_${decoded.id}`, JSON.stringify(updateCart));
-   }
+  }
 
   function handleRemoveAll() {
     setMergeCartItems([]);
@@ -102,7 +115,7 @@ function Cart() {
       <h1 className="cartTitle">Shopping Cart</h1>
       {mergeCartItems.length !== 0 ? (
         <div className="innerCartContainer">
-          <div>
+          <div className="onlyCartItems">
             <div className="cartDescTitle">
               <h3 className="cartDescProductName">Product</h3>
               <h3>Quantity</h3>
@@ -169,15 +182,18 @@ function Cart() {
               </div>
             ))}
           </div>
+          <div className="total">Total: {totalPrice} €</div>
           <div className="cartBottomContainer">
-            <Button onClick={handleRemoveAll}>Clear Cart</Button>
+            <Button style={{backgroundColor: "red", fontFamily: "Lora", color: "#fff", textTransform: "capitalize", fontSize: "1.1em", padding: "0.4em", width: "8em"}} onClick={handleRemoveAll}>Clear Cart</Button>
             <Checkout cartItems={mergeCartItems} />
           </div>
         </div>
       ) : (
         <div className="emptyCartContainer">
           <p>Your cart is empty</p>
-          <Link className="backToStoreLink" to="/">Back to store...</Link>
+          <Link className="backToStoreLink" to="/">
+            Back to store...
+          </Link>
         </div>
       )}
     </div>
