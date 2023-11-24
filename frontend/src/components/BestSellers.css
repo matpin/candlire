@@ -1,27 +1,38 @@
-.bestSellerTitle {
-    margin-top: 2em;
-    margin-left: 1em;
-}
-
 .bestSellerContainer {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     /* border: 1px solid black; */
-    gap: 4em;
-    max-height: 50vh;
     margin-top: 3em;
-    margin-bottom: 5em;
+    margin-bottom: 6em;
     overflow: hidden;
+}
+
+.bestSellerTitle {
+    margin-top: 2em;
+    margin-left: 1em;
+    width: 80%;
+}
+
+.innerBestSellerContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4em;
+    margin-top: 3em;
+    overflow: hidden;
+    width: 80%;
 }
 
 .bestSellerLinks {
     text-decoration: none;
     width: 100%;
     overflow: hidden;
+    /* border: 1px solid black; */
 }
 
-.innerBestSellerContainer {
+.innerBestSeller {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -45,11 +56,13 @@
 
 .bestSellerBrand {
     color: rgb(194, 194, 194);
+    font-size: 0.9em;
     /* border: 1px solid black; */
 }
 
 .bestSellerName {
     color: #333;
+    font-size: 1.2em;
 }
 
 .bestSellerName:hover {
