@@ -4,7 +4,7 @@ import "./Homepage.css";
 import { Link } from "react-router-dom";
 import LatestsProducts from "./LatestsProducts";
 import BestSeller from "./BestSellers";
-import blackFriday from "../../src/blackFriday.jpg";
+import christmasImage from "../../src/christmasImage2.jpg";
 
 function Homepage() {
   let token = localStorage.getItem("token");
@@ -15,11 +15,11 @@ function Homepage() {
         <div className="newsContainer">
           <div className="newsContent">
             <div className="newsHeadContainer">
-              <h1 className="newsHead">Black Friday</h1>
-              <h1 className="newsDetails">35% OFF everything!</h1>
+              <h1 className="newsHead">Christmas Sales</h1>
+              <h1 className="newsDetails">10% OFF everything!</h1>
             </div>
             <p className="newsParagraph">
-              Use the promotion code on every checkout until 26/11/23.
+              Use the promotion code on every checkout. Ends 9/1/24.
             </p>
             <Link className="newsLink" to="/products">
               Shop now
@@ -28,8 +28,8 @@ function Homepage() {
           <div className="newsImageContainer">
             <img
               className="newsImage"
-              src={blackFriday}
-              alt="blackFridayImage"
+              src={christmasImage}
+              alt="christmasImage"
             />
           </div>
         </div>

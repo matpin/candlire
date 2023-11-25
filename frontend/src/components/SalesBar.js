@@ -4,7 +4,7 @@ import "./SalesBar.css";
 function SalesBar() {
   return (
     <div className="salesBarContainer">
-        <p className="salesContent">!BLACK FRIDAY SALES! USE PROMOTION CODE ON CHECKOUT: BLACKFRIDAY23 </p>
+        <p className="salesContent">!CHRISTMAS IS COMING! USE PROMOTION CODE ON CHECKOUT: XMAS23 </p>
     </div>
   )
 }
