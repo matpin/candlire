@@ -34,6 +34,7 @@ function EditProduct({ editProduct }) {
   const navigate = useNavigate();
   const [isClicked, setIsClicked] = useState(false);
   const [open, setOpen] = useState(false);
+  const [openFieldError, setOpenFieldError] = useState(false);
 
   const handleImageSave = () => {
     setOpen(true);
@@ -45,6 +46,14 @@ function EditProduct({ editProduct }) {
     }
 
     setOpen(false);
+  };
+
+  const handleCloseFieldError = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpenFieldError(false);
   };
 
   const VisuallyHiddenInput = styled("input")({
@@ -111,7 +120,7 @@ function EditProduct({ editProduct }) {
       product.price === "" ||
       product.description.trim() === ""
     ) {
-      alert("Fill all fields");
+      setOpenFieldError(true);
       return;
     }
     await editProduct(product);
@@ -322,6 +331,15 @@ function EditProduct({ editProduct }) {
         >
           Save
         </Button>
+        <Snackbar open={openFieldError} autoHideDuration={3000} onClose={handleCloseFieldError}>
+        <Alert
+          onClose={handleCloseFieldError}
+          severity="error"
+          sx={{ width: "100%" }}
+        >
+          Fill all the fields.
+        </Alert>
+      </Snackbar>
       </form>
     </div>
   );
