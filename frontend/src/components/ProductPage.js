@@ -40,36 +40,10 @@ function ProductPage({ deleteProduct }) {
   const [commentsArray, setCommentsArray] = useState([]);
   const [openDialogDeleteItem, setOpenDialogDeleteItem] = useState(false);
   const [open, setOpen] = useState(false);
-  // const [openFavorites, setOpenFavorites] = useState(false);
-  // const [openRemoveFavorites, setOpenRemoveFavorites] = useState(false);
 
   if (token) {
     decoded = jwtDecode(token);
   }
-
-  // const handleClickFavorites = () => {
-  //   setOpenFavorites(true);
-  // };
-
-  // const handleCloseFavorites = (event, reason) => {
-  //   if (reason === "clickaway") {
-  //     return;
-  //   }
-
-  //   setOpenFavorites(false);
-  // };
-
-  // const handleClickRemoveFavorites = () => {
-  //   setOpenRemoveFavorites(true);
-  // };
-
-  // const handleCloseRemoveFavorites = (event, reason) => {
-  //   if (reason === "clickaway") {
-  //     return;
-  //   }
-
-  //   setOpenRemoveFavorites(false);
-  // };
 
   // Handles the snackbars
   const handleClick = () => {
@@ -246,36 +220,10 @@ function ProductPage({ deleteProduct }) {
                         onClick={() => {addRemoveFavorites();}}
                         style={{ color: "#FF0000" }}
                       />
-                      {/* <Snackbar
-                        open={openFavorites}
-                        autoHideDuration={3000}
-                        onClose={handleCloseFavorites}
-                      >
-                        <Alert
-                          onClose={handleCloseFavorites}
-                          severity="success"
-                          sx={{ width: "100%" }}
-                        >
-                          You've added this product to your favorites.
-                        </Alert>
-                      </Snackbar> */}
                     </>
                   ) : (
                     <>
                       <FavoriteBorderIcon onClick={() => {addRemoveFavorites();}} />
-                      {/* <Snackbar
-                        open={openRemoveFavorites}
-                        autoHideDuration={3000}
-                        onClose={handleCloseRemoveFavorites}
-                      >
-                        <Alert
-                          onClose={handleCloseRemoveFavorites}
-                          severity="error"
-                          sx={{ width: "100%" }}
-                        >
-                          You've removed this product from your favorites.
-                        </Alert>
-                      </Snackbar> */}
                     </>
                   )}
                 </div>
