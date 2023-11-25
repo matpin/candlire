@@ -29,6 +29,7 @@ function AddProduct({ addNewProduct }) {
   const [imageUpload, setImageUpload] = useState(null);
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
+  const [openFieldError, setOpenFieldError] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
 
   const handleSave = () => {
@@ -45,6 +46,18 @@ function AddProduct({ addNewProduct }) {
 
   const handleAdd = () => {
     setOpen(true);
+  };
+
+  const handleOpenFieldError = () => {
+    
+  };
+
+  const handleCloseFieldError = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpenFieldError(false);
   };
 
   const VisuallyHiddenInput = styled("input")({
@@ -81,7 +94,7 @@ function AddProduct({ addNewProduct }) {
       productPrice.trim() === "" ||
       productDescription.trim() === ""
     ) {
-      alert("Fill all fields");
+      setOpenFieldError(true);
       return;
     }
     await addNewProduct(
@@ -283,6 +296,15 @@ function AddProduct({ addNewProduct }) {
         >
           Add Product
         </Button>
+        <Snackbar open={openFieldError} autoHideDuration={3000} onClose={handleCloseFieldError}>
+        <Alert
+          onClose={handleCloseFieldError}
+          severity="error"
+          sx={{ width: "100%" }}
+        >
+          Fill all the fields.
+        </Alert>
+      </Snackbar>
           </>
         ) : (
           <>
