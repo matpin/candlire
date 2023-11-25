@@ -14,6 +14,13 @@ import {
   resetCartCount,
 } from "../redux/actions/cartActions";
 import { useDispatch } from "react-redux";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
 
 function Cart() {
   const [mergeCartItems, setMergeCartItems] = useState([]);
@@ -58,10 +65,14 @@ function Cart() {
 
   if (decoded) {
     let storedCart = JSON.parse(localStorage.getItem(`cart_${decoded.id}`));
-
-    totalPrice = storedCart.reduce((acc, cur) => {
-      return acc + cur.productPrice * cur.quantity;
-    }, 0);
+    if (storedCart !== null) {
+      totalPrice = storedCart.reduce((acc, cur) => {
+        if (cur.productPrice > 0) {
+          return acc + cur.productPrice * cur.quantity;
+        }
+        return acc;
+      }, 0);
+    }
   }
 
   // Deletes items from cart
@@ -114,77 +125,130 @@ function Cart() {
     <div className="cartContainer">
       <h1 className="cartTitle">Shopping Cart</h1>
       {mergeCartItems.length !== 0 ? (
-        <div className="innerCartContainer">
-          <div className="onlyCartItems">
-            <div className="cartDescTitle">
-              <h3 className="cartDescProductName">Product</h3>
-              <h3>Quantity</h3>
-              <h3>Price</h3>
-              <h3>Delete Item</h3>
-            </div>
-            {mergeCartItems.map((p) => (
-              <div className="cartProducts" key={p.productId}>
-                <Link
-                  className="cartProductName"
-                  to={`/product/${p.productId}`}
-                >
-                  {p.productName}
-                </Link>
-                <ButtonGroup
-                  style={{
-                    backgroundColor: "#f2f2f2",
-                    color: "#000",
-                    borderColor: "#000",
-                  }}
-                  className="cartProductQuantity"
-                >
-                  <Button
+        <div>
+          <TableContainer component={Paper} sx={{ width: "100%" }}>
+            <Table aria-label="simple table">
+              <TableHead>
+                <TableRow>
+                  <TableCell
                     style={{
-                      backgroundColor: "#f2f2f2",
-                      color: "#000",
-                      borderColor: "#000",
-                    }}
-                    aria-label="reduce"
-                    onClick={() => {
-                      setCount(Math.max(count - 1, 0));
-                      removeQuantity(p);
+                      fontFamily: "Lora",
+                      fontWeight: "bold",
+                      fontSize: "1em",
                     }}
                   >
-                    <RemoveIcon fontSize="small" />
-                  </Button>
-                  <Button
+                    Product
+                  </TableCell>
+                  <TableCell
                     style={{
-                      backgroundColor: "#f2f2f2",
-                      color: "#000",
-                      borderColor: "#000",
+                      fontFamily: "Lora",
+                      fontWeight: "bold",
+                      fontSize: "1em",
+                    }}
+                    // align="right"
+                  >
+                    Quantity
+                  </TableCell>
+                  <TableCell
+                    style={{
+                      fontFamily: "Lora",
+                      fontWeight: "bold",
+                      fontSize: "1em",
+                    }}
+                    align="right"
+                  >
+                    Price
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+              {mergeCartItems.map((p) => (
+                <TableBody key={p._id}>
+                  <TableRow
+                    sx={{
+                      "&:last-child td, &:last-child th": { border: 0 },
                     }}
                   >
-                    {" "}
-                    {p.quantity}{" "}
-                  </Button>
-                  <Button
-                    style={{
-                      backgroundColor: "#f2f2f2",
-                      color: "#000",
-                      borderColor: "#000",
-                    }}
-                    aria-label="increase"
-                    onClick={() => {
-                      setCount(count + 1);
-                      addQuantity(p);
-                    }}
-                  >
-                    <AddIcon fontSize="small" />
-                  </Button>
-                </ButtonGroup>
-                <p>{p.productPrice} €</p>
-                <ClearIcon onClick={() => handleDeleteItem(p.productId)} />
-              </div>
-            ))}
-          </div>
+                    <TableCell
+                      style={{ fontFamily: "Lora" }}
+                      component="th"
+                      scope="o"
+                    >
+                      <div className="cartProductNameContainer">
+                      <Link
+                        to={`/product/${p.productId}`}
+                        className="cartProductName"
+                      >{p.productName}</Link>
+                      <p className="removeProduct" onClick={() => handleDeleteItem(p.productId)}>Remove</p>
+                      </div>
+                    </TableCell>
+                    <TableCell style={{ fontFamily: "Lora" }}>
+                      <ButtonGroup
+                        className="cartProductQuantity"
+                      >
+                        <Button
+                          style={{
+                            backgroundColor: "#fff",
+                            color: "#333",
+                            borderColor: "gray",
+                          }}
+                          aria-label="reduce"
+                          onClick={() => {
+                            setCount(Math.max(count - 1, 0));
+                            removeQuantity(p);
+                          }}
+                        >
+                          <RemoveIcon fontSize="small" />
+                        </Button>
+                        <Button
+                          style={{
+                            backgroundColor: "#fff",
+                            color: "#333",
+                            borderColor: "gray",
+                          }}
+                        >
+                          {" "}
+                          {p.quantity}{" "}
+                        </Button>
+                        <Button
+                          style={{
+                            backgroundColor: "#fff",
+                            color: "#333",
+                            borderColor: "gray",
+                          }}
+                          aria-label="increase"
+                          onClick={() => {
+                            setCount(count + 1);
+                            addQuantity(p);
+                          }}
+                        >
+                          <AddIcon fontSize="small" />
+                        </Button>
+                      </ButtonGroup>
+                    </TableCell>
+                    <TableCell style={{ fontFamily: "Lora", fontSize: "1.1em" }} align="right">
+                      {p.productPrice} €
+                    </TableCell>
+                  </TableRow>
+                </TableBody>
+              ))}
+            </Table>
+          </TableContainer>
           <div className="total">Total: {totalPrice} €</div>
           <div className="cartBottomContainer">
-            <Button style={{backgroundColor: "red", fontFamily: "Lora", color: "#fff", textTransform: "capitalize", fontSize: "1.1em", padding: "0.4em", width: "8em"}} onClick={handleRemoveAll}>Clear Cart</Button>
+            <Button
+              style={{
+                backgroundColor: "red",
+                fontFamily: "Lora",
+                color: "#fff",
+                textTransform: "capitalize",
+                fontSize: "1.1em",
+                padding: "0.4em",
+                width: "8em",
+              }}
+              onClick={handleRemoveAll}
+            >
+              Clear Cart
+            </Button>
             <Checkout cartItems={mergeCartItems} />
           </div>
         </div>

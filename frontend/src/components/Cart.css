@@ -34,14 +34,28 @@
     padding-top: 2em;
 }
 
+.cartProductNameContainer {
+    display: flex;
+    align-items: flex-end;
+    gap: 1em;
+}
+
 .cartProductName {
-    width: 18%;
+    font-size: 1.4em;
+    font-weight: bold;
     text-decoration: none;
     color: #333;
 }
 
 .cartProductName:hover {
     text-decoration: underline;
+}
+
+.removeProduct {
+    font-size: 0.85em;
+    color: rgba(128, 128, 128, 0.74);
+    cursor: pointer;
+    font-weight: bold;
 }
 
 .total {
