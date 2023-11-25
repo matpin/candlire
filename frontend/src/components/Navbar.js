@@ -126,8 +126,8 @@ function Navbar({ setProductsArray }) {
           Home
         </Link>
         <div className="productsContainerDropdown">
-          <Link className="navProductsLink">
-            Products <ArrowDropDownIcon />{" "}
+          <Link className="navMenuItemsLinks">
+            Products <ArrowDropDownIcon />
           </Link>
           <div className="dropdown">
             <div

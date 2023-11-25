@@ -35,8 +35,11 @@
 }
 
 .navMenuItemsLinks {
+    display: flex;
+    align-items: center;
     text-decoration: none;
     color: #333;
+    font-size: 1.1em;
 }
 
 .navMenuItemsLinks:hover {
