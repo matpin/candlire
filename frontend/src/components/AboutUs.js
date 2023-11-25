@@ -5,6 +5,8 @@ import "./AboutUs.css";
 import { Link } from "react-router-dom";
 
 function AboutUs() {
+  let token = localStorage.getItem("token");
+
   return (
     <div className="aboutUsContainer">
       <div className="aboutUsTop">
@@ -42,7 +44,8 @@ function AboutUs() {
           <br />
           <br />
           To fully immerse yourself in the Candlire experience,{" "}
-          <Link className="aboutUsLink" to="/signin">sign in</Link> to buy, comment, or favorite, and
+          {!token ? (<Link className="aboutUsLink" to="/signin">sign in</Link>) : ("sign in")}{" "}
+          to buy, comment, or favorite, and
           become an integral part of our luminous world. At Candlire, we're not
           just a platform; we're a collective of candle enthusiasts, creators,
           and connoisseurs. Come, be a part of our glowing community, where the
