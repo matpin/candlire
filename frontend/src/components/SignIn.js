@@ -10,6 +10,8 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Alert from "@mui/material/Alert";
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
 function SignIn() {
   const [username, setUsername] = useState("");
@@ -20,6 +22,7 @@ function SignIn() {
   const [emptyPassword, setEmptyPassword] = useState("");
   const [userNotFound, setUserNotFound] = useState("");
   const [incorrectPassword, setIncorrectPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   // Handles dialog when user sign up successfully
   function handleSignInDialog() {
@@ -84,12 +87,29 @@ function SignIn() {
           </div>
           <div className="signInUsernamePassword">
             <label>Password</label>
-            <input
+            <div className="signInPassInputContainer">
+              {showPassword ? (
+                <>
+                 <input
+              type="text"
+              onChange={(e) => {setPassword(e.target.value); setEmptyPassword(""); setIncorrectPassword("");}}
+              value={password}
+              className="signInPassInput"
+            />
+            <VisibilityOffIcon style={{marginRight: "0.4em", color: "gray"}} onClick={() => setShowPassword(false)} />
+                </>
+              ) : (
+                <>
+                 <input
               type="password"
               onChange={(e) => {setPassword(e.target.value); setEmptyPassword(""); setIncorrectPassword("");}}
               value={password}
-              className="signInInput"
+              className="signInPassInput"
             />
+            <VisibilityIcon style={{marginRight: "0.4em", color: "gray"}} onClick={() => setShowPassword(true)} />
+                </>
+              )}
+            </div>
              {emptyPassword !== "" ? (
               <Alert style={{ fontFamily: "Lora" }} severity="error">{emptyPassword}</Alert>
             ) : ("")}
