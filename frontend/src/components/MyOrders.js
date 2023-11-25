@@ -15,6 +15,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import "./MyOrders.css";
+import { Link } from "react-router-dom";
 
 // Requirements for MUI accordion
 const Accordion = styled((props) => (
@@ -63,7 +64,7 @@ function MyOrders() {
     const year = dateObject.getFullYear();
     const month = String(dateObject.getMonth() + 1).padStart(2, "0");
     const day = String(dateObject.getDate()).padStart(2, "0");
-    return `${year}-${month}-${day}`;
+    return `${day}-${month}-${year}`;
   }
 
   // Gets orders from database
@@ -88,78 +89,247 @@ function MyOrders() {
       {orderList.length !== 0 ? (
         <div>
           {orderList.map((o) => (
-        <Accordion
-          key={o._id}
-          expandIcon={<ExpandMoreIcon />}
-          style={{marginBottom: "2em", border: 0}}
-        >
-          <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
-            <TableContainer component={Paper} sx={{ width: "100%" }}>
-              <Table aria-label="simple table">
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Date</TableCell>
-                    <TableCell align="right">Order ID</TableCell>
-                    <TableCell align="right">Total</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  <TableRow
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  >
-                    <TableCell component="th" scope="o">
-                      {formatDate(o.createdAt)}
-                    </TableCell>
-                    <TableCell align="right">{o._id}</TableCell>
-                    <TableCell align="right">{(o.total / 100).toFixed(2)}</TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Accordion>
+            <Accordion
+              key={o._id}
+              expandicon={<ExpandMoreIcon />}
+              style={{ marginBottom: "2em", border: 0 }}
+            >
               <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1a-content"
-                id="panel1a-header"
+                aria-controls="panel1d-content"
+                id="panel1d-header"
               >
-                <Typography>Order: {o._id}</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
                 <TableContainer component={Paper} sx={{ width: "100%" }}>
                   <Table aria-label="simple table">
                     <TableHead>
                       <TableRow>
-                        <TableCell>Product Name</TableCell>
-                        <TableCell align="right">Price</TableCell>
-                        <TableCell align="right">Quantity</TableCell>
-                        <TableCell align="right">Total</TableCell>
-                      </TableRow>
-                    </TableHead>
-                    {o.products.map((p) => (
-                      <TableBody key={p._id}>
-                        <TableRow
-                          sx={{
-                            "&:last-child td, &:last-child th": { border: 0 },
+                        <TableCell
+                          style={{
+                            fontFamily: "Lora",
+                            fontWeight: "bold",
+                            fontSize: "1em",
                           }}
                         >
-                          <TableCell component="th" scope="o">
-                            {p.productName}
-                          </TableCell>
-                          <TableCell align="right">{p.productPrice}</TableCell>
-                          <TableCell align="right">{p.quantity}</TableCell>
-                          <TableCell align="right">{(o.total / 100).toFixed(2)}</TableCell>
-                        </TableRow>
-                      </TableBody>
-                    ))}
+                          Date
+                        </TableCell>
+                        <TableCell
+                          style={{
+                            fontFamily: "Lora",
+                            fontWeight: "bold",
+                            fontSize: "1em",
+                          }}
+                          align="right"
+                        >
+                          Order ID
+                        </TableCell>
+                        <TableCell
+                          style={{
+                            fontFamily: "Lora",
+                            fontWeight: "bold",
+                            fontSize: "1em",
+                          }}
+                          align="right"
+                        >
+                          Delivery Status
+                        </TableCell>
+                        <TableCell
+                          style={{
+                            fontFamily: "Lora",
+                            fontWeight: "bold",
+                            fontSize: "1em",
+                          }}
+                          align="right"
+                        >
+                          Total
+                        </TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      <TableRow
+                        sx={{
+                          "&:last-child td, &:last-child th": { border: 0 },
+                        }}
+                      >
+                        <TableCell
+                          style={{ fontFamily: "Lora" }}
+                          component="th"
+                          scope="o"
+                        >
+                          {formatDate(o.createdAt)}
+                        </TableCell>
+                        <TableCell style={{ fontFamily: "Lora" }} align="right">
+                          {o._id}
+                        </TableCell>
+                        <TableCell style={{ fontFamily: "Lora" }} align="right">
+                          {o.delivery_status.charAt(0).toUpperCase() +
+                            o.delivery_status.slice(1)}
+                        </TableCell>
+                        <TableCell style={{ fontFamily: "Lora" }} align="right">
+                          {(o.total / 100).toFixed(2)} €
+                        </TableCell>
+                      </TableRow>
+                    </TableBody>
                   </Table>
                 </TableContainer>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Accordion>
+                  <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel1a-content"
+                    id="panel1a-header"
+                  >
+                    <Typography
+                      style={{
+                        fontFamily: "Lora",
+                        fontWeight: "bold",
+                        fontSize: "1em",
+                      }}
+                    >
+                      Order: {o._id}
+                    </Typography>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <div className="ordersAddressContainer">
+                        <p className="ordersHead">Address:</p>
+                        <div className="ordersAddressDetails">
+                        <p>{o.shipping.address.line1},</p>
+                        <p>{o.shipping.address.city},</p>
+                        {o.shipping.address.line2 !== null ? (
+                          <p>{o.shipping.address.line2},</p>
+                        ) : (
+                          ""
+                        )}
+                        <p>{o.shipping.address.postal_code},</p>
+                        <p>{o.shipping.address.country}</p>
+                      </div>
+                    </div>
+                    <TableContainer component={Paper} sx={{ width: "100%" }}>
+                      <Table aria-label="simple table">
+                        <TableHead>
+                          <TableRow>
+                            <TableCell
+                              style={{
+                                fontFamily: "Lora",
+                                fontWeight: "bold",
+                                fontSize: "1em",
+                              }}
+                            >
+                              Product Name
+                            </TableCell>
+                            <TableCell
+                              style={{
+                                fontFamily: "Lora",
+                                fontWeight: "bold",
+                                fontSize: "1em",
+                              }}
+                              align="right"
+                            >
+                              Price
+                            </TableCell>
+                            <TableCell
+                              style={{
+                                fontFamily: "Lora",
+                                fontWeight: "bold",
+                                fontSize: "1em",
+                              }}
+                              align="right"
+                            >
+                              Discount
+                            </TableCell>
+                            <TableCell
+                              style={{
+                                fontFamily: "Lora",
+                                fontWeight: "bold",
+                                fontSize: "1em",
+                              }}
+                              align="right"
+                            >
+                              Quantity
+                            </TableCell>
+                            <TableCell
+                              style={{
+                                fontFamily: "Lora",
+                                fontWeight: "bold",
+                                fontSize: "1em",
+                              }}
+                              align="right"
+                            >
+                              Payment Status
+                            </TableCell>
+                            <TableCell
+                              style={{
+                                fontFamily: "Lora",
+                                fontWeight: "bold",
+                                fontSize: "1em",
+                              }}
+                              align="right"
+                            >
+                              Subtotal
+                            </TableCell>
+                          </TableRow>
+                        </TableHead>
+                        {o.products.map((p) => (
+                          <TableBody key={p._id}>
+                            <TableRow
+                              sx={{
+                                "&:last-child td, &:last-child th": {
+                                  border: 0,
+                                },
+                              }}
+                            >
+                              <TableCell
+                                style={{ fontFamily: "Lora" }}
+                                component="th"
+                                scope="o"
+                              >
+                                <Link
+                                  className="ordersNameLink"
+                                  to={`/product/${p.productId}`}
+                                >
+                                  {p.productName}
+                                </Link>
+                              </TableCell>
+                              <TableCell
+                                style={{ fontFamily: "Lora" }}
+                                align="right"
+                              >
+                                {p.productPrice} €
+                              </TableCell>
+                              <TableCell
+                                style={{ fontFamily: "Lora" }}
+                                align="right"
+                              >
+                                {o.total_discount > 0 ? (<>-{(o.total_discount / 100).toFixed(2)} €</>) : (<>-</>)}
+                              </TableCell>
+                              <TableCell
+                                style={{ fontFamily: "Lora" }}
+                                align="right"
+                              >
+                                {p.quantity}
+                              </TableCell>
+                              <TableCell
+                                style={{ fontFamily: "Lora" }}
+                                align="right"
+                              >
+                                {o.payment_status.charAt(0).toUpperCase() +
+                            o.payment_status.slice(1)}
+                              </TableCell>
+                              <TableCell
+                                style={{ fontFamily: "Lora" }}
+                                align="right"
+                              >
+                                {o.total_discount > 0 ? (<>{(p.productPrice * p.quantity) - (o.total_discount / 100).toFixed(2)} €</>) : (<>{p.productPrice * p.quantity} €</>)}
+                              </TableCell>
+                            </TableRow>
+                          </TableBody>
+                        ))}
+                      </Table>
+                    </TableContainer>
+                  </AccordionDetails>
+                </Accordion>
               </AccordionDetails>
             </Accordion>
-          </AccordionDetails>
-        </Accordion>
-      ))}
+          ))}
         </div>
       ) : (
         <p className="noOrdersYet">No orders yet.</p>

@@ -8,3 +8,26 @@
     text-align: center;
     margin-top: 6em;
 }
+
+.ordersNameLink {
+    color: #333;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.ordersAddressContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.ordersHead {
+    font-weight: bold;
+    margin-bottom: 0.7em;
+}
+
+.ordersAddressDetails {
+    display: flex;
+    flex-direction: column;
+    padding-left: 1em;
+    margin-bottom: 1em;
+}
