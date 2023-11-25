@@ -11,30 +11,44 @@ function Catalog({ productsArray }) {
   let sortedProductsArray = productsArray;
 
   function handleOrder(e) {
-    console.log(e.target.value);
     setPriceOrder(e.target.value);
     if (priceOrder === "asc") {
       sortedProductsArray = productsArray.sort((a, b) => b.price - a.price);
     } else {
       sortedProductsArray = productsArray.sort((a, b) => a.price - b.price);
     }
-    console.log(sortedProductsArray);
   }
 
   return (
     <div className="catalogContainer">
       <div className="orderContainer">
         <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-          <InputLabel id="demo-simple-select-label">Sort by</InputLabel>
+          <InputLabel style={{ fontFamily: "Lora", fontSize: "1.03em", color: "#333" }} id="demo-simple-select-label">Sort by</InputLabel>
           <Select
+            sx={{
+              color: "#333",
+              ".MuiOutlinedInput-notchedOutline": {
+                borderColor: "gray",
+              },
+              "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                borderColor: "gray",
+              },
+              "&:hover .MuiOutlinedInput-notchedOutline": {
+                borderColor: "gray",
+              },
+              ".MuiSvgIcon-root ": {
+                fill: "#333 !important",
+              },
+              fontFamily: "Lora"
+            }}
             labelId="demo-simple-select-label"
             id="demo-simple-select"
             value={priceOrder}
             label="Sort by"
             onChange={handleOrder}
           >
-            <MenuItem value="asc">Price(Low to High)</MenuItem>
-            <MenuItem value="desc">Price(High to Low)</MenuItem>
+            <MenuItem style={{ fontFamily: "Lora", color: "#333" }} value="asc">Price(Low to High)</MenuItem>
+            <MenuItem style={{ fontFamily: "Lora", color: "#333" }} value="desc">Price(High to Low)</MenuItem>
           </Select>
         </FormControl>
       </div>
