@@ -4,11 +4,13 @@ const Product = require("../models/productModel");
 // Creates the order
 const createOrder = async (customer, data) => {
     try {
+        console.log(data);
         const items = JSON.parse(customer.metadata.cart);
         const newOrder = await Order.create({
             userId: customer.metadata.userId,
             products: items,
             total: data.amount_total,
+            total_discount: data.total_details.amount_discount,
             shipping: data.shipping_details,
             delivery_status: data.status,
             payment_status: data.payment_status
