@@ -48,10 +48,6 @@ function AddProduct({ addNewProduct }) {
     setOpen(true);
   };
 
-  const handleOpenFieldError = () => {
-    
-  };
-
   const handleCloseFieldError = (event, reason) => {
     if (reason === "clickaway") {
       return;
