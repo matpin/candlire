@@ -63,3 +63,40 @@
     margin-right: auto;
     margin-left: 1em;
 }
+
+@media screen and (max-width: 1200px) {
+    .uploadImageButtonContainer {
+        height: 8vh;
+    }
+}
+
+@media screen and (max-width: 750px) {
+    .addProductForm {
+        width: 70%;
+    }
+
+    .uploadImageButtonContainer {
+        height: 8vh;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .addProductForm {
+        width: 80%;
+    }
+
+    .uploadImageButtonContainer {
+        height: 8vh;
+    }
+}
+
+@media screen and (max-width: 420px) {
+    .addProductForm {
+        width: 100%;
+        padding: 1em;
+    }
+
+    .uploadImageButtonContainer {
+        height: 12vh;
+    }
+}
