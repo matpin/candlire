@@ -7,7 +7,7 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 
 function Catalog({ productsArray }) {
-  const [priceOrder, setPriceOrder] = useState("desc");
+  const [priceOrder, setPriceOrder] = useState("");
   let sortedProductsArray = productsArray;
 
   function handleOrder(e) {
