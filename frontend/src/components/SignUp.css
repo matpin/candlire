@@ -62,3 +62,69 @@
 .signInLink:hover {
     text-decoration: underline;
 }
+
+@media screen and (max-width: 1050px) {
+    .signUpContainer {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 5em;
+        width: 100%;
+    }
+
+    .signUpLeftSide {
+        display: none;
+    }
+
+    .signUpRightSide {
+        width: 70%;
+    }
+
+    .signUpTitle {
+        width: 70%;
+    }
+    
+    .signUpFormContainer {
+        width: 70%;;
+    }
+
+    .existedAccount {
+        margin-bottom: 6em;
+    }
+}
+
+@media screen and (max-width: 790px) {
+    .signUpRightSide {
+        width: 80%;
+    }
+
+    .signUpTitle {
+        width: 80%;
+    }
+    
+    .signUpFormContainer {
+        width: 80%;;
+    }
+
+    .existedAccount {
+        margin-bottom: 6em;
+    }
+}
+
+@media screen and (max-width: 420px) {
+    .signUpRightSide {
+        width: 90%;
+    }
+
+    .signUpTitle {
+        width: 90%;
+    }
+    
+    .signUpFormContainer {
+        width: 90%;
+    }
+
+    .existedAccount {
+        margin-bottom: 6em;
+    }
+}
