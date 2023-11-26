@@ -7,7 +7,6 @@ import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import "./Cart.css";
-import ClearIcon from "@mui/icons-material/Clear";
 import {
   increaseCartCount,
   decreaseCartCount,
@@ -126,7 +125,7 @@ function Cart() {
       <h1 className="cartTitle">Shopping Cart</h1>
       {mergeCartItems.length !== 0 ? (
         <div>
-          <TableContainer component={Paper} sx={{ width: "100%" }}>
+          <TableContainer component={Paper} sx={{ minWidth: "100%" }}>
             <Table aria-label="simple table">
               <TableHead>
                 <TableRow>
