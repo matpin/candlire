@@ -21,6 +21,12 @@ function Homepage() {
             <p className="newsParagraph">
               Use the promotion code on every checkout. Ends 9/1/24.
             </p>
+            <div hidden className="promotionCodeContainer">
+            <p className="promotionCode">
+              PROMOTION CODE: 
+            </p>
+            <p className="code">XMAS23</p>
+            </div>
             <Link className="newsLink" to="/products">
               Shop now
             </Link>
