@@ -86,3 +86,61 @@
 .signUpLink:hover {
     text-decoration: underline;
 }
+
+@media screen and (max-width: 1050px) {
+    .signInContainer {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 5em;
+        width: 100%;
+    }
+
+    .signInLeftSide {
+        display: none;
+    }
+
+    .signInRightSide {
+        width: 70%;
+    }
+
+    .signInTitle {
+        width: 70%;
+    }
+    
+    .formContainer {
+        width: 70%;;
+    }
+}
+
+@media screen and (max-width: 790px) {
+    .signInRightSide {
+        width: 80%;
+    }
+
+    .signInTitle {
+        width: 80%;
+    }
+    
+    .formContainer {
+        width: 80%;;
+    }
+}
+
+@media screen and (max-width: 420px) {
+    .signInRightSide {
+        width: 90%;
+    }
+
+    .signInTitle {
+        width: 90%;
+    }
+    
+    .formContainer {
+        width: 90%;
+    }
+
+    .notAccount {
+        margin-bottom: 6em;
+    }
+}
