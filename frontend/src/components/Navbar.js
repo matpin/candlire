@@ -18,6 +18,8 @@ import Box from "@mui/material/Box";
 import Tooltip from "@mui/material/Tooltip";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import SearchIcon from "@mui/icons-material/Search";
+import MenuIcon from "@mui/icons-material/Menu";
+import ClearIcon from "@mui/icons-material/Clear";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -35,6 +37,8 @@ function Navbar({ setProductsArray }) {
   const cartCount = useSelector((state) => state.cart.count);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [isClicked, setIsClicked] = useState(false);
+  const [showSideNav, setShowSideNav] = useState(false);
+  const [showSearchBar, setShowSearchBar] = useState(false);
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -101,7 +105,6 @@ function Navbar({ setProductsArray }) {
     axios
       .request(config)
       .then((res) => {
-        console.log(res.data);
         setProductsArray(res.data);
         navigate("/products");
       })
@@ -111,184 +114,280 @@ function Navbar({ setProductsArray }) {
   }
 
   return (
-    <nav className="navbarContainer">
-      <div className="navLeftSide">
-        <div className="burgerIcon" hidden></div>
-        <img
-          onClick={handleReturnHome}
-          className="logo"
-          src={logo}
-          alt="candlireImage"
-        />
-      </div>
-      <div className="middleSide">
-        <Link className="navMenuItemsLinks" to="/">
-          Home
-        </Link>
-        <div className="productsContainerDropdown">
-          <Link className="navMenuItemsLinks">
-            Products <ArrowDropDownIcon />
-          </Link>
-          <div className="dropdown">
-            <div
-              onClick={() => {
-                getAllProducts();
+    <>
+      <nav className="navbarContainer">
+        <div className="navLeftSide">
+          <div className="burgerIcon" hidden>
+            <MenuIcon
+              style={{
+                color: "#333",
+                fontSize: "30",
+                marginRight: "0.5em",
+                marginLeft: "0.5em",
+                fontWeight: "bolder",
               }}
-            >
-              <Link className="navProductsLink">All Products</Link>
-            </div>
-            <div
-              onClick={() => {
-                getByCategory("all_season");
-              }}
-            >
-              <Link className="navProductsLink">All Season</Link>
-            </div>
-            <div
-              onClick={() => {
-                getByCategory("christmas");
-              }}
-            >
-              <Link className="navProductsLink">Christmas</Link>
-            </div>
-            <div
-              onClick={() => {
-                getByCategory("halloween");
-              }}
-            >
-              <Link className="navProductsLink">Halloween</Link>
-            </div>
-            <div
-              onClick={() => {
-                getByCategory("summer");
-              }}
-            >
-              <Link className="navProductsLink">Summer</Link>
-            </div>
-            <div
-              onClick={() => {
-                getByCategory("easter");
-              }}
-            >
-              <Link className="navProductsLink">Easter</Link>
-            </div>
-          </div>
-        </div>
-        <Link to="/aboutus" className="navMenuItemsLinks">About us</Link>
-      </div>
-      {!token ? (
-        <div className="navRightSide">
-          <div className="navSearchBar" onClick={() => setIsClicked(true)}>
-            {isClicked ? (
-              <Searchbar
-                setProductsArray={setProductsArray}
-                setIsClicked={setIsClicked}
-              />
-            ) : (
-              <SearchIcon
-                sx={{ fontSize: "2em" }}
-                style={{ color: "#333", marginRight: "0.3em" }}
-              />
-            )}
-          </div>
-          <Link style={{ marginTop: "0.1em" }} to="/cart">
-            <LocalMallIcon style={{ color: "#333", fontSize: "27" }} />
-          </Link>
-          <Box style={{ padding: "0", margin: "0" }}>
-            <Tooltip title="Open profile">
-              <Button onClick={handleOpenUserMenu}>
-                <PersonIcon
+              onClick={() => setShowSideNav(true)}
+            />
+            {showSideNav ? (
+              <div className="sideNavContainer">
+                <ClearIcon
                   style={{
-                    color: "#333",
-                    fontSize: "30",
-                    padding: "0",
-                    margin: "0",
+                    borderBottom: "solid",
+                    borderBottomColor: "gray",
+                    width: "100%",
+                    paddingBottom: "0.1em",
                   }}
+                  onClick={() => setShowSideNav(false)}
                 />
-              </Button>
-            </Tooltip>
-            <Menu
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              <MenuItem onClick={handleCloseUserMenu}>
-                <Link to="/signin" className="signUpInOut">
-                  Sign In / Sign Up
-                </Link>
-              </MenuItem>
-            </Menu>
-          </Box>
-        </div>
-      ) : (
-        <div className="navRightSide">
-          <div className="navSearchBar" onClick={() => setIsClicked(true)}>
-            {isClicked ? (
-              <Searchbar
-                setProductsArray={setProductsArray}
-                setIsClicked={setIsClicked}
-              />
+                <div className="navSide">
+                  <Link className="navMenuItemsLinks" to="/">
+                    Home
+                  </Link>
+                  <div className="productsContainerDropdown">
+                    <Link className="navMenuItemsLinks">
+                      Products <ArrowDropDownIcon />
+                    </Link>
+                    <div className="dropdown">
+                      <div
+                        onClick={() => {
+                          getAllProducts();
+                        }}
+                      >
+                        <Link className="navProductsLink">All Products</Link>
+                      </div>
+                      <div
+                        onClick={() => {
+                          getByCategory("all_season");
+                        }}
+                      >
+                        <Link className="navProductsLink">All Season</Link>
+                      </div>
+                      <div
+                        onClick={() => {
+                          getByCategory("christmas");
+                        }}
+                      >
+                        <Link className="navProductsLink">Christmas</Link>
+                      </div>
+                      <div
+                        onClick={() => {
+                          getByCategory("halloween");
+                        }}
+                      >
+                        <Link className="navProductsLink">Halloween</Link>
+                      </div>
+                      <div
+                        onClick={() => {
+                          getByCategory("summer");
+                        }}
+                      >
+                        <Link className="navProductsLink">Summer</Link>
+                      </div>
+                      <div
+                        onClick={() => {
+                          getByCategory("easter");
+                        }}
+                      >
+                        <Link className="navProductsLink">Easter</Link>
+                      </div>
+                    </div>
+                  </div>
+                  <Link to="/aboutus" className="navMenuItemsLinks">
+                    About us
+                  </Link>
+                </div>
+              </div>
             ) : (
-              <SearchIcon sx={{ fontSize: "2em" }} style={{ color: "#333" }} />
+              ""
             )}
           </div>
-          <Link to="/cart">
-            {cartCount > 0 ? (
-              <StyledBadge badgeContent={cartCount} color="secondary">
-                <LocalMallIcon style={{ color: "#333", fontSize: "25" }} />
-              </StyledBadge>
-            ) : (
-              <LocalMallIcon style={{ color: "#333", fontSize: "25" }} />
-            )}
-          </Link>
-          <Box style={{ padding: "0", margin: "0" }}>
-            <Tooltip title="Open profile">
-              <Button onClick={handleOpenUserMenu}>
-                <PersonIcon style={{ color: "#333", fontSize: "30" }} />
-              </Button>
-            </Tooltip>
-            <Menu
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              <MenuItem onClick={handleCloseUserMenu}>
-                <Link className="navMyProfileLink" to="/myprofile">
-                  My Profile
-                </Link>
-              </MenuItem>
-              <MenuItem onClick={handleCloseUserMenu}>
-                <Link className="signUpInOut" onClick={handleLogout}>
-                  Sign Out
-                </Link>
-              </MenuItem>
-            </Menu>
-          </Box>
+          <img
+            onClick={handleReturnHome}
+            className="logo"
+            src={logo}
+            alt="candlireImage"
+          />
         </div>
-      )}
-    </nav>
+        <div className="middleSide">
+          <Link className="navMenuItemsLinks" to="/">
+            Home
+          </Link>
+          <div className="productsContainerDropdown">
+            <Link className="navMenuItemsLinks">
+              Products <ArrowDropDownIcon />
+            </Link>
+            <div className="dropdown">
+              <div
+                onClick={() => {
+                  getAllProducts();
+                }}
+              >
+                <Link className="navProductsLink">All Products</Link>
+              </div>
+              <div
+                onClick={() => {
+                  getByCategory("all_season");
+                }}
+              >
+                <Link className="navProductsLink">All Season</Link>
+              </div>
+              <div
+                onClick={() => {
+                  getByCategory("christmas");
+                }}
+              >
+                <Link className="navProductsLink">Christmas</Link>
+              </div>
+              <div
+                onClick={() => {
+                  getByCategory("halloween");
+                }}
+              >
+                <Link className="navProductsLink">Halloween</Link>
+              </div>
+              <div
+                onClick={() => {
+                  getByCategory("summer");
+                }}
+              >
+                <Link className="navProductsLink">Summer</Link>
+              </div>
+              <div
+                onClick={() => {
+                  getByCategory("easter");
+                }}
+              >
+                <Link className="navProductsLink">Easter</Link>
+              </div>
+            </div>
+          </div>
+          <Link to="/aboutus" className="navMenuItemsLinks">
+            About us
+          </Link>
+        </div>
+        {!token ? (
+          <div className="navRightSide">
+            <div className="navSearchBar" onClick={() => setIsClicked(true)}>
+              {isClicked && showSearchBar ? (
+                  <Searchbar
+                setProductsArray={setProductsArray}
+                setIsClicked={setIsClicked} />
+              ) : (
+                <SearchIcon
+                  sx={{ fontSize: "2em" }}
+                  style={{ color: "#333", marginRight: "0.3em" }}
+                  onClick={() => setShowSearchBar(true)}
+                />
+              )}
+            </div>
+            <Link style={{ marginTop: "0.1em" }} to="/cart">
+              <LocalMallIcon style={{ color: "#333", fontSize: "27" }} />
+            </Link>
+            <Box style={{ padding: "0", margin: "0" }}>
+              <Tooltip title="Open profile">
+                <Button onClick={handleOpenUserMenu}>
+                  <PersonIcon
+                    style={{
+                      color: "#333",
+                      fontSize: "30",
+                      padding: "0",
+                      margin: "0",
+                    }}
+                  />
+                </Button>
+              </Tooltip>
+              <Menu
+                sx={{ mt: "45px" }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                <MenuItem onClick={handleCloseUserMenu}>
+                  <Link to="/signin" className="signUpInOut">
+                    Sign In / Sign Up
+                  </Link>
+                </MenuItem>
+              </Menu>
+            </Box>
+          </div>
+        ) : (
+          <div className="navRightSide">
+            <div className="navSearchBar" onClick={() => setIsClicked(true)}>
+              {isClicked ? (
+                <Searchbar
+                  setProductsArray={setProductsArray}
+                  setIsClicked={setIsClicked}
+                />
+              ) : (
+                <SearchIcon
+                  sx={{ fontSize: "2em" }}
+                  style={{ color: "#333" }}
+                />
+              )}
+            </div>
+            <Link to="/cart">
+              {cartCount > 0 ? (
+                <StyledBadge badgeContent={cartCount} color="secondary">
+                  <LocalMallIcon style={{ color: "#333", fontSize: "25" }} />
+                </StyledBadge>
+              ) : (
+                <LocalMallIcon style={{ color: "#333", fontSize: "25" }} />
+              )}
+            </Link>
+            <Box style={{ padding: "0", margin: "0" }}>
+              <Tooltip title="Open profile">
+                <Button onClick={handleOpenUserMenu}>
+                  <PersonIcon style={{ color: "#333", fontSize: "30" }} />
+                </Button>
+              </Tooltip>
+              <Menu
+                sx={{ mt: "45px" }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                <MenuItem onClick={handleCloseUserMenu}>
+                  <Link className="navMyProfileLink" to="/myprofile">
+                    My Profile
+                  </Link>
+                </MenuItem>
+                <MenuItem onClick={handleCloseUserMenu}>
+                  <Link className="signUpInOut" onClick={handleLogout}>
+                    Sign Out
+                  </Link>
+                </MenuItem>
+              </Menu>
+            </Box>
+          </div>
+        )}
+      </nav>
+      {showSearchBar ? (
+        <div hidden className="navSearchBarContainer">
+        <Searchbar setProductsArray={setProductsArray} setIsClicked={setIsClicked} />
+        <ClearIcon onClick={() => setShowSearchBar(false)} />
+      </div>
+      ) : ("")}
+    </>
   );
 }
 
