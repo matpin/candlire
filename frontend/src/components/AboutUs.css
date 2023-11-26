@@ -66,6 +66,7 @@
     gap: 3em;
     width: 100%;
 }
+
 .aboutUsContentBottom {
     border: 2px inset rgba(177, 177, 177, 0.795);
     box-shadow: 0px 3px 5px 1px #ccc;
@@ -93,4 +94,57 @@
 
 .aboutUsLink {
     color: #333;
+}
+
+@media screen and (max-width: 1400px) {
+    .aboutUsContainer {
+        gap: 5em;
+    }
+
+    .aboutUsImageContainer {
+        display: none;
+    }
+
+    .aboutUsContentTop {
+        width: 70%;
+    }
+
+    .aboutUsBottom {
+        flex-direction: column;
+    }
+
+    .aboutUsContentBottom {
+        width: 70%;
+    }
+
+    .aboutUsImageContainerBottom {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 670px) {
+    .aboutUsContentTop {
+        width: 90%;
+    }
+
+    .aboutUsContentBottom {
+        width: 90%;
+    }
+}
+
+@media screen and (max-width: 420px) {
+    .aboutUsContentTop {
+        width: 100%;
+    }
+
+    .aboutUsParagraph {
+        padding: 2em;
+        border: none;
+    }
+
+    .aboutUsContentBottom {
+        width: 100%;
+        padding: 2em;
+        border: none;
+    }
 }
