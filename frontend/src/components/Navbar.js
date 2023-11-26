@@ -323,7 +323,7 @@ function Navbar({ setProductsArray }) {
         ) : (
           <div className="navRightSide">
             <div className="navSearchBar" onClick={() => setIsClicked(true)}>
-              {isClicked ? (
+              {isClicked && showSearchBar ? (
                 <Searchbar
                   setProductsArray={setProductsArray}
                   setIsClicked={setIsClicked}
@@ -332,6 +332,7 @@ function Navbar({ setProductsArray }) {
                 <SearchIcon
                   sx={{ fontSize: "2em" }}
                   style={{ color: "#333" }}
+                  onClick={() => setShowSearchBar(true)}
                 />
               )}
             </div>
