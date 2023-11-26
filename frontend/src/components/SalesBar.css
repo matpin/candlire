@@ -24,3 +24,15 @@
         transform: translateX(-180%);
     }
 }
+
+@media screen and (max-width: 1470px) {
+    .salesContent {
+        animation: none;
+    }
+}
+
+@media screen and (max-width: 610px) {
+    .salesBarContainer {
+        display: none;
+    }
+}
