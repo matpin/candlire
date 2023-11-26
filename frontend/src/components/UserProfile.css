@@ -53,3 +53,39 @@
     display: flex;
     flex-direction: column;
 }
+
+@media screen and (max-width: 1130px) {
+    .profilePageSideBar {
+        width: 18%;;
+    }
+}
+
+@media screen and (max-width: 830px) {
+    .profilePageSideBar {
+        width: 22%;;
+    }
+}
+
+@media screen and (max-width: 730px) {
+    .profilePageSideBar {
+        width: 25%;;
+    }
+}
+
+@media screen and (max-width: 650px) {
+    .profilePageSideBar {
+        width: 27%;;
+    }
+}
+
+@media screen and (max-width: 570px) {
+    .profilePageSideBar {
+        width: 45%;;
+    }
+}
+
+@media screen and (max-width: 420px) {
+    .profilePageSideBar {
+        width: 50%;;
+    }
+}

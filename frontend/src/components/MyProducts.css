@@ -45,3 +45,52 @@
     text-align: center;
     margin-top: 6em;
 }
+
+@media screen and (max-width: 1470px) {
+    .innerMyProductsContainer {
+        width: 25%;
+    }
+}
+
+@media screen and (max-width: 1160px) {
+    .innerMyProductsContainer {
+        width: 28%;
+    }
+}
+
+@media screen and (max-width: 950px) {
+    .innerMyProductsContainer {
+        width: 30%;
+    }
+}
+
+@media screen and (max-width: 830px) {
+    .innerMyProductsContainer {
+        width: 40%;
+    }
+}
+
+@media screen and (max-width: 730px) {
+    .innerMyProductsContainer {
+        width: 60%;
+    }
+}
+
+@media screen and (max-width: 630px) {
+    .innerMyProductsContainer {
+        width: 80%;
+        margin: 0;
+    }
+}
+
+@media screen and (max-width: 530px) {
+    .innerMyProductsContainer {
+        width: 90%;
+    }
+}
+
+@media screen and (max-width: 420px) {
+    .innerMyProductsContainer {
+        width: 100%;
+    }
+}
