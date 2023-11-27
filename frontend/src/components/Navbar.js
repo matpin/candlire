@@ -55,7 +55,6 @@ function Navbar({ setProductsArray }) {
       let cart = localStorage.getItem(`cart_${decoded.id}`);
       if (cart) {
         let productCount = JSON.parse(cart).length;
-        console.log(productCount);
         dispatch(updateCartCount(productCount));
       }
     }

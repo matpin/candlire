@@ -109,7 +109,6 @@ function ProductPage({ deleteProduct }) {
             `favorites_${decoded.id}`,
             JSON.stringify(res.data.favorites)
           );
-          console.log(favoritesArray);
         });
     } catch (error) {
       console.log(error);

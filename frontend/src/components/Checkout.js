@@ -13,7 +13,6 @@ function Checkout({ cartItems }) {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((res) => {
-            console.log(res.data);
           if (res.data) {
             window.location.href = res.data.url;
           }
