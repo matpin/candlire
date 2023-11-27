@@ -251,7 +251,9 @@ function ProductPage({ deleteProduct }) {
             </div>
           </div>
           <p className="productPagePrice">{product.price} €</p>
-          <div className="quantityButtons">
+            {token && product.owner !== decoded.id ? (
+              <>
+              <div className="quantityButtons">
             <h4>Quantity</h4>
             <ButtonGroup
               style={{
@@ -299,9 +301,7 @@ function ProductPage({ deleteProduct }) {
               </Button>
             </ButtonGroup>
           </div>
-          <div className="addToCartButtonContainer">
-            {token ? (
-              <>
+              <div className="addToCartButtonContainer">
                 <Button
                   style={{
                     backgroundColor: "#f2f2f2",
@@ -333,9 +333,59 @@ function ProductPage({ deleteProduct }) {
                     Product added to cart!
                   </Alert>
                 </Snackbar>
+                </div>
               </>
-            ) : (
+            ) : token && product.owner === decoded.id ? ("") : (
               <>
+              <div className="quantityButtons">
+            <h4>Quantity</h4>
+            <ButtonGroup
+              style={{
+                width: "100%",
+                height: "5vh",
+              }}
+            >
+              <Button
+                style={{
+                  backgroundColor: "#fff",
+                  color: "#000",
+                  borderColor: "#000",
+                }}
+                aria-label="reduce"
+                onClick={() => {
+                  setCount(Math.max(count - 1, 0)); removeFromQuantity();
+                }}
+              >
+                <RemoveIcon fontSize="small" />
+              </Button>
+              <Button
+                style={{
+                  backgroundColor: "#fff",
+                  color: "#000",
+                  borderColor: "#000",
+                  borderRadius: "5%",
+                }}
+              >
+                {" "}
+                {count}{" "}
+              </Button>
+              <Button
+                style={{
+                  backgroundColor: "#fff",
+                  color: "#000",
+                  borderColor: "#000",
+                  borderRadius: "5%",
+                }}
+                aria-label="increase"
+                onClick={() => {
+                  setCount(count + 1); addToQuantity();
+                }}
+              >
+                <AddIcon fontSize="small" />
+              </Button>
+            </ButtonGroup>
+          </div>
+              <div className="addToCartButtonContainer">
                 <Button
                   style={{
                     backgroundColor: "#f2f2f2",
@@ -366,10 +416,10 @@ function ProductPage({ deleteProduct }) {
                   >
                     You have to sign in first!
                   </Alert>
-                </Snackbar>
+                </Snackbar></div>
               </>
             )}
-          </div>
+          
           <div className="productPageDescContainer">
             <h4>Description</h4>
             <p className="productPageDesc">{product.description}</p>
