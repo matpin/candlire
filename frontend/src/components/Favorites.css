@@ -3,6 +3,7 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
+    justify-content: center;
     gap: 3em;
     padding: 2em;
     margin-top: 4em;
@@ -50,4 +51,68 @@
     font-style: italic;
     text-align: center;
     margin-top: 6em;
+}
+
+@media screen and (max-width: 1470px) {
+    .myFavoritesContainer {
+        padding: 1em;
+    }
+    
+    .innerMyFavoritesContainer {
+        width: 21%;
+    }
+}
+
+@media screen and (max-width: 1250px) {
+    .innerMyFavoritesContainer {
+        width: 23%;
+    }
+}
+
+@media screen and (max-width: 1150px) {
+    .innerMyFavoritesContainer {
+        width: 25%;
+    }
+}
+
+@media screen and (max-width: 1050px) {
+    .innerMyFavoritesContainer {
+        width: 27%;
+    }
+}
+
+@media screen and (max-width: 950px) {
+    .innerMyFavoritesContainer {
+        width: 29%;
+    }
+}
+
+@media screen and (max-width: 850px) {
+    .innerMyFavoritesContainer {
+        width: 31%;
+    }
+}
+
+@media screen and (max-width: 750px) {
+    .innerMyFavoritesContainer {
+        width: 40%;
+    }
+}
+
+@media screen and (max-width: 650px) {
+    .innerMyFavoritesContainer {
+        width: 60%;
+    }
+}
+
+@media screen and (max-width: 550px) {
+    .innerMyFavoritesContainer {
+        width: 80%;
+    }
+}
+
+@media screen and (max-width: 420px) {
+    .innerMyFavoritesContainer {
+        width: 100%;
+    }
 }
