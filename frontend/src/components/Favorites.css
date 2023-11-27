@@ -3,7 +3,6 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: center;
     gap: 3em;
     padding: 2em;
     margin-top: 4em;
@@ -113,6 +112,7 @@
 
 @media screen and (max-width: 420px) {
     .innerMyFavoritesContainer {
+        justify-content: center;
         width: 100%;
     }
 }

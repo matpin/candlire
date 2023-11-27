@@ -3,7 +3,6 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: center;
     gap: 3em;
     padding: 2em;
 }
@@ -96,6 +95,7 @@
 
 @media screen and (max-width: 420px) {
     .innerMyProductsContainer {
+        justify-content: center;
         width: 100%;
     }
 }
