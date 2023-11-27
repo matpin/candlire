@@ -12,3 +12,10 @@
 .pageNotFound {
     font-size: 1.2em;
 }
+
+@media screen and (max-width: 420px) {
+    .pageNotFoundContainer {
+        margin-top: 3.5em;
+        font-size: 1.8em;
+    }
+}
