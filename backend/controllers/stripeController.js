@@ -61,8 +61,6 @@ const stripeWebHook = (req, res) => {
   // Handle the event
   if (event.type === "checkout.session.completed") {
     stripe.customers.retrieve(req.body.data.object.customer).then((customer) => {
-      console.log(customer, "dddd");
-      console.log(req.body.data.object, "aaaa");
       createOrder(customer, req.body.data.object);
     }). catch(error => console.log(error))
   }

@@ -4,7 +4,6 @@ const Product = require("../models/productModel");
 // Creates the order
 const createOrder = async (customer, data) => {
     try {
-        console.log(data);
         const items = JSON.parse(customer.metadata.cart);
         const newOrder = await Order.create({
             userId: customer.metadata.userId,
