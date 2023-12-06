@@ -134,7 +134,7 @@ function App() {
             path="/edit/:id"
             element={<EditProduct editProduct={editProduct} />}
           />
-          <Route path="/myprofile" element={<UserProfile />} />
+          <Route path="/myprofile" element={<UserProfile productsArray={productsArray} />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/aboutus" element={<AboutUs />} />
           <Route path="/signup" element={<SignUp />} />

@@ -4,8 +4,8 @@ import { jwtDecode } from "jwt-decode";
 import { Link } from "react-router-dom";
 import "./MyProducts.css";
 
-function MyProducts() {
-    const [myProductsArray, setMyProductsArray] = useState([])
+function MyProducts({ productsArray }) {
+  const [myProductsArray, setMyProductsArray] = useState([]);
   let token = localStorage.getItem("token");
   let decoded;
 
@@ -37,30 +37,55 @@ function MyProducts() {
 
   useEffect(() => {
     getMyProducts(decoded.id);
-  }, [decoded.id])
+  }, [decoded.id]);
 
   return (
-    <div >
-      {myProductsArray.length !== 0 ? (
+    <div>
+      {myProductsArray.length !== 0 || productsArray.length !== 0 ? (
         <div className="myProductsContainer">
-          {myProductsArray.map((p, i) => (
-          <div key={i} className="innerMyProductsContainer">
-            <Link className="myProductsLinks" to={`/product/${p._id}`}>
-              <img className="productsImage" src={p.image} alt="productImage" />
-              <div className="productsDetails">
-                <p className="myProductsBrand">{p.brand}</p>
-                <p className="myProductsName">{p.name}</p>
-              </div>
-              <p className="myProductsPrice">{p.price} €</p>
-            </Link>
-          </div>
-        ))}
+          {!decoded.isAdmin ? (
+            <>
+              {myProductsArray.map((p, i) => (
+                <div key={i} className="innerMyProductsContainer">
+                  <Link className="myProductsLinks" to={`/product/${p._id}`}>
+                    <img
+                      className="productsImage"
+                      src={p.image}
+                      alt="productImage"
+                    />
+                    <div className="productsDetails">
+                      <p className="myProductsBrand">{p.brand}</p>
+                      <p className="myProductsName">{p.name}</p>
+                    </div>
+                    <p className="myProductsPrice">{p.price} €</p>
+                  </Link>
+                </div>
+              ))}
+            </>
+          ) : (
+            <>
+              {productsArray.map((p, i) => (
+                <div key={i} className="innerMyProductsContainer">
+                  <Link className="myProductsLinks" to={`/product/${p._id}`}>
+                    <img
+                      className="productsImage"
+                      src={p.image}
+                      alt="productImage"
+                    />
+                    <div className="productsDetails">
+                      <p className="myProductsBrand">{p.brand}</p>
+                      <p className="myProductsName">{p.name}</p>
+                    </div>
+                    <p className="myProductsPrice">{p.price} €</p>
+                  </Link>
+                </div>
+              ))}
+            </>
+          )}
         </div>
-        
       ) : (
         <p className="noProductsYet">No products added yet.</p>
       )}
-      
     </div>
   );
 }

@@ -8,7 +8,7 @@ import { jwtDecode } from "jwt-decode";
 import "./UserProfile.css";
 import Button from '@mui/material/Button';
 
-function UserProfile() {
+function UserProfile({ productsArray }) {
   let token = localStorage.getItem("token");
   const [option, setOption] = useState("myProducts");
   let decoded;
@@ -41,7 +41,7 @@ function UserProfile() {
                   </Link>
                 </div>
                 <div className="profileProductContent">
-                  <MyProducts />
+                  <MyProducts productsArray={productsArray} />
                 </div>
               </div>
             ) : option === "myFavorites" ? (
