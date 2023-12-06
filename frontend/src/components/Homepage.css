@@ -158,6 +158,10 @@
 }
 
 @media screen and (max-width: 610px) {
+    .newsContainer {
+        margin: 0;
+    }
+
     .newsContent {
         font-size: 0.8em;
     }
@@ -188,6 +192,10 @@
 }
 
 @media screen and (max-width: 560px) {
+    .newsContainer {
+        margin: 0;
+    }
+
     .newsContent {
         padding-left: 1em;
         padding-right: 1em;
@@ -195,6 +203,10 @@
 }
 
 @media screen and (max-width: 420px) {
+    .newsContainer {
+        margin: 0;
+    }
+    
     .newsContent {
         font-size: 0.6em;
         text-align: center;
