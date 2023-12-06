@@ -15,6 +15,7 @@ const userSchema = new mongoose.mongoose.Schema({
         },
     },
     password: String,
+    isAdmin: {type: Boolean, default: false},
     favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Product' }]
 }, { timestamps: true });
 

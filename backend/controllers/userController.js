@@ -16,7 +16,7 @@ const signUpUser = async (req, res) => {
         }
         let hashedPass = await bcrypt.hash(password, +process.env.SALT);
         let user = await User.create({username, email, password: hashedPass});
-        let token = jwt.sign({id: user._id, username: user.username}, process.env.PRIVATE_TOKEN, {expiresIn: "2h"});
+        let token = jwt.sign({id: user._id, username: user.username, isAdmin: user.isAdmin}, process.env.PRIVATE_TOKEN, {expiresIn: "2h"});
         res.status(200).send({msg: "registered successfully", token});
     } catch (error) {
         console.log(error);
@@ -36,7 +36,7 @@ const signInUser = async (req, res) => {
             if (!validPass) {
                 return res.status(404).send({msg: "Incorrect password", validPass});
             } else {
-                let token = jwt.sign({id: userFound._id, username: userFound.username, favorites: userFound.favorites}, process.env.PRIVATE_TOKEN, {expiresIn: "2h"});
+                let token = jwt.sign({id: userFound._id, username: userFound.username, favorites: userFound.favorites, isAdmin: userFound.isAdmin}, process.env.PRIVATE_TOKEN, {expiresIn: "2h"});
                 return res.status(200).send({msg: "User logged in successfully", token});
             }
         } else {
