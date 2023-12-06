@@ -231,7 +231,7 @@ function ProductPage({ deleteProduct }) {
               )}
             </div>
             <div className="productPageEditDelete">
-              {token && product.owner === decoded.id ? (
+              {token && (product.owner === decoded.id || decoded.isAdmin) ? (
                 <>
                   <Link to={`/edit/${product._id}`} className="editButton">
                     <EditIcon
