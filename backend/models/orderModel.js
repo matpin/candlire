@@ -6,7 +6,8 @@ const orderSchema = new mongoose.Schema({
         productId: String,
         productName: String,
         quantity: Number,
-        productPrice: String
+        productPrice: String,
+        owner: String
     }],
     total: {type: Number, required: true},
     total_discount: {type: Number, required: true},
