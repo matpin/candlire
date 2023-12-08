@@ -123,12 +123,13 @@ function ProductPage({ deleteProduct }) {
   }, [decoded?.id]);
 
   // Adds products to local storage for shopping cart
-  function addToCart(productId, productName, quantity, productPrice) {
+  function addToCart(productId, productName, quantity, productPrice, productOwner) {
     let cart = {
       productId: productId,
       productName: productName,
       quantity: quantity,
       productPrice: productPrice,
+      owner: productOwner
     };
 
     const oldCart =
@@ -314,7 +315,7 @@ function ProductPage({ deleteProduct }) {
                   }}
                   variant="outlined"
                   onClick={() => {
-                    addToCart(product._id, product.name, count, product.price);
+                    addToCart(product._id, product.name, count, product.price, product.owner);
                     handleClick();
                   }}
                 >
