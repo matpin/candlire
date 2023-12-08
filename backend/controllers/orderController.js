@@ -39,4 +39,15 @@ const getOrders = async (req, res) => {
     }
 }
 
-module.exports = {createOrder, getOrders};
+// Gets user orders
+const getSales = async (req, res) => {
+    try {
+        let orders = await Order.find({"products.owner": req.user.id}).sort({ createdAt: "desc" });
+        res.status(200).send(orders);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({msg: `Internal error`});
+    }
+}
+
+module.exports = {createOrder, getOrders, getSales};
